@@ -1,0 +1,14 @@
+.header__wrapper {
+  grid-column: span 12;
+
+  display: flex;
+  justify-content: space-between;
+}
+
+.header__btn {
+  border-color: transparent;
+  border-radius: 8px;
+  width: 120px;
+  background-color: black;
+  color: white;
+}
