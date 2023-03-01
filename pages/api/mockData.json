@@ -1,0 +1,9 @@
+{
+  "exercises": [
+    { "name": "Push-up" },
+    { "name": "Dumbbell Skull Crushers" },
+    { "name": "Dumbbell Flies" }
+  ],
+
+  "workouts": [{ "name": "Workout 1" }]
+}
