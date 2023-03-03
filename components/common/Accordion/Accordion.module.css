@@ -1,0 +1,7 @@
+.accordion__container {
+  grid-column: span 12;
+}
+
+.accordion__trigger {
+  width: 100%;
+}
