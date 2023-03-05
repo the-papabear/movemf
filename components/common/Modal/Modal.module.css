@@ -1,0 +1,38 @@
+.modal__overlay {
+  background-color: rgba(0, 0, 0, 0.505);
+  position: fixed;
+  inset: 0;
+}
+
+.modal__content {
+  gap: 12px;
+  display: flex;
+  flex-direction: column;
+
+  border-radius: 4px;
+  border: 2px solid black;
+  padding: 12px;
+
+  max-width: 35%;
+  min-width: 300px;
+
+  margin: 0 auto;
+  background-color: white;
+
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.modal__header__wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal__close {
+  border-color: transparent;
+  background-color: transparent;
+  cursor: pointer;
+  background-image: 'public/closeIcon.svg';
+}

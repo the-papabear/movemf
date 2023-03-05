@@ -1,4 +1,4 @@
-import styles from "@components/layout/Card/Card.module.css";
+import styles from '@components/common/Card/Card.module.css';
 
 type CardProps = {
   data: any;
