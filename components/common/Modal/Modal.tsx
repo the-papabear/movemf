@@ -16,7 +16,7 @@ import styles from '@components/common/Modal/Modal.module.css';
 
 type ModalProps = {
   title?: string;
-  trigger: JSX.Element;
+  trigger: string;
 };
 
 const Modal = ({ title, trigger, children }: PropsWithChildren<ModalProps>) => (
