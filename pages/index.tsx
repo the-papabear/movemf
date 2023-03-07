@@ -1,9 +1,19 @@
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import { Inter } from 'next/font/google';
+
+import data from '@/pages/api/mockData.json';
+
+import Card from '@components/common/Card/Card';
+import Modal from '@/components/common/Modal/Modal';
+import Accordion from '@/components/common/Accordion/Accordion';
+import ExercisesForm from '@/components/layout/ExercisesForm/ExercisesForm';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export default function Home() {
+  const router = useRouter();
+
   return (
     <>
       <Head>
@@ -12,6 +22,28 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
+      <Accordion label="Workouts">
+        <Card>
+          <button
+            onClick={() => {
+              router.push('/workouts');
+            }}
+          >
+            Start Workout
+          </button>
+        </Card>
+      </Accordion>
+      <Accordion label="Exercises">
+        <Card>
+          <Modal title="Add exercise" trigger="Add Exercise">
+            <ExercisesForm />
+          </Modal>
+          {data.exercises.map((exercise, index) => (
+            <span key={index}>{exercise.name}</span>
+          ))}
+        </Card>
+      </Accordion>
     </>
   );
 }
