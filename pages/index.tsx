@@ -1,8 +1,9 @@
+import { useState } from 'react';
+
+import axios from 'axios';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { Inter } from 'next/font/google';
-
-import data from '@/pages/api/mockData.json';
 
 import Card from '@components/common/Card/Card';
 import Modal from '@/components/common/Modal/Modal';
@@ -10,6 +11,18 @@ import Accordion from '@/components/common/Accordion/Accordion';
 import ExercisesForm from '@/components/layout/ExercisesForm/ExercisesForm';
 
 const inter = Inter({ subsets: ['latin'] });
+
+async function getExercises() {
+  try {
+    const { data } = await axios.get('http://localhost:4000/exercises');
+
+    console.log(data);
+
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 export default function Home() {
   const router = useRouter();
@@ -38,10 +51,8 @@ export default function Home() {
         <Card>
           <Modal title="Add exercise" trigger="Add Exercise">
             <ExercisesForm />
+            <div>{JSON.stringify(getExercises())}</div>
           </Modal>
-          {data.exercises.map((exercise, index) => (
-            <span key={index}>{exercise.name}</span>
-          ))}
         </Card>
       </Accordion>
     </>
