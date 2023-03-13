@@ -3,10 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "npm run stopLocalMongo && npm run startLocalMongo && next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "startLocalMongo": "node backend/scripts/startLocalMongo.mjs",
+    "stopLocalMongo": "node backend/scripts/stopLocalMongo.mjs"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.1.0",
@@ -15,8 +17,10 @@
     "@types/react": "18.0.28",
     "@types/react-dom": "18.0.11",
     "next": "13.2.1",
+    "ora": "^6.1.2",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "shelljs": "^0.8.5"
   },
   "devDependencies": {
     "eslint": "8.35.0",
