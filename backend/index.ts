@@ -1,13 +1,16 @@
 import express from 'express';
-import http from 'http';
-const PORT = 8080;
+
+const PORT = 4000;
 
 const app = express();
 
-const server = http.createServer(app);
-
-server.listen(PORT, () => {
-  console.log(`Server running for real on localhost:${PORT}/`);
+app.get('/exercise', (req, res) => {
+  res.json([
+    { name: 'Squat', link: 'squat.com' },
+    { name: 'Pull-up', link: 'pull-up.io' },
+  ]);
 });
+
+app.listen(PORT);
 
 export {};
