@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "npm run stopLocalMongo && npm run startLocalMongo && next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "nodemon",
     "lint": "next lint",
     "startLocalMongo": "node backend/scripts/startLocalMongo.mjs",
     "stopLocalMongo": "node backend/scripts/stopLocalMongo.mjs"
@@ -13,19 +13,23 @@
   "dependencies": {
     "@radix-ui/react-accordion": "^1.1.0",
     "@radix-ui/react-dialog": "^1.0.2",
-    "@types/node": "18.14.1",
     "@types/react": "18.0.28",
     "@types/react-dom": "18.0.11",
     "next": "13.2.1",
     "ora": "^6.1.2",
     "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "shelljs": "^0.8.5"
+    "react-dom": "18.2.0"
   },
   "devDependencies": {
+    "@types/express": "^4.17.17",
+    "@types/node": "18.14.1",
     "eslint": "8.35.0",
     "eslint-config-next": "13.2.1",
+    "express": "^4.18.2",
+    "nodemon": "^2.0.21",
     "npm": "^9.6.0",
+    "shelljs": "^0.8.5",
+    "ts-node": "^10.9.1",
     "typescript": "4.9.5"
   }
 }
