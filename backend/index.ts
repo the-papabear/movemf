@@ -1,21 +1,22 @@
 import cors from 'cors';
 import express from 'express';
 
+import connectToDB from '../backend/mongoConnection';
+
 const PORT = 4000;
 
 const app = express();
 
 app.use(cors());
 
-app.get('/exercises', (req, res) => {
-  res.json([
-    { name: 'Squat', link: 'squat.com' },
-    { name: 'Pull-up', link: 'pull-up.io' },
-  ]);
+app.get('/api/exercises', async (req, res) => {
+  const connection = await connectToDB();
 
-  res.status(200);
+  const exercises = await connection.collection('exercises').find({}).toArray();
+
+  res.send(exercises).status(200);
 });
 
-app.listen(PORT);
+app.listen(PORT, () => console.log('Connected to API server'));
 
-export {};
+export default app;

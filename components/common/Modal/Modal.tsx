@@ -11,7 +11,7 @@ import {
   Trigger,
 } from '@radix-ui/react-dialog';
 
-import closeIcon from '@/public/closeIcon.svg';
+import closeIcon from 'public/closeIcon.svg';
 import styles from '@components/common/Modal/Modal.module.css';
 
 type ModalProps = {

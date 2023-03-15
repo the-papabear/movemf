@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import axios from 'axios';
 import Head from 'next/head';
@@ -6,26 +6,24 @@ import { useRouter } from 'next/router';
 import { Inter } from 'next/font/google';
 
 import Card from '@components/common/Card/Card';
-import Modal from '@/components/common/Modal/Modal';
-import Accordion from '@/components/common/Accordion/Accordion';
-import ExercisesForm from '@/components/layout/ExercisesForm/ExercisesForm';
+import Modal from '@components/common/Modal/Modal';
+import Accordion from '@components/common/Accordion/Accordion';
+import ExercisesForm from '@components/layout/ExercisesForm/ExercisesForm';
 
 const inter = Inter({ subsets: ['latin'] });
 
-async function getExercises() {
-  try {
-    const { data } = await axios.get('http://localhost:4000/exercises');
-
-    console.log(data);
-
-    return data;
-  } catch (error) {
-    console.log(error);
-  }
-}
-
 export default function Home() {
   const router = useRouter();
+
+  const [exercises, setExercises] = useState<any>([]);
+
+  const getExercises = useEffect(() => {
+    (async function getExercises() {
+      const { data } = await axios('http://localhost:4000/api/exercises');
+
+      setExercises(data);
+    })();
+  });
 
   return (
     <>
@@ -51,8 +49,10 @@ export default function Home() {
         <Card>
           <Modal title="Add exercise" trigger="Add Exercise">
             <ExercisesForm />
-            <div>{JSON.stringify(getExercises())}</div>
           </Modal>
+          {exercises.map((exercise: any, index: number) => (
+            <span key={index}>{exercise.name}</span>
+          ))}
         </Card>
       </Accordion>
     </>
