@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import logo from '@/public/logo.png';
+import logo from 'public/logo.png';
 
 import styles from '@components/layout/Header/Header.module.css';
 import { useRouter } from 'next/router';
