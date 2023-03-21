@@ -17,13 +17,13 @@ export default function Home() {
 
   const [exercises, setExercises] = useState<any>([]);
 
-  const getExercises = useEffect(() => {
+  useEffect(() => {
     (async function getExercises() {
       const { data } = await axios('http://localhost:4000/api/exercises');
 
       setExercises(data);
     })();
-  });
+  }, []);
 
   return (
     <>
