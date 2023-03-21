@@ -1,22 +1,16 @@
 import cors from 'cors';
 import express from 'express';
 
-import connectToDB from '../backend/mongoConnection';
-
-const PORT = 4000;
+import exerciseRoutes from './domain/exercise/api/exercise';
 
 const app = express();
 
 app.use(cors());
 
-app.get('/api/exercises', async (req, res) => {
-  const connection = await connectToDB();
+app.use('/api/exercises', exerciseRoutes);
 
-  const exercises = await connection.collection('exercises').find({}).toArray();
-
-  res.send(exercises).status(200);
-});
-
-app.listen(PORT, () => console.log('Connected to API server'));
+app.listen(process.env.API_PORT, () =>
+  console.log(`I'm watching you on port ${process.env.API_PORT}`)
+);
 
 export default app;
