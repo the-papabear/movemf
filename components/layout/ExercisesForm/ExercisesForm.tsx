@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import styles from '@components/layout/ExercisesForm/ExercisesForm.module.css';
+import axios from 'axios';
 
 const ExercisesForm = () => {
   const [values, setValues] = useState({
@@ -24,8 +25,21 @@ const ExercisesForm = () => {
     }));
   };
 
+  const handleSubmit = (event: any) => {
+    event.preventDefault();
+  };
+
+  const onExerciseSubmit = async () => {
+    await axios
+      .post('http://localhost:4000/api/exercises/exercise', {
+        name: values.name,
+        link: values.link,
+      })
+      .then((response) => console.log(response.data));
+  };
+
   return (
-    <form className={styles.form}>
+    <form className={styles.form} onSubmit={handleSubmit}>
       <label htmlFor="name">
         Name
         <input
@@ -37,11 +51,14 @@ const ExercisesForm = () => {
       <label htmlFor="link">
         Link
         <input
-          type="url"
+          type="text"
           value={values.link}
           onChange={handleLinkInputChange}
         />
       </label>
+      <button type="submit" onClick={onExerciseSubmit}>
+        Add exercise
+      </button>
     </form>
   );
 };

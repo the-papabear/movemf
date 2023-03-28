@@ -28,4 +28,14 @@ router.get('/seedExercises', async (req, res) => {
   res.send(`Successfully seeded the db with exercises`).status(200);
 });
 
+router.post('/exercise', async (req, res) => {
+  const connection = await connectToDB();
+
+  const exercise = await connection
+    .collection('exercises')
+    .insertOne({ name: req.body.name, link: req.body.link });
+
+  res.send(`Added entity with id ${exercise.insertedId}`).status(200);
+});
+
 export default router;
