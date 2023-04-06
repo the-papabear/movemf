@@ -53,4 +53,20 @@ router.post('/exercise', async (req, res) => {
   return res.send(`Added entity with id ${exercise.insertedId}`).status(200);
 });
 
+router.delete('/:id', async (req, res) => {
+  const { id } = req.params;
+
+  if (!ObjectId.isValid(id)) {
+    return res.status(404).send('EXERCISE_NOT_FOUND');
+  }
+
+  const connection = await connectToDB();
+
+  const exercise = await connection
+    .collection('exercises')
+    .deleteOne({ _id: new ObjectId(id) });
+
+  return res.status(200).send('EXERCISE_DELETED');
+});
+
 export default router;
