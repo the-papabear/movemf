@@ -62,11 +62,26 @@ router.delete('/:id', async (req, res) => {
 
   const connection = await connectToDB();
 
-  const exercise = await connection
-    .collection('exercises')
-    .deleteOne({ _id: new ObjectId(id) });
+  await connection.collection('exercises').deleteOne({ _id: new ObjectId(id) });
 
   return res.status(200).send('EXERCISE_DELETED');
+});
+
+router.patch('/:id', async (req, res) => {
+  const { id } = req.params;
+  const { name, link } = req.body;
+
+  if (!ObjectId.isValid(id)) {
+    return res.status(404).send('EXERCISE_NOT_FOUND');
+  }
+
+  const connection = await connectToDB();
+
+  const exercise = await connection
+    .collection('exercises')
+    .updateOne({ _id: new ObjectId(id) }, { $set: { name, link } });
+
+  return res.status(200).send('UPDATED_SUCCESSFULLY');
 });
 
 export default router;
