@@ -17,14 +17,6 @@ export default function Home() {
 
   const [exercises, setExercises] = useState<any>([]);
 
-  useEffect(() => {
-    (async function getExercises() {
-      const { data } = await axios('http://localhost:4000/api/exercises');
-
-      setExercises(data);
-    })();
-  }, []);
-
   return (
     <>
       <Head>
@@ -50,9 +42,6 @@ export default function Home() {
           <Modal title="Add exercise" trigger="Add Exercise">
             <ExercisesForm />
           </Modal>
-          {exercises.map((exercise: any, index: number) => (
-            <span key={index}>{exercise.name}</span>
-          ))}
         </Card>
       </Accordion>
     </>
