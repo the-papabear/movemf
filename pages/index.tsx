@@ -1,22 +1,9 @@
-import { useEffect, useState } from 'react';
-
-import axios from 'axios';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
-import { Inter } from 'next/font/google';
 
-import Card from '@components/common/Card/Card';
-import Modal from '@components/common/Modal/Modal';
-import Accordion from '@components/common/Accordion/Accordion';
-import ExercisesForm from '@components/layout/ExercisesForm/ExercisesForm';
-
-const inter = Inter({ subsets: ['latin'] });
+import WorkoutsCard from '@components/layout/WorkoutsCard/WorkoutsCard';
+import ExercisesCard from '@components/layout/ExercisesCard/ExercisesCard';
 
 export default function Home() {
-  const router = useRouter();
-
-  const [exercises, setExercises] = useState<any>([]);
-
   return (
     <>
       <Head>
@@ -25,25 +12,8 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <Accordion label="Workouts">
-        <Card>
-          <button
-            onClick={() => {
-              router.push('/workouts');
-            }}
-          >
-            Start Workout
-          </button>
-        </Card>
-      </Accordion>
-      <Accordion label="Exercises">
-        <Card>
-          <Modal title="Add exercise" trigger="Add Exercise">
-            <ExercisesForm />
-          </Modal>
-        </Card>
-      </Accordion>
+      <WorkoutsCard />
+      <ExercisesCard />
     </>
   );
 }
