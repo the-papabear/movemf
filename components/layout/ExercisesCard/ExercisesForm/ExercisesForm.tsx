@@ -1,7 +1,9 @@
 import { useState } from 'react';
-
-import styles from '@components/layout/ExercisesForm/ExercisesForm.module.css';
 import axios from 'axios';
+
+import Button from '@components/common/Button/Button';
+
+import styles from '@components/layout/ExercisesCard/ExercisesForm/ExercisesForm.module.css';
 
 const ExercisesForm = () => {
   const [values, setValues] = useState({
@@ -31,7 +33,7 @@ const ExercisesForm = () => {
 
   const onExerciseSubmit = async () => {
     await axios
-      .post('http://localhost:4000/api/exercises/exercise', {
+      .post('api/exercises', {
         name: values.name,
         link: values.link,
       })
@@ -56,9 +58,7 @@ const ExercisesForm = () => {
           onChange={handleLinkInputChange}
         />
       </label>
-      <button type="submit" onClick={onExerciseSubmit}>
-        Add exercise
-      </button>
+      <Button onClick={onExerciseSubmit} title="Add exercise" />
     </form>
   );
 };
