@@ -4,6 +4,7 @@ import logo from 'public/logo.png';
 
 import styles from '@components/layout/Header/Header.module.css';
 import { useRouter } from 'next/router';
+import Button from '@components/common/Button/Button';
 
 const Header = () => {
   const router = useRouter();
@@ -18,7 +19,7 @@ const Header = () => {
         onClick={() => router.push('/')}
         className={styles.header__logo}
       />
-      <button className={styles.header__btn}>Log in</button>
+      <Button title="Log in" />
     </div>
   );
 };
