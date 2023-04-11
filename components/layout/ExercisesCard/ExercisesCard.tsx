@@ -23,10 +23,14 @@ const ExercisesCard = () => {
           <ExercisesForm />
         </Modal>
       </div>
-      {exercises &&
-        exercises.map((exercise: any, index: number) => (
-          <span key={index}>{exercise.name}</span>
-        ))}
+      <div className={styles.exercisesCard__item__wrapper}>
+        {exercises &&
+          exercises.map((exercise: any, index: number) => (
+            <div className={styles.exercisesCard__item} key={index}>
+              {exercise.name}
+            </div>
+          ))}
+      </div>
     </Card>
   );
 };

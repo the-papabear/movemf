@@ -5,3 +5,16 @@
 
   width: 100%;
 }
+
+.exercisesCard__item__wrapper {
+  width: 100%;
+}
+
+.exercisesCard__item {
+  padding: 0.5rem;
+  border-radius: 6px;
+}
+
+.exercisesCard__item:hover {
+  background-color: rgba(128, 128, 128, 0.197);
+}

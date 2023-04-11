@@ -9,6 +9,7 @@
 
   color: white;
   background-color: black;
+  cursor: pointer;
 }
 
 .modal__overlay {
