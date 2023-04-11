@@ -1,6 +1,6 @@
-import { PropsWithChildren } from "react";
+import { PropsWithChildren } from 'react';
 
-import styles from "@components/layout/Layout/Layout.module.css";
+import styles from '@components/layout/Layout.module.css';
 
 const Layout = (props: PropsWithChildren) => {
   const { children } = props;
