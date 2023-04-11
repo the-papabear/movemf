@@ -12,6 +12,8 @@ import {
 } from '@radix-ui/react-dialog';
 
 import closeIcon from 'public/closeIcon.svg';
+import Button from '@components/common/Button/Button';
+
 import styles from '@components/common/Modal/Modal.module.css';
 
 type ModalProps = {
@@ -21,7 +23,9 @@ type ModalProps = {
 
 const Modal = ({ title, trigger, children }: PropsWithChildren<ModalProps>) => (
   <Root>
-    <Trigger>{trigger}</Trigger>
+    <Trigger className={styles.modal__trigger}>
+      <span>Add Exercise</span>
+    </Trigger>
     <Portal>
       <Overlay className={styles.modal__overlay}>
         <Content className={styles.modal__content}>

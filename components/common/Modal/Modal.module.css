@@ -1,3 +1,16 @@
+.modal__trigger {
+  height: min-content;
+
+  background-color: transparent;
+
+  padding: 0.1rem 0.5rem;
+  border-radius: 0.375rem;
+  border-color: transparent;
+
+  color: white;
+  background-color: black;
+}
+
 .modal__overlay {
   background-color: rgba(0, 0, 0, 0.505);
   position: fixed;
