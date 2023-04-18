@@ -19,7 +19,7 @@ const Header = () => {
         onClick={() => router.push('/')}
         className={styles.header__logo}
       />
-      <Button title="Log in" />
+      <Button title="Log in" theme="btn__primary" />
     </div>
   );
 };

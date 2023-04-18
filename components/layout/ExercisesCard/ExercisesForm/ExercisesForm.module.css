@@ -1,5 +1,22 @@
 .form {
+  gap: 8px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+}
+
+.form__item {
+  gap: 0.25rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.form__input {
+  border-radius: 4px;
+  height: 1.75rem;
+  border: 0.5px solid grey;
+  padding: 0.5rem;
+}
+
+.form__input:focus-visible {
+  outline: solid #cce3cc;
 }

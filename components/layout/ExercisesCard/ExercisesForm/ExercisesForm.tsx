@@ -42,19 +42,21 @@ const ExercisesForm = () => {
 
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
-      <label htmlFor="name">
+      <label htmlFor="name" className={styles.form__item}>
         Name
         <input
           type="text"
           value={values.name}
+          className={styles.form__input}
           onChange={handleNameInputChange}
         />
       </label>
-      <label htmlFor="link">
+      <label htmlFor="link" className={styles.form__item}>
         Link
         <input
           type="text"
           value={values.link}
+          className={styles.form__input}
           onChange={handleLinkInputChange}
         />
       </label>

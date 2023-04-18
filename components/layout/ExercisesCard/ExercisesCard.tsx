@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import Card from '@components/common/Card/Card';
-import Modal from '@components/common/Modal/Modal';
+import ExerciseModal from '@components/layout/ExercisesCard/ExerciseModal/ExerciseModal';
 import ExercisesForm from '@components/layout/ExercisesCard/ExercisesForm/ExercisesForm';
 
 import styles from '@components/layout/ExercisesCard/ExercisesCard.module.css';
@@ -19,9 +19,9 @@ const ExercisesCard = () => {
     <Card>
       <div className={styles.exercisesCard__title}>
         <span>Exercises</span>
-        <Modal title="Add exercise" trigger="Add Exercise">
+        <ExerciseModal title="Add exercise" trigger="Add Exercise">
           <ExercisesForm />
-        </Modal>
+        </ExerciseModal>
       </div>
       <div className={styles.exercisesCard__item__wrapper}>
         {exercises &&
