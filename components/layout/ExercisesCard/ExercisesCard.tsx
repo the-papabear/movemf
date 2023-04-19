@@ -11,17 +11,24 @@ import styles from '@components/layout/ExercisesCard/ExercisesCard.module.css';
 const ExercisesCard = () => {
   const [exercises, setExercises] = useState<any | []>();
 
+  const getExercises = async () => {
+    const { data } = await axios.get('/api/exercises');
+    setExercises(data);
+  };
+
   useEffect(() => {
-    axios.get('/api/exercises').then((res) => setExercises(res.data));
+    getExercises();
   }, []);
 
   return (
     <Card>
       <div className={styles.exercisesCard__title}>
         <span>Exercises</span>
-        <ExerciseModal title="Add exercise" trigger="Add Exercise">
-          <ExercisesForm />
-        </ExerciseModal>
+        <ExerciseModal
+          title="Add exercise"
+          exercises={exercises}
+          setExercises={setExercises}
+        />
       </div>
       <div className={styles.exercisesCard__item__wrapper}>
         {exercises &&

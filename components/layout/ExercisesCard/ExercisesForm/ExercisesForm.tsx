@@ -1,45 +1,18 @@
-import { useState } from 'react';
-import axios from 'axios';
-
-import Button from '@components/common/Button/Button';
-
 import styles from '@components/layout/ExercisesCard/ExercisesForm/ExercisesForm.module.css';
 
-const ExercisesForm = () => {
-  const [values, setValues] = useState({
-    name: '',
-    link: '',
-  });
+type ExercisesFormProps = {
+  values: any;
+  handleSubmit: any;
+  handleNameInputChange: any;
+  handleLinkInputChange: any;
+};
 
-  const handleNameInputChange = (event: any) => {
-    event.persist();
-    setValues((values) => ({
-      ...values,
-      name: event.target.value,
-    }));
-  };
-
-  const handleLinkInputChange = (event: any) => {
-    event.persist();
-    setValues((values) => ({
-      ...values,
-      link: event.target.value,
-    }));
-  };
-
-  const handleSubmit = (event: any) => {
-    event.preventDefault();
-  };
-
-  const onExerciseSubmit = async () => {
-    await axios
-      .post('api/exercises', {
-        name: values.name,
-        link: values.link,
-      })
-      .then((response) => console.log(response.data));
-  };
-
+const ExercisesForm = ({
+  values,
+  handleSubmit,
+  handleNameInputChange,
+  handleLinkInputChange,
+}: ExercisesFormProps) => {
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
       <label htmlFor="name" className={styles.form__item}>
@@ -60,7 +33,6 @@ const ExercisesForm = () => {
           onChange={handleLinkInputChange}
         />
       </label>
-      <Button onClick={onExerciseSubmit} title="Add exercise" />
     </form>
   );
 };

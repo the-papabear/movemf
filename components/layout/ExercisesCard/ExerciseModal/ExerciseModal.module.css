@@ -58,3 +58,12 @@
   cursor: pointer;
   background-image: 'public/closeIcon.svg';
 }
+
+.modal__submit {
+  background: transparent;
+  border-color: transparent;
+}
+
+.modal__submit > * {
+  width: 100%;
+}
