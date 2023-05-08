@@ -13,8 +13,7 @@ export default async function handler(req: any, res: any) {
       .find({})
       .toArray();
 
-    res.status(200).json(exercises);
-    res.send();
+    return res.status(200).json(exercises);
   }
 
   if (req.method === 'POST') {
