@@ -14,6 +14,7 @@ export default async function handler(req: any, res: any) {
       .toArray();
 
     res.status(200).json(exercises);
+    res.send();
   }
 
   if (req.method === 'POST') {
@@ -23,7 +24,7 @@ export default async function handler(req: any, res: any) {
       .collection('exercises')
       .insertOne({ name, link });
 
-    return res.status(200).json({
+    res.status(200).json({
       code: 200,
       success: true,
       message: 'EXERCISE_CREATED_SUCCESSFULLY',
