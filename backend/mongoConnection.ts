@@ -1,7 +1,3 @@
-import * as dotenv from 'dotenv';
-
-dotenv.config();
-
 import { MongoClient } from 'mongodb';
 
 const connectToDB = async () => {
@@ -9,7 +5,7 @@ const connectToDB = async () => {
 
   await client.connect();
 
-  const db = client.db('gabriel');
+  const db = client.db('movemf');
 
   return db;
 };
