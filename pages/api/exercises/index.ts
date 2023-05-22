@@ -1,4 +1,4 @@
-import connectToDB from 'backend/mongoConnection';
+import dbConnection from 'backend/mongoConnection';
 
 export default async function handler(req: any, res: any) {
   const {
@@ -6,7 +6,7 @@ export default async function handler(req: any, res: any) {
   } = req;
 
   if (req.method === 'GET') {
-    const connection = await connectToDB();
+    const connection = await dbConnection();
 
     const exercises = await connection
       .collection('exercises')
@@ -17,7 +17,7 @@ export default async function handler(req: any, res: any) {
   }
 
   if (req.method === 'POST') {
-    const connection = await connectToDB();
+    const connection = await dbConnection();
 
     const exercise = await connection
       .collection('exercises')

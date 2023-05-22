@@ -1,5 +1,5 @@
 import { ObjectId } from 'mongodb';
-import connectToDB from 'backend/mongoConnection';
+import dbConnection from 'backend/mongoConnection';
 
 export default async function handler(req: any, res: any) {
   const {
@@ -16,7 +16,7 @@ export default async function handler(req: any, res: any) {
   }
 
   if (req.method === 'GET') {
-    const connection = await connectToDB();
+    const connection = await dbConnection();
 
     const exercise = await connection
       .collection('exercises')
@@ -26,7 +26,7 @@ export default async function handler(req: any, res: any) {
   }
 
   if (req.method === 'PATCH') {
-    const connection = await connectToDB();
+    const connection = await dbConnection();
 
     const exercise = await connection
       .collection('exercises')
@@ -40,7 +40,7 @@ export default async function handler(req: any, res: any) {
   }
 
   if (req.method === 'DELETE') {
-    const connection = await connectToDB();
+    const connection = await dbConnection();
 
     await connection
       .collection('exercises')
