@@ -4,7 +4,6 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import NextAuth, { NextAuthOptions, SessionStrategy } from 'next-auth';
 
 import { mongoClient } from 'backend/mongoConnection';
-import retrieveUserById from 'backend/domain/user/repository/retrieveUserById';
 
 const options: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
@@ -15,15 +14,7 @@ const options: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       name: 'credentials',
-      authorize: async (credentials): Promise<any> => {
-        const user = await retrieveUserById(credentials);
-
-        if (user) {
-          return Promise.resolve(user);
-        } else {
-          return Promise.resolve(null);
-        }
-      },
+      authorize: async (credentials): Promise<any> => {},
       credentials: {
         email: {
           type: 'text',
