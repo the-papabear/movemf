@@ -1,5 +1,6 @@
 import { ObjectId } from 'mongodb';
 import dbConnection from 'backend/mongoConnection';
+import { retrieveExerciseById } from '@backend/domain/exercise/repository/retrieveExerciseById';
 
 export default async function handler(req: any, res: any) {
   const {
@@ -16,11 +17,7 @@ export default async function handler(req: any, res: any) {
   }
 
   if (req.method === 'GET') {
-    const connection = await dbConnection();
-
-    const exercise = await connection
-      .collection('exercises')
-      .findOne({ _id: new ObjectId(id) });
+    const exercise = await retrieveExerciseById(id);
 
     return res.status(200).json(exercise);
   }
@@ -28,7 +25,7 @@ export default async function handler(req: any, res: any) {
   if (req.method === 'PATCH') {
     const connection = await dbConnection();
 
-    const exercise = await connection
+    await connection
       .collection('exercises')
       .updateOne({ _id: new ObjectId(id) }, { $set: { name, link } });
 

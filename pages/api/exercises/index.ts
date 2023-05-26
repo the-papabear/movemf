@@ -1,4 +1,8 @@
-import dbConnection from 'backend/mongoConnection';
+import { ObjectId } from 'mongodb';
+
+import persistExercise from '@backend/domain/exercise/repository/persistExercise';
+import { createExerciseUseCase } from '@backend/domain/exercise/usecase/createExercise';
+import { retrieveExercises } from '@backend/domain/exercise/repository/retrieveExercises';
 
 export default async function handler(req: any, res: any) {
   const {
@@ -6,24 +10,22 @@ export default async function handler(req: any, res: any) {
   } = req;
 
   if (req.method === 'GET') {
-    const connection = await dbConnection();
-
-    const exercises = await connection
-      .collection('exercises')
-      .find({})
-      .toArray();
+    const exercises = await retrieveExercises();
 
     return res.status(200).json(exercises);
   }
 
   if (req.method === 'POST') {
-    const connection = await dbConnection();
+    const exercise = await createExerciseUseCase({
+      persistExercise,
+      generateObjectId: () => new ObjectId().toString(),
+    })({
+      name,
+      link,
+    });
 
-    const exercise = await connection
-      .collection('exercises')
-      .insertOne({ name, link });
-
-    res.status(200).json({
+    return res.status(200).json({
+      exercise,
       code: 200,
       success: true,
       message: 'EXERCISE_CREATED_SUCCESSFULLY',
