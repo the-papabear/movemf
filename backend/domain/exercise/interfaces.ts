@@ -16,3 +16,12 @@ export interface WorkoutDetails {
 export interface IPersistExercise {
   (exercise: ExerciseDTO): Promise<void>;
 }
+
+//TODO: Fix this type
+export interface IRetrieveExerciseById {
+  (exerciseId: string): Promise<ExerciseDTO | null | any>;
+}
+
+export interface IUpdateExercise {
+  (exercise: ExerciseDTO): Promise<void>;
+}

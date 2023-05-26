@@ -1,6 +1,9 @@
 import { ObjectId } from 'mongodb';
+
 import dbConnection from 'backend/mongoConnection';
-import { retrieveExerciseById } from '@backend/domain/exercise/repository/retrieveExerciseById';
+import { editExerciseUseCase } from 'backend/domain/exercise/usecase/editExercise';
+import { updateExercise } from 'backend/domain/exercise/repository/updateExercise';
+import { retrieveExerciseById } from 'backend/domain/exercise/repository/retrieveExerciseById';
 
 export default async function handler(req: any, res: any) {
   const {
@@ -23,15 +26,15 @@ export default async function handler(req: any, res: any) {
   }
 
   if (req.method === 'PATCH') {
-    const connection = await dbConnection();
+    const exerciseDTO = await editExerciseUseCase({
+      updateExercise,
+      retrieveExerciseById,
+    })({ exerciseId: id, name, link });
 
-    await connection
-      .collection('exercises')
-      .updateOne({ _id: new ObjectId(id) }, { $set: { name, link } });
-
-    return res.status(200).send({
+    return res.status(200).json({
       code: 200,
       success: true,
+      exercise: exerciseDTO,
       message: 'EXERCISE_UPDATED_SUCCESSFULLY',
     });
   }

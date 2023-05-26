@@ -1,8 +1,8 @@
 import { ObjectId } from 'mongodb';
 
-import persistExercise from '@backend/domain/exercise/repository/persistExercise';
-import { createExerciseUseCase } from '@backend/domain/exercise/usecase/createExercise';
-import { retrieveExercises } from '@backend/domain/exercise/repository/retrieveExercises';
+import persistExercise from 'backend/domain/exercise/repository/persistExercise';
+import { createExerciseUseCase } from 'backend/domain/exercise/usecase/createExercise';
+import { retrieveExercises } from 'backend/domain/exercise/repository/retrieveExercises';
 
 export default async function handler(req: any, res: any) {
   const {

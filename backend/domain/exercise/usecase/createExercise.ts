@@ -1,8 +1,8 @@
 import {
   ExerciseDTO,
   IPersistExercise,
-} from '@backend/domain/exercise/interfaces';
-import { IGenerateObjectId } from '@backend/interfaces';
+} from 'backend/domain/exercise/interfaces';
+import { IGenerateObjectId } from 'backend/interfaces';
 
 export const createExerciseUseCase =
   (dependencies: CreateExerciseDependencies) =>

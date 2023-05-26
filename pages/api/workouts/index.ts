@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import retrieveWorkouts from '@backend/domain/workout/repository/retrieveWorkouts';
+import retrieveWorkouts from 'backend/domain/workout/repository/retrieveWorkouts';
 
 export default async function handler(
   req: NextApiRequest,

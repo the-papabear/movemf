@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongodb';
 
-import dbConnection from '@backend/mongoConnection';
+import dbConnection from 'backend/mongoConnection';
 
 export const retrieveExerciseById = async (exerciseId: string) => {
   const db = await dbConnection();

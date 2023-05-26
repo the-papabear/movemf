@@ -1,4 +1,4 @@
-import dbConnection from '@backend/mongoConnection';
+import dbConnection from 'backend/mongoConnection';
 
 const retrieveWorkouts = async () => {
   const db = await dbConnection();
