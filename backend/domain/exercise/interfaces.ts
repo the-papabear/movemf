@@ -18,6 +18,10 @@ export interface IRetrieveExerciseById {
   (exerciseId: string): Promise<ExerciseDTO | null | any>;
 }
 
+export interface IRetrieveExercisesByIds {
+  (exerciseIds: string[]): Promise<ExerciseDTO[]>;
+}
+
 export interface IRetrieveExerciseByName {
   (exerciseName: string): Promise<ExerciseDTO | null | any>;
 }
