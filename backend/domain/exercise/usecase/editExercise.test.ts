@@ -3,10 +3,11 @@ import { editExerciseUseCase } from 'backend/domain/exercise/usecase/editExercis
 describe('editExerciseUseCase', () => {
   const mockDependencies = {
     updateExercise: jest.fn(),
+    retrieveExerciseByName: jest.fn(),
     retrieveExerciseById: jest.fn().mockResolvedValue({
-      _id: 'existingExerciseId',
       name: 'Pull-up',
       link: 'pull-up.com',
+      _id: 'existingExerciseId',
     }),
   };
 
@@ -66,6 +67,23 @@ describe('editExerciseUseCase', () => {
       await expect(
         editExerciseUseCase(mockDependencies)(invalidData)
       ).rejects.toThrowError('invalid_link');
+    });
+  });
+
+  describe('given an exercise name that already exists', () => {
+    it('should throw an error', async () => {
+      const invalidData = {
+        ...validData,
+        name: 'Duplicate Name',
+      };
+
+      mockDependencies.retrieveExerciseByName.mockResolvedValueOnce({
+        name: 'Duplicate Name',
+      });
+
+      await expect(
+        editExerciseUseCase(mockDependencies)(invalidData)
+      ).rejects.toThrowError('duplicate_name');
     });
   });
 

@@ -3,6 +3,7 @@ import { ObjectId } from 'mongodb';
 import persistExercise from 'backend/domain/exercise/repository/persistExercise';
 import { createExerciseUseCase } from 'backend/domain/exercise/usecase/createExercise';
 import { retrieveExercises } from 'backend/domain/exercise/repository/retrieveExercises';
+import { retrieveExerciseByName } from 'backend/domain/exercise/repository/retrieveExerciseByName';
 
 export default async function handler(req: any, res: any) {
   const {
@@ -18,6 +19,7 @@ export default async function handler(req: any, res: any) {
   if (req.method === 'POST') {
     const exercise = await createExerciseUseCase({
       persistExercise,
+      retrieveExerciseByName,
       generateObjectId: () => new ObjectId().toString(),
     })({
       name,

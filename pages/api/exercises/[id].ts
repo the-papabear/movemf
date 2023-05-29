@@ -4,6 +4,7 @@ import dbConnection from 'backend/mongoConnection';
 import { editExerciseUseCase } from 'backend/domain/exercise/usecase/editExercise';
 import { updateExercise } from 'backend/domain/exercise/repository/updateExercise';
 import { retrieveExerciseById } from 'backend/domain/exercise/repository/retrieveExerciseById';
+import { retrieveExerciseByName } from 'backend/domain/exercise/repository/retrieveExerciseByName';
 
 export default async function handler(req: any, res: any) {
   const {
@@ -29,6 +30,7 @@ export default async function handler(req: any, res: any) {
     const exerciseDTO = await editExerciseUseCase({
       updateExercise,
       retrieveExerciseById,
+      retrieveExerciseByName,
     })({ exerciseId: id, name, link });
 
     return res.status(200).json({

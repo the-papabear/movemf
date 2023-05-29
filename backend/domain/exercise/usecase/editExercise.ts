@@ -1,13 +1,15 @@
 import {
   ExerciseDTO,
-  IRetrieveExerciseById,
   IUpdateExercise,
+  IRetrieveExerciseById,
+  IRetrieveExerciseByName,
 } from 'backend/domain/exercise/interfaces';
 
 export const editExerciseUseCase =
   (dependencies: EditExerciseDependencies) =>
   async (data: EditExerciseData) => {
-    const { retrieveExerciseById, updateExercise } = dependencies;
+    const { retrieveExerciseById, updateExercise, retrieveExerciseByName } =
+      dependencies;
 
     const { exerciseId, name, link } = data;
 
@@ -18,6 +20,14 @@ export const editExerciseUseCase =
     const existingExerciseDTO = await retrieveExerciseById(exerciseId);
     if (!existingExerciseDTO) {
       throw new Error('exercise_not_found');
+    }
+
+    if (name) {
+      const duplicateExerciseDTO = await retrieveExerciseByName(name);
+
+      if (duplicateExerciseDTO) {
+        throw new Error('duplicate_name');
+      }
     }
 
     const exerciseDTO = createExerciseDTO(existingExerciseDTO);
@@ -62,4 +72,5 @@ interface EditExerciseData {
 interface EditExerciseDependencies {
   updateExercise: IUpdateExercise;
   retrieveExerciseById: IRetrieveExerciseById;
+  retrieveExerciseByName: IRetrieveExerciseByName;
 }

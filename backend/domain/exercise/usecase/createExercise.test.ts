@@ -3,6 +3,7 @@ import { createExerciseUseCase } from 'backend/domain/exercise/usecase/createExe
 describe('createExerciseUseCase', () => {
   const mockDependencies = {
     persistExercise: jest.fn(),
+    retrieveExerciseByName: jest.fn(),
     generateObjectId: jest.fn(() => 'exerciseId'),
   };
 
@@ -31,6 +32,23 @@ describe('createExerciseUseCase', () => {
       await expect(
         createExerciseUseCase(mockDependencies)(invalidData)
       ).rejects.toThrowError('invalid_link');
+    });
+  });
+
+  describe('given an exercise name that already exists', () => {
+    it('should throw an error', async () => {
+      const invalidData = {
+        ...validData,
+        name: 'Duplicate Name',
+      };
+
+      mockDependencies.retrieveExerciseByName.mockResolvedValueOnce({
+        name: 'Duplicate Name',
+      });
+
+      await expect(
+        createExerciseUseCase(mockDependencies)(invalidData)
+      ).rejects.toThrowError('duplicate_name');
     });
   });
 

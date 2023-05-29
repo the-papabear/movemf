@@ -1,17 +1,25 @@
 import {
   ExerciseDTO,
   IPersistExercise,
+  IRetrieveExerciseByName,
 } from 'backend/domain/exercise/interfaces';
 import { IGenerateObjectId } from 'backend/interfaces';
 
 export const createExerciseUseCase =
   (dependencies: CreateExerciseDependencies) =>
   async (data: CreateExerciseData) => {
-    const { persistExercise, generateObjectId } = dependencies;
+    const { persistExercise, generateObjectId, retrieveExerciseByName } =
+      dependencies;
 
     const { name, link } = data;
 
     validateData();
+
+    const existingExerciseDTO = await retrieveExerciseByName(name);
+
+    if (existingExerciseDTO) {
+      throw new Error('duplicate_name');
+    }
 
     const exerciseDTO = createExerciseDTO();
 
@@ -45,4 +53,5 @@ export interface CreateExerciseData {
 export interface CreateExerciseDependencies {
   persistExercise: IPersistExercise;
   generateObjectId: IGenerateObjectId;
+  retrieveExerciseByName: IRetrieveExerciseByName;
 }
