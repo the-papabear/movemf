@@ -17,20 +17,24 @@ export default async function handler(req: any, res: any) {
   }
 
   if (req.method === 'POST') {
-    const exercise = await createExerciseUseCase({
-      persistExercise,
-      retrieveExerciseByName,
-      generateObjectId: () => new ObjectId().toString(),
-    })({
-      name,
-      link,
-    });
+    try {
+      const exercise = await createExerciseUseCase({
+        persistExercise,
+        retrieveExerciseByName,
+        generateObjectId: () => new ObjectId().toString(),
+      })({
+        name,
+        link,
+      });
 
-    return res.status(200).json({
-      exercise,
-      code: 200,
-      success: true,
-      message: 'EXERCISE_CREATED_SUCCESSFULLY',
-    });
+      return res.status(200).json({
+        exercise,
+        code: 200,
+        success: true,
+        message: 'EXERCISE_CREATED_SUCCESSFULLY',
+      });
+    } catch (e: any) {
+      res.status(e.code).send(e);
+    }
   }
 }

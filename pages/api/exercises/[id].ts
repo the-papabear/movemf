@@ -27,18 +27,22 @@ export default async function handler(req: any, res: any) {
   }
 
   if (req.method === 'PATCH') {
-    const exerciseDTO = await editExerciseUseCase({
-      updateExercise,
-      retrieveExerciseById,
-      retrieveExerciseByName,
-    })({ exerciseId: id, name, link });
+    try {
+      const exerciseDTO = await editExerciseUseCase({
+        updateExercise,
+        retrieveExerciseById,
+        retrieveExerciseByName,
+      })({ exerciseId: id, name, link });
 
-    return res.status(200).json({
-      code: 200,
-      success: true,
-      exercise: exerciseDTO,
-      message: 'EXERCISE_UPDATED_SUCCESSFULLY',
-    });
+      return res.status(200).json({
+        code: 200,
+        success: true,
+        exercise: exerciseDTO,
+        message: 'EXERCISE_UPDATED_SUCCESSFULLY',
+      });
+    } catch (e: any) {
+      res.status(e.code).send(e);
+    }
   }
 
   if (req.method === 'DELETE') {

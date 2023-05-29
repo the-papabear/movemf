@@ -3,6 +3,7 @@ import {
   IPersistExercise,
   IRetrieveExerciseByName,
 } from 'backend/domain/exercise/interfaces';
+import { BackendError } from 'backend/errors';
 import { IGenerateObjectId } from 'backend/interfaces';
 
 export const createExerciseUseCase =
@@ -18,7 +19,7 @@ export const createExerciseUseCase =
     const existingExerciseDTO = await retrieveExerciseByName(name);
 
     if (existingExerciseDTO) {
-      throw new Error('duplicate_name');
+      throw new BackendError(409, 'duplicate_name');
     }
 
     const exerciseDTO = createExerciseDTO();
@@ -38,10 +39,10 @@ export const createExerciseUseCase =
 
     function validateData() {
       if (!name) {
-        throw new Error('name_missing');
+        throw new BackendError(400, 'name_missing');
       }
       if (typeof link === 'string' && !link.trim()) {
-        throw new Error('invalid_link');
+        throw new BackendError(400, 'invalid_link');
       }
     }
   };

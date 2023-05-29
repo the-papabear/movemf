@@ -4,6 +4,7 @@ import {
   IRetrieveExerciseById,
   IRetrieveExerciseByName,
 } from 'backend/domain/exercise/interfaces';
+import { BackendError } from 'backend/errors';
 
 export const editExerciseUseCase =
   (dependencies: EditExerciseDependencies) =>
@@ -15,8 +16,6 @@ export const editExerciseUseCase =
 
     validateData();
 
-    //TODO: implement case for duplicate names
-
     const existingExerciseDTO = await retrieveExerciseById(exerciseId);
     if (!existingExerciseDTO) {
       throw new Error('exercise_not_found');
@@ -26,7 +25,7 @@ export const editExerciseUseCase =
       const duplicateExerciseDTO = await retrieveExerciseByName(name);
 
       if (duplicateExerciseDTO) {
-        throw new Error('duplicate_name');
+        throw new BackendError(409, 'duplicate_name');
       }
     }
 
@@ -50,15 +49,15 @@ export const editExerciseUseCase =
 
     function validateData() {
       if (!exerciseId) {
-        throw new Error('missing_exerciseId');
+        throw new BackendError(400, 'missing_exerciseId');
       }
 
       if (typeof name === 'string' && !name.trim()) {
-        throw new Error('invalid_name');
+        throw new BackendError(400, 'invalid_name');
       }
 
       if (typeof link === 'string' && !link.trim()) {
-        throw new Error('invalid_link');
+        throw new BackendError(400, 'invalid_link');
       }
     }
   };
