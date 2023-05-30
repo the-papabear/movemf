@@ -1,5 +1,6 @@
 import {
   ExerciseDTO,
+  ExerciseType,
   IPersistExercise,
   IRetrieveExerciseByName,
 } from 'backend/domain/exercise/interfaces';
@@ -12,7 +13,7 @@ export const createExerciseUseCase =
     const { persistExercise, generateObjectId, retrieveExerciseByName } =
       dependencies;
 
-    const { name, link } = data;
+    const { name, link, type } = data;
 
     validateData();
 
@@ -32,12 +33,16 @@ export const createExerciseUseCase =
       return {
         name,
         link,
+        type,
         workoutDetails: null,
         _id: generateObjectId(),
       };
     }
 
     function validateData() {
+      if (!type) {
+        throw new BackendError(400, 'exercise_type_missing');
+      }
       if (!name) {
         throw new BackendError(400, 'name_missing');
       }
@@ -50,7 +55,9 @@ export const createExerciseUseCase =
 export interface CreateExerciseData {
   name: string;
   link?: string;
+  type: ExerciseType;
 }
+
 export interface CreateExerciseDependencies {
   persistExercise: IPersistExercise;
   generateObjectId: IGenerateObjectId;

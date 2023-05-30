@@ -7,7 +7,7 @@ import { retrieveExerciseByName } from 'backend/domain/exercise/repository/retri
 
 export default async function handler(req: any, res: any) {
   const {
-    body: { name, link },
+    body: { name, link, type },
   } = req;
 
   if (req.method === 'GET') {
@@ -25,6 +25,7 @@ export default async function handler(req: any, res: any) {
       })({
         name,
         link,
+        type,
       });
 
       return res.status(200).json({

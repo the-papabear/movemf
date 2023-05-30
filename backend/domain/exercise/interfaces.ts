@@ -1,6 +1,9 @@
+export type ExerciseType = 'exercise' | 'rest';
+
 export interface ExerciseDTO {
   _id: string;
   name: string;
+  type: ExerciseType;
   link?: string | null;
   workoutDetails: WorkoutDetails[] | null;
 }

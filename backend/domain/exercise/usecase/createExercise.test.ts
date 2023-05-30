@@ -1,3 +1,4 @@
+import { ExerciseType } from 'backend/domain/exercise/interfaces';
 import { createExerciseUseCase } from 'backend/domain/exercise/usecase/createExercise';
 
 describe('createExerciseUseCase', () => {
@@ -7,7 +8,24 @@ describe('createExerciseUseCase', () => {
     generateObjectId: jest.fn(() => 'exerciseId'),
   };
 
-  const validData = { name: 'Pull-up', link: 'pullups.com' };
+  const validData = {
+    name: 'Pull-up',
+    link: 'pullups.com',
+    type: 'exercise' as ExerciseType,
+  };
+
+  describe('given no type', () => {
+    it('should throw an error', async () => {
+      const invalidData = {
+        ...validData,
+        type: '' as ExerciseType,
+      };
+
+      await expect(
+        createExerciseUseCase(mockDependencies)(invalidData)
+      ).rejects.toMatchObject({ code: 400, message: 'exercise_type_missing' });
+    });
+  });
 
   describe('given no name', () => {
     it('should throw an error', async () => {
