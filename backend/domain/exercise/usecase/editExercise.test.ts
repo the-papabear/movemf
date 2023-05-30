@@ -26,7 +26,7 @@ describe('editExerciseUseCase', () => {
 
       await expect(
         editExerciseUseCase(mockDependencies)(invalidData)
-      ).rejects.toThrowError('missing_exerciseId');
+      ).rejects.toMatchObject({ code: 400, message: 'missing_exerciseId' });
     });
   });
 
@@ -40,7 +40,7 @@ describe('editExerciseUseCase', () => {
 
       await expect(
         editExerciseUseCase(mockDependencies)(invalidData)
-      ).rejects.toThrowError('exercise_not_found');
+      ).rejects.toMatchObject({ code: 404, message: 'exercise_not_found' });
     });
   });
 
@@ -53,7 +53,7 @@ describe('editExerciseUseCase', () => {
 
       await expect(
         editExerciseUseCase(mockDependencies)(invalidData)
-      ).rejects.toThrowError('invalid_name');
+      ).rejects.toMatchObject({ code: 400, message: 'invalid_name' });
     });
   });
 
@@ -66,7 +66,7 @@ describe('editExerciseUseCase', () => {
 
       await expect(
         editExerciseUseCase(mockDependencies)(invalidData)
-      ).rejects.toThrowError('invalid_link');
+      ).rejects.toMatchObject({ code: 400, message: 'invalid_link' });
     });
   });
 
@@ -83,7 +83,7 @@ describe('editExerciseUseCase', () => {
 
       await expect(
         editExerciseUseCase(mockDependencies)(invalidData)
-      ).rejects.toThrowError('duplicate_name');
+      ).rejects.toMatchObject({ code: 409, message: 'duplicate_name' });
     });
   });
 

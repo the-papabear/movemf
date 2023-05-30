@@ -18,7 +18,7 @@ describe('createExerciseUseCase', () => {
 
       await expect(
         createExerciseUseCase(mockDependencies)(invalidData)
-      ).rejects.toThrowError('name_missing');
+      ).rejects.toMatchObject({ code: 400, message: 'name_missing' });
     });
   });
 
@@ -31,7 +31,7 @@ describe('createExerciseUseCase', () => {
 
       await expect(
         createExerciseUseCase(mockDependencies)(invalidData)
-      ).rejects.toThrowError('invalid_link');
+      ).rejects.toMatchObject({ code: 400, message: 'invalid_link' });
     });
   });
 
@@ -48,7 +48,7 @@ describe('createExerciseUseCase', () => {
 
       await expect(
         createExerciseUseCase(mockDependencies)(invalidData)
-      ).rejects.toThrowError('duplicate_name');
+      ).rejects.toMatchObject({ code: 409, message: 'duplicate_name' });
     });
   });
 

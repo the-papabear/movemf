@@ -18,7 +18,7 @@ export const editExerciseUseCase =
 
     const existingExerciseDTO = await retrieveExerciseById(exerciseId);
     if (!existingExerciseDTO) {
-      throw new Error('exercise_not_found');
+      throw new BackendError(404, 'exercise_not_found');
     }
 
     if (name) {
