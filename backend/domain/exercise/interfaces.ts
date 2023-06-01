@@ -1,3 +1,5 @@
+import { WorkoutDetailsDTO } from 'backend/domain/workout/interfaces';
+
 export type ExerciseType = 'exercise' | 'rest';
 
 export interface ExerciseDTO {
@@ -5,15 +7,7 @@ export interface ExerciseDTO {
   name: string;
   type: ExerciseType;
   link?: string | null;
-  workoutDetails: WorkoutDetails[] | null;
-}
-
-export interface WorkoutDetails {
-  _id: string;
-  reps: number;
-  notes: string;
-  weight: number;
-  workoutId: string;
+  workoutDetails: WorkoutDetailsDTO[] | null;
 }
 
 //TODO: Fix this type
