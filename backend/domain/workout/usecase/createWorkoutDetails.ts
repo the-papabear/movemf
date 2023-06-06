@@ -4,16 +4,24 @@ import {
   IRetrieveWorkoutById,
   IPersistWorkoutDetails,
 } from 'backend/domain/workout/interfaces';
+import {
+  ExerciseDTO,
+  IRetrieveExerciseById,
+} from 'backend/domain/exercise/interfaces';
 import { BackendError } from 'backend/errors';
 import { IGenerateObjectId } from 'backend/interfaces';
 
 export const createWorkoutDetailsUseCase =
   (dependencies: CreateWorkoutDetailsDependencies) =>
   async (data: CreateWorkoutDetailsData) => {
-    const { retrieveWorkoutById, persistWorkoutDetails, generateObjectId } =
-      dependencies;
+    const {
+      generateObjectId,
+      retrieveWorkoutById,
+      retrieveExerciseById,
+      persistWorkoutDetails,
+    } = dependencies;
 
-    const { workoutId, notes, reps, time, weight } = data;
+    const { workoutId, exerciseId, notes, reps, time, weight } = data;
 
     validateData();
 
@@ -22,19 +30,29 @@ export const createWorkoutDetailsUseCase =
       throw new BackendError(404, 'workout_not_found');
     }
 
-    const workoutDetailsDTO = createWorkoutDetailsDTO(workoutDTO);
+    const exerciseDTO = await retrieveExerciseById(exerciseId);
+    if (!exerciseDTO) {
+      throw new BackendError(404, 'exercise_not_found');
+    }
+
+    const workoutDetailsDTO = createWorkoutDetailsDTO(workoutDTO, exerciseDTO);
 
     await persistWorkoutDetails(workoutDetailsDTO);
 
     return workoutDetailsDTO;
 
-    function createWorkoutDetailsDTO(workout: WorkoutDTO): WorkoutDetailsDTO {
+    function createWorkoutDetailsDTO(
+      workout: WorkoutDTO,
+      exercise: ExerciseDTO
+    ): WorkoutDetailsDTO {
       return {
         reps,
         time,
         notes,
         weight,
         workout,
+        exercise,
+        createdAt: new Date(),
         _id: generateObjectId(),
       };
     }
@@ -42,6 +60,9 @@ export const createWorkoutDetailsUseCase =
     function validateData() {
       if (!workoutId) {
         throw new BackendError(400, 'missing_workoutId');
+      }
+      if (!exerciseId) {
+        throw new BackendError(400, 'missing_exerciseId');
       }
 
       if (reps) {
@@ -76,10 +97,12 @@ interface CreateWorkoutDetailsData {
   notes?: string;
   weight?: number;
   workoutId: string;
+  exerciseId: string;
 }
 
 interface CreateWorkoutDetailsDependencies {
   generateObjectId: IGenerateObjectId;
   retrieveWorkoutById: IRetrieveWorkoutById;
+  retrieveExerciseById: IRetrieveExerciseById;
   persistWorkoutDetails: IPersistWorkoutDetails;
 }

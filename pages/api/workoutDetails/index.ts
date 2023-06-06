@@ -2,6 +2,7 @@ import { ObjectId } from 'mongodb';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 import { retrieveWorkoutById } from 'backend/domain/workout/repository/retrieveWorkoutById';
+import { retrieveExerciseById } from 'backend/domain/exercise/repository/retrieveExerciseById';
 import { persistWorkoutDetails } from 'backend/domain/workout/repository/persistWorkoutDetails';
 import { createWorkoutDetailsUseCase } from 'backend/domain/workout/usecase/createWorkoutDetails';
 
@@ -10,16 +11,17 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const {
-    body: { workoutId, reps, time, notes, weight },
+    body: { workoutId, exerciseId, reps, time, notes, weight },
   } = req;
 
   if (req.method === 'POST') {
     try {
       const workoutDetails = await createWorkoutDetailsUseCase({
         retrieveWorkoutById,
+        retrieveExerciseById,
         persistWorkoutDetails,
         generateObjectId: () => new ObjectId().toString(),
-      })({ workoutId, reps, time, notes, weight });
+      })({ workoutId, exerciseId, reps, time, notes, weight });
 
       return res.status(200).json({
         code: 200,

@@ -12,5 +12,6 @@ export const persistWorkoutDetails = async (
     ...workoutDetails,
     _id: new ObjectId(workoutDetails._id),
     workout: new ObjectId(workoutDetails.workout._id),
+    exercise: new ObjectId(workoutDetails.exercise._id),
   });
 };

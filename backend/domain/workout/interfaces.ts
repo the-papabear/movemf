@@ -12,7 +12,9 @@ export interface WorkoutDetailsDTO {
   time?: number;
   notes?: string;
   weight?: number;
+  createdAt: Date;
   workout: WorkoutDTO;
+  exercise: ExerciseDTO;
 }
 
 //TODO: Map the result to fix the any in this interface

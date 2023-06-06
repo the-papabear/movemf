@@ -2,11 +2,13 @@ import { createWorkoutDetailsUseCase } from 'backend/domain/workout/usecase/crea
 
 describe('createWorkoutDetailsUseCase', () => {
   const workout = { _id: 'workoutId' };
+  const exercise = { _id: 'exerciseId' };
 
   const mockDependencies = {
     persistWorkoutDetails: jest.fn(),
     generateObjectId: jest.fn(() => 'id'),
     retrieveWorkoutById: jest.fn().mockResolvedValue(workout),
+    retrieveExerciseById: jest.fn().mockResolvedValue(exercise),
   };
 
   const validData = {
@@ -15,6 +17,7 @@ describe('createWorkoutDetailsUseCase', () => {
     weight: 22,
     notes: 'lorem ipsum',
     workoutId: 'workoutId',
+    exerciseId: 'exerciseId',
   };
 
   describe('given no workoutId', () => {
@@ -30,6 +33,19 @@ describe('createWorkoutDetailsUseCase', () => {
     });
   });
 
+  describe('given no exerciseId', () => {
+    it('should throw an error', async () => {
+      const invalidData = {
+        ...validData,
+        exerciseId: '',
+      };
+
+      await expect(
+        createWorkoutDetailsUseCase(mockDependencies)(invalidData)
+      ).rejects.toMatchObject({ code: 400, message: 'missing_exerciseId' });
+    });
+  });
+
   describe('given no Workout for the given workoutId', () => {
     it('should throw an error', async () => {
       const invalidData = {
@@ -42,6 +58,21 @@ describe('createWorkoutDetailsUseCase', () => {
       await expect(
         createWorkoutDetailsUseCase(mockDependencies)(invalidData)
       ).rejects.toMatchObject({ code: 404, message: 'workout_not_found' });
+    });
+  });
+
+  describe('given no Exercise for the given exerciseId', () => {
+    it('should throw an error', async () => {
+      const invalidData = {
+        ...validData,
+        exerciseId: 'non_existent',
+      };
+
+      mockDependencies.retrieveExerciseById.mockResolvedValueOnce(null);
+
+      await expect(
+        createWorkoutDetailsUseCase(mockDependencies)(invalidData)
+      ).rejects.toMatchObject({ code: 404, message: 'exercise_not_found' });
     });
   });
 
