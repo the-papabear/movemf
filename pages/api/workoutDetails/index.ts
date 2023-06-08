@@ -3,8 +3,8 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 import { retrieveWorkoutById } from 'backend/domain/workout/repository/retrieveWorkoutById';
 import { retrieveExerciseById } from 'backend/domain/exercise/repository/retrieveExerciseById';
-import { persistWorkoutDetails } from 'backend/domain/workout/repository/persistWorkoutDetails';
-import { createWorkoutDetailsUseCase } from 'backend/domain/workout/usecase/createWorkoutDetails';
+import { persistExerciseDetails } from 'backend/domain/exerciseDetails/repository/persistExerciseDetails';
+import { createExerciseDetailsUseCase } from 'backend/domain/exerciseDetails/usecase/createExerciseDetails';
 
 export default async function handler(
   req: NextApiRequest,
@@ -16,10 +16,10 @@ export default async function handler(
 
   if (req.method === 'POST') {
     try {
-      const workoutDetails = await createWorkoutDetailsUseCase({
+      const workoutDetails = await createExerciseDetailsUseCase({
         retrieveWorkoutById,
         retrieveExerciseById,
-        persistWorkoutDetails,
+        persistExerciseDetails,
         generateObjectId: () => new ObjectId().toString(),
       })({ workoutId, exerciseId, reps, time, notes, weight });
 

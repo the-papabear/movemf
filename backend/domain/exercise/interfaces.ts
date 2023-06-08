@@ -1,16 +1,13 @@
-import { WorkoutDetailsDTO } from 'backend/domain/workout/interfaces';
-
-export type ExerciseType = 'exercise' | 'rest';
+export type ExerciseType = 'EXERCISE' | 'TYPE';
 
 export interface ExerciseDTO {
   _id: string;
   name: string;
   type: ExerciseType;
   link?: string | null;
-  workoutDetails: WorkoutDetailsDTO[] | null;
 }
 
-//TODO: Fix this type
+//TODO: Fix this type by mapping out the db result to it
 export interface IRetrieveExerciseById {
   (exerciseId: string): Promise<ExerciseDTO | null | any>;
 }

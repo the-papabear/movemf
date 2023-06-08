@@ -1,24 +1,26 @@
 import {
   WorkoutDTO,
-  WorkoutDetailsDTO,
   IRetrieveWorkoutById,
-  IPersistWorkoutDetails,
 } from 'backend/domain/workout/interfaces';
 import {
   ExerciseDTO,
   IRetrieveExerciseById,
 } from 'backend/domain/exercise/interfaces';
 import { BackendError } from 'backend/errors';
+import {
+  ExerciseDetailsDTO,
+  IPersistExerciseDetails,
+} from 'backend/domain/exerciseDetails/interfaces';
 import { IGenerateObjectId } from 'backend/interfaces';
 
-export const createWorkoutDetailsUseCase =
-  (dependencies: CreateWorkoutDetailsDependencies) =>
-  async (data: CreateWorkoutDetailsData) => {
+export const createExerciseDetailsUseCase =
+  (dependencies: CreateExerciseDetailsDependencies) =>
+  async (data: CreateExerciseDetailsData) => {
     const {
       generateObjectId,
       retrieveWorkoutById,
       retrieveExerciseById,
-      persistWorkoutDetails,
+      persistExerciseDetails,
     } = dependencies;
 
     const { workoutId, exerciseId, notes, reps, time, weight } = data;
@@ -35,16 +37,19 @@ export const createWorkoutDetailsUseCase =
       throw new BackendError(404, 'exercise_not_found');
     }
 
-    const workoutDetailsDTO = createWorkoutDetailsDTO(workoutDTO, exerciseDTO);
+    const exerciseDetailsDTO = createExerciseDetailsDTO(
+      workoutDTO,
+      exerciseDTO
+    );
 
-    await persistWorkoutDetails(workoutDetailsDTO);
+    await persistExerciseDetails(exerciseDetailsDTO);
 
-    return workoutDetailsDTO;
+    return exerciseDetailsDTO;
 
-    function createWorkoutDetailsDTO(
+    function createExerciseDetailsDTO(
       workout: WorkoutDTO,
       exercise: ExerciseDTO
-    ): WorkoutDetailsDTO {
+    ): ExerciseDetailsDTO {
       return {
         reps,
         time,
@@ -91,7 +96,7 @@ export const createWorkoutDetailsUseCase =
     }
   };
 
-interface CreateWorkoutDetailsData {
+interface CreateExerciseDetailsData {
   reps?: number;
   time?: number;
   notes?: string;
@@ -100,9 +105,9 @@ interface CreateWorkoutDetailsData {
   exerciseId: string;
 }
 
-interface CreateWorkoutDetailsDependencies {
+interface CreateExerciseDetailsDependencies {
   generateObjectId: IGenerateObjectId;
   retrieveWorkoutById: IRetrieveWorkoutById;
   retrieveExerciseById: IRetrieveExerciseById;
-  persistWorkoutDetails: IPersistWorkoutDetails;
+  persistExerciseDetails: IPersistExerciseDetails;
 }

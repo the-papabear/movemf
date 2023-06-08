@@ -34,15 +34,11 @@ export const createExerciseUseCase =
         name,
         link,
         type,
-        workoutDetails: null,
         _id: generateObjectId(),
       };
     }
 
     function validateData() {
-      if (!type) {
-        throw new BackendError(400, 'exercise_type_missing');
-      }
       if (!name) {
         throw new BackendError(400, 'name_missing');
       }

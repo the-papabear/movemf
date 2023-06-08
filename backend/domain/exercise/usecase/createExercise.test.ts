@@ -14,19 +14,6 @@ describe('createExerciseUseCase', () => {
     type: 'exercise' as ExerciseType,
   };
 
-  describe('given no type', () => {
-    it('should throw an error', async () => {
-      const invalidData = {
-        ...validData,
-        type: '' as ExerciseType,
-      };
-
-      await expect(
-        createExerciseUseCase(mockDependencies)(invalidData)
-      ).rejects.toMatchObject({ code: 400, message: 'exercise_type_missing' });
-    });
-  });
-
   describe('given no name', () => {
     it('should throw an error', async () => {
       const invalidData = {
@@ -89,6 +76,7 @@ describe('createExerciseUseCase', () => {
       function assertValidExerciseDTO() {
         expect(exerciseDTO._id).toBeDefined();
         expect(exerciseDTO.name).toMatch(validData.name);
+        expect(exerciseDTO.type).toMatch(validData.type);
         expect(exerciseDTO.link).toMatch(validData.link);
       }
     });
