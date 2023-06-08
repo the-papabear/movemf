@@ -7,7 +7,7 @@ export interface ExerciseDetailsDTO {
   time?: number;
   notes?: string;
   weight?: number;
-  createdAt: Date;
+  insertedAt: Date;
   workout: WorkoutDTO;
   exercise: ExerciseDTO;
 }

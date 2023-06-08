@@ -57,7 +57,7 @@ export const createExerciseDetailsUseCase =
         weight,
         workout,
         exercise,
-        createdAt: new Date(),
+        insertedAt: new Date(),
         _id: generateObjectId(),
       };
     }

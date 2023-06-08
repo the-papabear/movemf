@@ -143,6 +143,7 @@ describe('createWorkoutDetailsUseCase', () => {
       )(validData);
 
       expect(exerciseDetailsDTO._id).toBeDefined();
+      expect(exerciseDetailsDTO.insertedAt).toBeDefined();
       expect(exerciseDetailsDTO.reps).toEqual(validData.reps);
       expect(exerciseDetailsDTO.time).toEqual(validData.time);
       expect(exerciseDetailsDTO.notes).toEqual(validData.notes);

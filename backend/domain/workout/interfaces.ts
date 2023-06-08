@@ -3,7 +3,7 @@ import { ExerciseDTO } from 'backend/domain/exercise/interfaces';
 export interface WorkoutDTO {
   _id: string;
   completedAt: Date;
-  exercises: ExerciseDTO[];
+  exerciseDetails: ExerciseDTO[];
 }
 
 //TODO: Map the result to fix the any in this interface
