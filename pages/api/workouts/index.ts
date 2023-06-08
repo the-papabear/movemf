@@ -24,9 +24,8 @@ export default async function handler(
     try {
       const workout = await createWorkoutUseCase({
         persistWorkout,
-        retrieveExercisesByIds,
         generateObjectId: () => new ObjectId().toString(),
-      })({ completedAt, exerciseIds });
+      })({ completedAt });
 
       return res.status(200).json({
         workout,

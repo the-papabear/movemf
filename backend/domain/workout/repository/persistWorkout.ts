@@ -9,6 +9,5 @@ export const persistWorkout = async (workout: WorkoutDTO) => {
   await connection.collection('workouts').insertOne({
     ...workout,
     _id: new ObjectId(workout._id),
-    exercises: workout.exercises.map((exercise) => new ObjectId(exercise._id)),
   });
 };
