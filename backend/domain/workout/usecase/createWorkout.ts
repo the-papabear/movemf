@@ -1,6 +1,5 @@
 import { IGenerateObjectId } from 'backend/interfaces';
 import { IPersistWorkout } from 'backend/domain/workout/interfaces';
-import { IRetrieveExercisesByIds } from 'backend/domain/exercise/interfaces';
 
 export const createWorkoutUseCase =
   (dependencies: CreateWorkoutDependencies) =>
