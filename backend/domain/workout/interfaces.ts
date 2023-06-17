@@ -1,9 +1,9 @@
-import { ExerciseDTO } from 'backend/domain/exercise/interfaces';
+import { ExerciseDetailsDTO } from 'backend/domain/exerciseDetails/interfaces';
 
 export interface WorkoutDTO {
   _id: string;
   completedAt: Date;
-  exerciseDetails: ExerciseDTO[];
+  exerciseDetails: ExerciseDetailsDTO[];
 }
 
 //TODO: Map the result to fix the any in this interface
@@ -13,4 +13,8 @@ export interface IRetrieveWorkoutById {
 
 export interface IPersistWorkout {
   (workout: WorkoutDTO): Promise<void>;
+}
+
+export interface IEditWorkout {
+  (workoutDTO: WorkoutDTO): Promise<void>;
 }

@@ -4,14 +4,13 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { persistWorkout } from 'backend/domain/workout/repository/persistWorkout';
 import retrieveWorkouts from 'backend/domain/workout/repository/retrieveWorkouts';
 import { createWorkoutUseCase } from 'backend/domain/workout/usecase/createWorkout';
-import { retrieveExercisesByIds } from 'backend/domain/exercise/repository/retrieveExercisesByIds';
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   const {
-    body: { completedAt, exerciseIds },
+    body: { completedAt },
   } = req;
 
   if (req.method === 'GET') {

@@ -96,7 +96,7 @@ export const createExerciseDetailsUseCase =
     }
   };
 
-interface CreateExerciseDetailsData {
+export interface CreateExerciseDetailsData {
   reps?: number;
   time?: number;
   notes?: string;
