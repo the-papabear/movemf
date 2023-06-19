@@ -35,3 +35,7 @@ export interface IPersistExerciseDetails {
 export interface IEditExerciseDetailsUseCase {
   (exerciseDetails: EditExerciseDetailsData): Promise<ExerciseDetailsDTO>;
 }
+
+export interface IUpdateExerciseDetails {
+  (exerciseDetails: ExerciseDetailsDTO): Promise<void>;
+}
