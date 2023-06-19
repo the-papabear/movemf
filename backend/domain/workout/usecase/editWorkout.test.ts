@@ -5,7 +5,7 @@ describe('editWorkoutUseCase', () => {
   const exerciseDetails = { id: 'exerciseDetailsId' };
 
   const mockDependencies = {
-    editWorkout: jest.fn(),
+    updateWorkout: jest.fn(),
     editExerciseDetailsUseCase: jest.fn(),
     createExerciseDetailsUseCase: jest.fn(),
     retrieveExerciseDetailsByIds: jest.fn(),
@@ -15,6 +15,7 @@ describe('editWorkoutUseCase', () => {
 
   const validData = {
     workoutId: 'workoutId',
+    exerciseDetailsIds: ['id1', 'id2'],
     exerciseDetails: {
       workoutId: 'workoutId',
       exerciseId: 'exerciseId',
