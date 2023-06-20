@@ -1,8 +1,3 @@
-import {
-  WorkoutDTO,
-  IEditWorkout,
-  IRetrieveWorkoutById,
-} from 'backend/domain/workout/interfaces';
 import { BackendError } from 'backend/errors';
 import {
   ExerciseDetailsDTO,
@@ -11,90 +6,87 @@ import {
   IRetrieveExerciseDetailsByIds,
   ICreateExerciseDetailsUseCase,
 } from 'backend/domain/exerciseDetails/interfaces';
+import { WorkoutDTO, IEditWorkout, IRetrieveWorkoutById } from 'backend/domain/workout/interfaces';
 
-export const editWorkoutUseCase =
-  (dependencies: EditWorkoutDependencies) => async (data: EditWorkoutData) => {
-    const {
-      updateWorkout,
-      retrieveWorkoutById,
-      editExerciseDetailsUseCase,
-      retrieveExerciseDetailsById,
-      retrieveExerciseDetailsByIds,
-      createExerciseDetailsUseCase,
-    } = dependencies;
+export const editWorkoutUseCase = (dependencies: EditWorkoutDependencies) => async (data: EditWorkoutData) => {
+  const {
+    updateWorkout,
+    retrieveWorkoutById,
+    editExerciseDetailsUseCase,
+    retrieveExerciseDetailsById,
+    retrieveExerciseDetailsByIds,
+    createExerciseDetailsUseCase,
+  } = dependencies;
 
-    const { workoutId, exerciseDetails } = data;
+  const { workoutId, exerciseDetailsId, exerciseId, notes, reps, time, weight, completedAt } = data;
 
-    validateData();
+  validateData();
 
-    const existingWorkoutDTO = await retrieveWorkoutById(workoutId);
+  const existingWorkoutDTO = await retrieveWorkoutById(workoutId);
 
-    if (!existingWorkoutDTO) {
-      throw new BackendError(404, 'workout_not_found');
-    }
+  if (!existingWorkoutDTO) {
+    throw new BackendError(404, 'workout_not_found');
+  }
 
-    let newExerciseDetailsDTO: ExerciseDetailsDTO | null = null;
+  let exerciseDetailsDTOs: ExerciseDetailsDTO[] = [];
 
-    if (exerciseDetails) {
-      if (exerciseDetails?.exerciseDetailsId) {
-        const existingExerciseDetailsDTO = await retrieveExerciseDetailsById(
-          exerciseDetails.exerciseDetailsId
-        );
+  if (exerciseId) {
+    if (exerciseDetailsId) {
+      const existingExerciseDetailsDTO = await retrieveExerciseDetailsById(exerciseDetailsId);
 
-        if (!existingExerciseDetailsDTO) {
-          throw new BackendError(404, 'exerciseDetails_not_found');
-        }
-
-        await editExerciseDetailsUseCase({
-          ...exerciseDetails,
-          exerciseDetailsId: exerciseDetails.exerciseDetailsId,
-        });
-      } else {
-        newExerciseDetailsDTO = await createExerciseDetailsUseCase(
-          exerciseDetails
-        );
+      if (!existingExerciseDetailsDTO) {
+        throw new BackendError(404, 'exerciseDetails_not_found');
       }
+
+      await editExerciseDetailsUseCase({
+        reps,
+        time,
+        notes,
+        weight,
+        workoutId,
+        exerciseId,
+        exerciseDetailsId,
+      });
+
+      exerciseDetailsDTOs = await retrieveExerciseDetailsByIds(existingWorkoutDTO.exerciseDetails);
+    } else {
+      const exerciseDetailsDTO = await createExerciseDetailsUseCase({
+        reps,
+        time,
+        notes,
+        weight,
+        workoutId,
+        exerciseId,
+      });
+
+      const existingExerciseDetailsDTOs = await retrieveExerciseDetailsByIds(existingWorkoutDTO.exerciseDetails);
+      exerciseDetailsDTOs = [...existingExerciseDetailsDTOs, exerciseDetailsDTO];
     }
+  }
 
-    const existingWorkoutDetailsIds = existingWorkoutDTO.exerciseDetails.map(
-      (exerciseDetails: any) => exerciseDetails._id
-    );
+  const workoutDTO = createWorkoutDTO(existingWorkoutDTO, exerciseDetailsDTOs);
 
-    const exerciseDetailsDTOs = await retrieveExerciseDetailsByIds(
-      existingWorkoutDetailsIds
-    );
+  await updateWorkout(workoutDTO);
 
-    if (exerciseDetailsDTOs.length !== existingWorkoutDetailsIds.length) {
-      throw new BackendError(400, 'invalid_exerciseDetailsIds');
-    }
+  return workoutDTO;
 
-    const workoutDTO = createWorkoutDTO(
-      existingWorkoutDTO,
-      exerciseDetailsDTOs
-    );
+  function createWorkoutDTO(workout: WorkoutDTO, exerciseDetails: ExerciseDetailsDTO[]) {
+    const workoutDTO = {
+      ...workout,
+      exerciseDetails: exerciseDetails,
+    };
 
-    await updateWorkout(workoutDTO);
+    if (completedAt !== undefined) workoutDTO.completedAt = new Date(completedAt);
 
     return workoutDTO;
+  }
 
-    function createWorkoutDTO(
-      workout: WorkoutDTO,
-      exerciseDetails: ExerciseDetailsDTO[]
-    ) {
-      return {
-        ...workout,
-        exerciseDetails: newExerciseDetailsDTO
-          ? [...exerciseDetails, newExerciseDetailsDTO]
-          : exerciseDetails,
-      };
+  function validateData() {
+    if (!workoutId) {
+      throw new BackendError(400, 'invalid_workoutId');
     }
-
-    function validateData() {
-      if (!workoutId) {
-        throw new BackendError(400, 'invalid_workoutId');
-      }
-    }
-  };
+  }
+};
 
 interface EditWorkoutDependencies {
   updateWorkout: IEditWorkout;
@@ -106,14 +98,12 @@ interface EditWorkoutDependencies {
 }
 
 interface EditWorkoutData {
+  reps?: number;
+  time?: number;
+  notes?: string;
+  weight?: number;
   workoutId: string;
-  exerciseDetails?: {
-    reps?: number;
-    time?: number;
-    notes?: string;
-    weight?: number;
-    workoutId: string;
-    exerciseId: string;
-    exerciseDetailsId?: string;
-  };
+  completedAt?: Date;
+  exerciseId?: string;
+  exerciseDetailsId?: string;
 }

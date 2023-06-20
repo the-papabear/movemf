@@ -8,18 +8,18 @@ export const retrieveExerciseDetailsByIds = async (
 ) => {
   const db = await dbConnection();
 
-  const exercises = await db
+  const exerciseDetails = await db
     .collection('exerciseDetails')
     .find({
       _id: { $in: exerciseDetailsIds.map((id) => new ObjectId(id)) },
     })
     .toArray();
 
-  return exercises.map(
-    (exercise) =>
+  return exerciseDetails.map(
+    (exerciseDetails) =>
       ({
-        ...exercise,
-        _id: new ObjectId(exercise._id).toString(),
+        ...exerciseDetails,
+        _id: new ObjectId(exerciseDetails._id).toString(),
       } as ExerciseDetailsDTO)
   );
 };

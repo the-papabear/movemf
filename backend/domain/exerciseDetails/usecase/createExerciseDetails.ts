@@ -1,27 +1,12 @@
-import {
-  WorkoutDTO,
-  IRetrieveWorkoutById,
-} from 'backend/domain/workout/interfaces';
-import {
-  ExerciseDTO,
-  IRetrieveExerciseById,
-} from 'backend/domain/exercise/interfaces';
+import { WorkoutDTO, IRetrieveWorkoutById } from 'backend/domain/workout/interfaces';
+import { ExerciseDTO, IRetrieveExerciseById } from 'backend/domain/exercise/interfaces';
 import { BackendError } from 'backend/errors';
-import {
-  ExerciseDetailsDTO,
-  IPersistExerciseDetails,
-} from 'backend/domain/exerciseDetails/interfaces';
+import { ExerciseDetailsDTO, IPersistExerciseDetails } from 'backend/domain/exerciseDetails/interfaces';
 import { IGenerateObjectId } from 'backend/interfaces';
 
 export const createExerciseDetailsUseCase =
-  (dependencies: CreateExerciseDetailsDependencies) =>
-  async (data: CreateExerciseDetailsData) => {
-    const {
-      generateObjectId,
-      retrieveWorkoutById,
-      retrieveExerciseById,
-      persistExerciseDetails,
-    } = dependencies;
+  (dependencies: CreateExerciseDetailsDependencies) => async (data: CreateExerciseDetailsData) => {
+    const { generateObjectId, retrieveWorkoutById, retrieveExerciseById, persistExerciseDetails } = dependencies;
 
     const { workoutId, exerciseId, notes, reps, time, weight } = data;
 
@@ -37,19 +22,13 @@ export const createExerciseDetailsUseCase =
       throw new BackendError(404, 'exercise_not_found');
     }
 
-    const exerciseDetailsDTO = createExerciseDetailsDTO(
-      workoutDTO,
-      exerciseDTO
-    );
+    const exerciseDetailsDTO = createExerciseDetailsDTO(workoutDTO, exerciseDTO);
 
     await persistExerciseDetails(exerciseDetailsDTO);
 
     return exerciseDetailsDTO;
 
-    function createExerciseDetailsDTO(
-      workout: WorkoutDTO,
-      exercise: ExerciseDTO
-    ): ExerciseDetailsDTO {
+    function createExerciseDetailsDTO(workout: WorkoutDTO, exercise: ExerciseDTO): ExerciseDetailsDTO {
       return {
         reps,
         time,

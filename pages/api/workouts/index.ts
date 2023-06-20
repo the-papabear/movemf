@@ -5,10 +5,7 @@ import { persistWorkout } from 'backend/domain/workout/repository/persistWorkout
 import retrieveWorkouts from 'backend/domain/workout/repository/retrieveWorkouts';
 import { createWorkoutUseCase } from 'backend/domain/workout/usecase/createWorkout';
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const {
     body: { completedAt },
   } = req;
@@ -36,4 +33,8 @@ export default async function handler(
       res.status(e.code).send(e);
     }
   }
+
+  return res
+    .status(501)
+    .json({ message: 'Y dis?', realMessage: 'You probably are trying a type of request I have not implemented yet' });
 }
