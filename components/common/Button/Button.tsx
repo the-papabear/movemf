@@ -4,11 +4,12 @@ interface ButtonProps {
   title?: string;
   onClick?: () => void;
   theme?: 'btn__primary' | 'default';
+  type?: 'button' | 'submit' | 'reset';
 }
 
-const Button = ({ onClick, title, theme = 'default' }: ButtonProps) => {
+const Button = ({ onClick, title, theme = 'default', type }: ButtonProps) => {
   return (
-    <button className={[styles.btn, styles[theme]].join(' ')} onClick={onClick}>
+    <button type={type} className={[styles.btn, styles[theme]].join(' ')} onClick={onClick}>
       {title}
     </button>
   );

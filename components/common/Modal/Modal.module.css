@@ -43,7 +43,6 @@
   position: relative;
   top: 20%;
   margin: 0 auto;
-  transform: translateY(-50%);
 }
 
 .modal__header__wrapper {
