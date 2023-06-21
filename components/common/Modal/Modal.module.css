@@ -41,7 +41,7 @@
   background-color: white;
 
   position: relative;
-  top: 50%;
+  top: 20%;
   margin: 0 auto;
   transform: translateY(-50%);
 }

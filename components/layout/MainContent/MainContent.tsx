@@ -1,7 +1,6 @@
 import { Root, List, Trigger, Content } from '@radix-ui/react-tabs';
 
-import { Exercises } from '@components/layout/Exercises/Exercises';
-
+import { Exercises, Workouts } from '@components/layout';
 import styles from 'components/layout/MainContent/MainContent.module.css';
 
 export const MainContent = () => {
@@ -15,7 +14,9 @@ export const MainContent = () => {
           Exercises
         </Trigger>
       </List>
-      <Content value="workouts-tab"></Content>
+      <Content value="workouts-tab">
+        <Workouts />
+      </Content>
       <Content value="exercises-tab">
         <Exercises />
       </Content>

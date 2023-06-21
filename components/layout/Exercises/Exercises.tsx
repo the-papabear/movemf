@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react';
 
 import axios from 'axios';
 
-import ExerciseModal from '@components/layout/Exercises/ExerciseModal/ExerciseModal';
-
+import { Modal } from '@components/common';
 import styles from '@components/layout/Exercises/Exercises.module.css';
 
 export const Exercises = () => {
@@ -17,11 +16,12 @@ export const Exercises = () => {
   useEffect(() => {
     getExercises();
   }, []);
+
   return (
     <>
       <div className={styles.header}>
         <h2>Exercises</h2>
-        <ExerciseModal title="Add exercise" exercises={exercises} setExercises={setExercises} />
+        <Modal triggerTitle="Add Exercise" title="Add Exercise"></Modal>
       </div>
       {exercises &&
         exercises.map((exercise: any, index: number) => (
