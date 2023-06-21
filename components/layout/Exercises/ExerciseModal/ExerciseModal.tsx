@@ -1,21 +1,13 @@
 import { useState } from 'react';
 import axios from 'axios';
 import Image from 'next/image';
-import {
-  Root,
-  Close,
-  Title,
-  Portal,
-  Overlay,
-  Content,
-  Trigger,
-} from '@radix-ui/react-dialog';
+import { Root, Close, Title, Portal, Overlay, Content, Trigger } from '@radix-ui/react-dialog';
 
 import closeIcon from 'public/closeIcon.svg';
 import Button from '@components/common/Button/Button';
-import ExercisesForm from '@components/layout/ExercisesCard/ExercisesForm/ExercisesForm';
+import ExercisesForm from '@components/layout/Exercises/ExercisesForm/ExercisesForm';
 
-import styles from '@components/layout/ExercisesCard/ExerciseModal/ExerciseModal.module.css';
+import styles from '@components/layout/Exercises/ExerciseModal/ExerciseModal.module.css';
 
 type ModalProps = {
   title?: string;
@@ -70,12 +62,7 @@ const Modal = ({ title, exercises, setExercises }: ModalProps) => {
             <div className={styles.modal__header__wrapper}>
               <Title>{title}</Title>
               <Close className={styles.modal__close}>
-                <Image
-                  width={16}
-                  height={16}
-                  src={closeIcon}
-                  alt="close icon"
-                />
+                <Image width={16} height={16} src={closeIcon} alt="close icon" />
               </Close>
             </div>
             <ExercisesForm

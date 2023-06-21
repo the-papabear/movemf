@@ -1,6 +1,4 @@
 .header__wrapper {
-  grid-column: span 12;
-
   display: flex;
   justify-content: space-between;
 }
