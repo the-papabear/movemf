@@ -8,12 +8,14 @@ import Button from '@components/common/Button/Button';
 import styles from 'components/common/Modal/Modal.module.css';
 
 interface ModalProps {
+  open?: boolean;
   title?: string;
   triggerTitle: string;
+  toggleModal?: () => void;
 }
 
-export const Modal = ({ children, title, triggerTitle }: PropsWithChildren<ModalProps>) => (
-  <Root>
+export const Modal = ({ children, title, triggerTitle, open, toggleModal }: PropsWithChildren<ModalProps>) => (
+  <Root open={open} onOpenChange={toggleModal}>
     <Trigger className={styles.modal__trigger}>{triggerTitle}</Trigger>
     <Portal>
       <Overlay className={styles.modal__overlay}>

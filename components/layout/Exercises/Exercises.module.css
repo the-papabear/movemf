@@ -1,4 +1,12 @@
+.exercises__wrapper {
+  padding: 1rem;
+}
+
 .item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
   padding: 0.5rem;
   border-radius: 6px;
   cursor: pointer;
@@ -6,6 +14,15 @@
 
 .item:hover {
   background-color: #cce3cc;
+}
+
+.removeItem {
+  height: 18px;
+  color: transparent;
+}
+
+.item:hover > .removeItem {
+  color: darkred;
 }
 
 .header {
