@@ -1,4 +1,4 @@
-export type ExerciseType = 'EXERCISE' | 'TYPE';
+export type ExerciseType = 'EXERCISE' | 'REST';
 
 export interface ExerciseDTO {
   _id: string;
@@ -7,9 +7,8 @@ export interface ExerciseDTO {
   link?: string | null;
 }
 
-//TODO: Fix this type by mapping out the db result to it
 export interface IRetrieveExerciseById {
-  (exerciseId: string): Promise<ExerciseDTO | null | any>;
+  (exerciseId: string): Promise<ExerciseDTO | null>;
 }
 
 export interface IRetrieveExercisesByIds {
@@ -17,7 +16,7 @@ export interface IRetrieveExercisesByIds {
 }
 
 export interface IRetrieveExerciseByName {
-  (exerciseName: string): Promise<ExerciseDTO | null | any>;
+  (exerciseName: string): Promise<ExerciseDTO | null>;
 }
 
 export interface IPersistExercise {
