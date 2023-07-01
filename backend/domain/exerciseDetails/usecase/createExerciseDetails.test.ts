@@ -27,9 +27,10 @@ describe('createWorkoutDetailsUseCase', () => {
         workoutId: '',
       };
 
-      await expect(
-        createExerciseDetailsUseCase(mockDependencies)(invalidData)
-      ).rejects.toMatchObject({ code: 400, message: 'missing_workoutId' });
+      await expect(createExerciseDetailsUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
+        code: 400,
+        message: 'missing_workoutId',
+      });
     });
   });
 
@@ -40,9 +41,10 @@ describe('createWorkoutDetailsUseCase', () => {
         exerciseId: '',
       };
 
-      await expect(
-        createExerciseDetailsUseCase(mockDependencies)(invalidData)
-      ).rejects.toMatchObject({ code: 400, message: 'missing_exerciseId' });
+      await expect(createExerciseDetailsUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
+        code: 400,
+        message: 'missing_exerciseId',
+      });
     });
   });
 
@@ -55,9 +57,10 @@ describe('createWorkoutDetailsUseCase', () => {
 
       mockDependencies.retrieveWorkoutById.mockResolvedValueOnce(null);
 
-      await expect(
-        createExerciseDetailsUseCase(mockDependencies)(invalidData)
-      ).rejects.toMatchObject({ code: 404, message: 'workout_not_found' });
+      await expect(createExerciseDetailsUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
+        code: 404,
+        message: 'workout_not_found',
+      });
     });
   });
 
@@ -70,9 +73,10 @@ describe('createWorkoutDetailsUseCase', () => {
 
       mockDependencies.retrieveExerciseById.mockResolvedValueOnce(null);
 
-      await expect(
-        createExerciseDetailsUseCase(mockDependencies)(invalidData)
-      ).rejects.toMatchObject({ code: 404, message: 'exercise_not_found' });
+      await expect(createExerciseDetailsUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
+        code: 404,
+        message: 'exercise_not_found',
+      });
     });
   });
 
@@ -83,9 +87,10 @@ describe('createWorkoutDetailsUseCase', () => {
         reps: -1,
       };
 
-      await expect(
-        createExerciseDetailsUseCase(mockDependencies)(invalidData)
-      ).rejects.toMatchObject({ code: 400, message: 'invalid_reps' });
+      await expect(createExerciseDetailsUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
+        code: 400,
+        message: 'invalid_reps',
+      });
     });
   });
 
@@ -96,9 +101,10 @@ describe('createWorkoutDetailsUseCase', () => {
         time: -1,
       };
 
-      await expect(
-        createExerciseDetailsUseCase(mockDependencies)(invalidData)
-      ).rejects.toMatchObject({ code: 400, message: 'invalid_time' });
+      await expect(createExerciseDetailsUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
+        code: 400,
+        message: 'invalid_time',
+      });
     });
   });
 
@@ -109,9 +115,10 @@ describe('createWorkoutDetailsUseCase', () => {
         weight: -1,
       };
 
-      await expect(
-        createExerciseDetailsUseCase(mockDependencies)(invalidData)
-      ).rejects.toMatchObject({ code: 400, message: 'invalid_weight' });
+      await expect(createExerciseDetailsUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
+        code: 400,
+        message: 'invalid_weight',
+      });
     });
   });
 
@@ -122,9 +129,10 @@ describe('createWorkoutDetailsUseCase', () => {
         notes: ' ',
       };
 
-      await expect(
-        createExerciseDetailsUseCase(mockDependencies)(invalidData)
-      ).rejects.toMatchObject({ code: 400, message: 'invalid_notes' });
+      await expect(createExerciseDetailsUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
+        code: 400,
+        message: 'invalid_notes',
+      });
     });
   });
 
@@ -138,9 +146,7 @@ describe('createWorkoutDetailsUseCase', () => {
     });
 
     it('should return a valid exerciseDetailsDTO', async () => {
-      const exerciseDetailsDTO = await createExerciseDetailsUseCase(
-        mockDependencies
-      )(validData);
+      const exerciseDetailsDTO = await createExerciseDetailsUseCase(mockDependencies)(validData);
 
       expect(exerciseDetailsDTO._id).toBeDefined();
       expect(exerciseDetailsDTO.insertedAt).toBeDefined();
@@ -148,7 +154,7 @@ describe('createWorkoutDetailsUseCase', () => {
       expect(exerciseDetailsDTO.time).toEqual(validData.time);
       expect(exerciseDetailsDTO.notes).toEqual(validData.notes);
       expect(exerciseDetailsDTO.weight).toEqual(validData.weight);
-      expect(exerciseDetailsDTO.workout._id).toEqual(validData.workoutId);
+      expect(exerciseDetailsDTO.workoutId).toEqual(validData.workoutId);
       expect(exerciseDetailsDTO.exercise._id).toEqual(validData.exerciseId);
     });
   });

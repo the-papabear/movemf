@@ -5,33 +5,18 @@ import {
   IRetrieveExerciseDetailsById,
 } from 'backend/domain/exerciseDetails/interfaces';
 import { IRetrieveWorkoutById } from 'backend/domain/workout/interfaces';
-import { IRetrieveExerciseById } from 'backend/domain/exercise/interfaces';
+import { ExerciseDTO, IRetrieveExerciseById } from 'backend/domain/exercise/interfaces';
 
 export const editExerciseDetailsUseCase =
-  (dependencies: EditExerciseDetailsDependencies) =>
-  async (data: EditExerciseDetailsData) => {
-    const {
-      retrieveWorkoutById,
-      retrieveExerciseById,
-      updateExerciseDetails,
-      retrieveExerciseDetailsById,
-    } = dependencies;
+  (dependencies: EditExerciseDetailsDependencies) => async (data: EditExerciseDetailsData) => {
+    const { retrieveWorkoutById, retrieveExerciseById, updateExerciseDetails, retrieveExerciseDetailsById } =
+      dependencies;
 
-    const {
-      reps,
-      time,
-      notes,
-      weight,
-      workoutId,
-      exerciseId,
-      exerciseDetailsId,
-    } = data;
+    const { reps, time, notes, weight, workoutId, exerciseId, exerciseDetailsId } = data;
 
     validateData();
 
-    const existingExerciseDetailsDTO = await retrieveExerciseDetailsById(
-      exerciseDetailsId
-    );
+    const existingExerciseDetailsDTO = await retrieveExerciseDetailsById(exerciseDetailsId);
 
     if (!existingExerciseDetailsDTO) {
       throw new BackendError(404, 'exerciseDetails_not_found');
@@ -49,19 +34,18 @@ export const editExerciseDetailsUseCase =
       throw new BackendError(404, 'exercise_not_found');
     }
 
-    const exerciseDetailsDTO = createExerciseDetailsDTO(
-      existingExerciseDetailsDTO
-    );
+    const exerciseDetailsDTO = createExerciseDetailsDTO(existingExerciseDetailsDTO, exerciseDTO);
 
     await updateExerciseDetails(exerciseDetailsDTO);
 
     return exerciseDetailsDTO;
 
-    function createExerciseDetailsDTO(exerciseDetails: ExerciseDetailsDTO) {
+    function createExerciseDetailsDTO(exerciseDetails: ExerciseDetailsDTO, exercise: ExerciseDTO) {
       const exerciseDetailsDTO = {
         ...exerciseDetails,
       };
 
+      exerciseDetailsDTO.exercise = exercise;
       if (reps !== undefined) exerciseDetailsDTO.reps = reps;
       if (time !== undefined) exerciseDetailsDTO.time = time;
       if (notes !== undefined) exerciseDetailsDTO.notes = notes;

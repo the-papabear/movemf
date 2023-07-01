@@ -1,25 +1,18 @@
 import { ObjectId } from 'mongodb';
 
 import dbConnection from 'backend/mongoConnection';
-import { ExerciseDetailsDTO } from 'backend/domain/exerciseDetails/interfaces';
+import { mapToExerciseDetailsDTO } from 'backend/domain/exerciseDetails/repository/mapper';
+import { ExerciseDetailsAggregationDB } from 'backend/domain/exerciseDetails/repository/interfaces';
 
-export const retrieveExerciseDetailsByIds = async (
-  exerciseDetailsIds: string[]
-) => {
+export const retrieveExerciseDetailsByIds = async (exerciseDetailsIds: string[]) => {
   const db = await dbConnection();
 
   const exerciseDetails = await db
     .collection('exerciseDetails')
-    .find({
+    .find<ExerciseDetailsAggregationDB>({
       _id: { $in: exerciseDetailsIds.map((id) => new ObjectId(id)) },
     })
     .toArray();
 
-  return exerciseDetails.map(
-    (exerciseDetails) =>
-      ({
-        ...exerciseDetails,
-        _id: new ObjectId(exerciseDetails._id).toString(),
-      } as ExerciseDetailsDTO)
-  );
+  return exerciseDetails.map((exerciseDetails) => mapToExerciseDetailsDTO(exerciseDetails));
 };

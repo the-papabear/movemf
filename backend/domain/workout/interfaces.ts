@@ -6,9 +6,8 @@ export interface WorkoutDTO {
   exerciseDetails: ExerciseDetailsDTO[];
 }
 
-//TODO: Map the result to fix the any in this interface
 export interface IRetrieveWorkoutById {
-  (workoutId: string): Promise<WorkoutDTO | null | any>;
+  (workoutId: string): Promise<WorkoutDTO | null>;
 }
 
 export interface IPersistWorkout {

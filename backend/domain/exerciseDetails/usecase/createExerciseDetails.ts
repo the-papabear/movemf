@@ -22,20 +22,20 @@ export const createExerciseDetailsUseCase =
       throw new BackendError(404, 'exercise_not_found');
     }
 
-    const exerciseDetailsDTO = createExerciseDetailsDTO(workoutDTO, exerciseDTO);
+    const exerciseDetailsDTO = createExerciseDetailsDTO(exerciseDTO);
 
     await persistExerciseDetails(exerciseDetailsDTO);
 
     return exerciseDetailsDTO;
 
-    function createExerciseDetailsDTO(workout: WorkoutDTO, exercise: ExerciseDTO): ExerciseDetailsDTO {
+    function createExerciseDetailsDTO(exercise: ExerciseDTO): ExerciseDetailsDTO {
       return {
         reps,
         time,
         notes,
         weight,
-        workout,
         exercise,
+        workoutId,
         insertedAt: new Date(),
         _id: generateObjectId(),
       };
