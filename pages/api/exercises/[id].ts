@@ -1,61 +1,27 @@
 import { ObjectId } from 'mongodb';
+import type { NextApiRequest, NextApiResponse } from 'next';
 
-import dbConnection from 'backend/mongoConnection';
-import { editExerciseUseCase } from 'backend/domain/exercise/usecase/editExercise';
-import { updateExercise } from 'backend/domain/exercise/repository/updateExercise';
-import { retrieveExerciseById } from 'backend/domain/exercise/repository/retrieveExerciseById';
-import { retrieveExerciseByName } from 'backend/domain/exercise/repository/retrieveExerciseByName';
+import { makeErrorResponse } from 'backend/lib/makeQueryResponse';
+import { getExercise } from 'backend/domain/exercise/api/getExercise';
+import { editExercise } from 'backend/domain/exercise/api/editExercise';
+import { deleteExercise } from 'backend/domain/exercise/api/deleteExercise';
 
-export default async function handler(req: any, res: any) {
-  const {
-    query: { id },
-    body: { name, link },
-  } = req;
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  const { id } = req.query;
 
-  if (!ObjectId.isValid(id)) {
-    return res.status(404).json({
-      code: 404,
-      success: false,
-      message: 'EXERCISE_NOT_FOUND',
-    });
+  if (!ObjectId.isValid(id as string)) {
+    return makeErrorResponse(res, 400, 'INVALID_EXERCISE_ID');
   }
 
   if (req.method === 'GET') {
-    const exercise = await retrieveExerciseById(id);
-
-    return res.status(200).json(exercise);
+    return await getExercise(req, res);
   }
 
   if (req.method === 'PATCH') {
-    try {
-      const exerciseDTO = await editExerciseUseCase({
-        updateExercise,
-        retrieveExerciseById,
-        retrieveExerciseByName,
-      })({ exerciseId: id, name, link });
-
-      return res.status(200).json({
-        code: 200,
-        success: true,
-        exercise: exerciseDTO,
-        message: 'EXERCISE_UPDATED_SUCCESSFULLY',
-      });
-    } catch (e: any) {
-      res.status(e.code).send(e);
-    }
+    return await editExercise(req, res);
   }
 
   if (req.method === 'DELETE') {
-    const connection = await dbConnection();
-
-    await connection
-      .collection('exercises')
-      .deleteOne({ _id: new ObjectId(id) });
-
-    return res.status(200).send({
-      code: 200,
-      success: true,
-      message: 'EXERCISE_DELETED',
-    });
+    return await deleteExercise(req, res);
   }
 }

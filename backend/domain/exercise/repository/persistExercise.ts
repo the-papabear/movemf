@@ -8,7 +8,6 @@ const persistExercise = async (exercise: ExerciseDTO) => {
 
   await connection.collection('exercises').insertOne({
     ...exercise,
-    workoutDetails: [],
     _id: new ObjectId(exercise._id),
   });
 };
