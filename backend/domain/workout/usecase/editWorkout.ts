@@ -48,7 +48,9 @@ export const editWorkoutUseCase = (dependencies: EditWorkoutDependencies) => asy
         exerciseDetailsId,
       });
 
-      exerciseDetailsDTOs = await retrieveExerciseDetailsByIds(existingWorkoutDTO.exerciseDetails);
+      exerciseDetailsDTOs = await retrieveExerciseDetailsByIds(
+        existingWorkoutDTO.exerciseDetails.map((exerciseDetails) => exerciseDetails._id),
+      );
     } else {
       const exerciseDetailsDTO = await createExerciseDetailsUseCase({
         reps,
@@ -59,7 +61,9 @@ export const editWorkoutUseCase = (dependencies: EditWorkoutDependencies) => asy
         exerciseId,
       });
 
-      const existingExerciseDetailsDTOs = await retrieveExerciseDetailsByIds(existingWorkoutDTO.exerciseDetails);
+      const existingExerciseDetailsDTOs = await retrieveExerciseDetailsByIds(
+        existingWorkoutDTO.exerciseDetails.map((exerciseDetails) => exerciseDetails._id),
+      );
       exerciseDetailsDTOs = [...existingExerciseDetailsDTOs, exerciseDetailsDTO];
     }
   }

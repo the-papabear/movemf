@@ -15,12 +15,8 @@ describe('editWorkoutUseCase', () => {
 
   const validData = {
     workoutId: 'workoutId',
-    exerciseDetailsIds: ['id1', 'id2'],
-    exerciseDetails: {
-      workoutId: 'workoutId',
-      exerciseId: 'exerciseId',
-      exerciseDetailsId: 'exerciseDetailsId',
-    },
+    exerciseId: 'exerciseId',
+    exerciseDetailsId: 'exerciseDetailsId',
   };
 
   describe('given invalid workoutId', () => {
@@ -30,9 +26,7 @@ describe('editWorkoutUseCase', () => {
         workoutId: '',
       };
 
-      await expect(
-        editWorkoutUseCase(mockDependencies)(invalidData)
-      ).rejects.toMatchObject({
+      await expect(editWorkoutUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
         code: 400,
         message: 'invalid_workoutId',
       });
@@ -48,9 +42,10 @@ describe('editWorkoutUseCase', () => {
 
       mockDependencies.retrieveWorkoutById.mockResolvedValueOnce(null);
 
-      await expect(
-        editWorkoutUseCase(mockDependencies)(invalidData)
-      ).rejects.toMatchObject({ code: 404, message: 'workout_not_found' });
+      await expect(editWorkoutUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
+        code: 404,
+        message: 'workout_not_found',
+      });
     });
   });
 
@@ -58,17 +53,12 @@ describe('editWorkoutUseCase', () => {
     it('should throw an error', async () => {
       const invalidData = {
         ...validData,
-        exerciseDetails: {
-          ...validData.exerciseDetails,
-          exerciseDetailsId: 'non_existent',
-        },
+        exerciseDetailsId: 'non_existent',
       };
 
       mockDependencies.retrieveExerciseDetailsById.mockResolvedValueOnce(null);
 
-      await expect(
-        editWorkoutUseCase(mockDependencies)(invalidData)
-      ).rejects.toMatchObject({
+      await expect(editWorkoutUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
         code: 404,
         message: 'exerciseDetails_not_found',
       });
