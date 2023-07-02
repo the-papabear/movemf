@@ -10,7 +10,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const { id } = req.query;
 
   if (!ObjectId.isValid(id as string)) {
-    return makeErrorResponse(res, 400, 'INVALID_EXERCISE_ID');
+    return makeErrorResponse(res, 400, 'INVALID_OBJECTID_FORMAT');
   }
 
   if (req.method === 'GET') {
