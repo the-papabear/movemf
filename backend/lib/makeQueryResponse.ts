@@ -10,8 +10,14 @@ export const makeSuccessResponse = (res: NextApiResponse, message?: string, data
 };
 
 export const makeErrorResponse = (res: NextApiResponse, code?: number, reason?: string) => {
-  return res.status(code || 500).json({
-    code: code || 500,
+  let parsedCode = 500;
+
+  if (code) {
+    parsedCode = code <= 100 || code >= 599 ? 500 : code;
+  }
+
+  return res.status(parsedCode).json({
+    code,
     success: false,
     reason: reason || 'SOMETHING_WENT_WRONG',
   });

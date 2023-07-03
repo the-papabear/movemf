@@ -6,7 +6,7 @@ export const mapToExerciseDetailsDTO = (exerciseDetails: ExerciseDetailsAggregat
   return {
     ...exerciseDetails,
     _id: exerciseDetails._id.toString(),
-    workoutId: exerciseDetails.workout.toString(),
+    workoutId: exerciseDetails.workoutId.toString(),
     exercise: mapToExerciseDTO(exerciseDetails.exercise),
   };
 };

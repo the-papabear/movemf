@@ -12,6 +12,6 @@ export interface ExerciseDetailsDB {
 }
 
 export interface ExerciseDetailsAggregationDB extends ExerciseDetailsDB {
-  workout: ObjectId;
+  workoutId: ObjectId;
   exercise: ExerciseDB;
 }

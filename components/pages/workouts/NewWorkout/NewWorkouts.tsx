@@ -25,8 +25,6 @@ export const NewWorkout = ({ exercises }: NewWorkoutProps) => {
     weight: undefined,
   });
 
-  console.log(formData);
-
   const handleChange = (event: any) => {
     const { name, value } = event.target;
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
