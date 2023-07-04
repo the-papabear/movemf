@@ -1,4 +1,36 @@
-.main {
+.wrapper {
+  max-width: 900px;
+}
+
+.tabList {
   display: flex;
-  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.tabTrigger {
+  width: 200px;
+  min-width: 144px;
+
+  cursor: pointer;
+  padding: 0.5rem;
+  border: 1px solid transparent;
+  background-color: white;
+  border-top-left-radius: 8px;
+}
+
+.tabTrigger:last-child {
+  border-top-left-radius: 0;
+  border-top-right-radius: 8px;
+}
+
+.tabTrigger[data-state='active'] {
+  background-color: var(--grey);
+}
+
+.tabTrigger:hover {
+  border-color: var(--grey);
+}
+
+.tabTrigger:focus {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }

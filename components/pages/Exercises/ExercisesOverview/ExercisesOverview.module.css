@@ -1,0 +1,29 @@
+.exercises__wrapper {
+  padding: 1rem;
+}
+
+.items {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  padding: 0.5rem;
+  border-radius: var(--border-radius);
+}
+
+.items:hover {
+  background-color: var(--grey);
+}
+
+.removeItem {
+  height: 18px;
+  color: #272c34;
+}
+
+.link {
+  all: unset;
+}
+
+.dropdown__item > * {
+  width: 100%;
+}
