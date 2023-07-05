@@ -3,3 +3,17 @@
   align-items: center;
   gap: 8px;
 }
+
+.completedAt {
+  margin: 1rem 0;
+}
+
+.datePicker__wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.form__element {
+  display: flex;
+  gap: 1rem;
+}

@@ -4,28 +4,13 @@
   cursor: pointer;
   font-size: 14px;
   padding: 0 12px;
-  line-height: 20px;
   height: 30px;
-  max-height: 30px;
-  background: #fff;
-  font-weight: 700;
-  border: 2px solid #cce3cc;
-  border-radius: 0;
+  background-color: var(--grey);
+  border: 1px solid var(--grey);
+  border-radius: var(--border-radius);
   color: #272c34;
-  transition-timing-function: ease-in-out;
-  transition-property: box-shadow;
-  transition-duration: 150ms;
 }
 
 .btn:hover {
   box-shadow: 0 2px 2px rgb(39 44 52 / 12%);
-}
-
-.btn__primary {
-  background: #cce3cc;
-  transition-property: background;
-}
-
-.btn__primary:hover {
-  background: #fff;
 }

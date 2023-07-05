@@ -1,2 +1,2 @@
-export * from 'components/layout/Workouts/';
-export * from 'components/layout/Exercises/';
+export * from '@components/pages/Workouts';
+export * from '@components/pages/Exercises';
