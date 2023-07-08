@@ -18,7 +18,7 @@ export const editWorkoutUseCase = (dependencies: EditWorkoutDependencies) => asy
     createExerciseDetailsUseCase,
   } = dependencies;
 
-  const { workoutId, exerciseDetailsId, exerciseId, notes, reps, time, weight, completedAt } = data;
+  const { workoutId, exerciseDetailsId, exerciseId, notes, reps, time, weight, completedAt, setNumber } = data;
 
   validateData();
 
@@ -30,48 +30,57 @@ export const editWorkoutUseCase = (dependencies: EditWorkoutDependencies) => asy
 
   let exerciseDetailsDTOs: ExerciseDetailsDTO[] = [];
 
-  if (exerciseId) {
-    if (exerciseDetailsId) {
-      const existingExerciseDetailsDTO = await retrieveExerciseDetailsById(exerciseDetailsId);
+  if (exerciseDetailsId) {
+    const existingExerciseDetailsDTO = await retrieveExerciseDetailsById(exerciseDetailsId);
 
-      if (!existingExerciseDetailsDTO) {
-        throw new BackendError(404, 'exerciseDetails_not_found');
-      }
-
-      await editExerciseDetailsUseCase({
-        reps,
-        time,
-        notes,
-        weight,
-        workoutId,
-        exerciseId,
-        exerciseDetailsId,
-      });
-
-      exerciseDetailsDTOs = await retrieveExerciseDetailsByIds(
-        existingWorkoutDTO.exerciseDetails.map((exerciseDetails) => exerciseDetails._id),
-      );
-    } else {
-      const exerciseDetailsDTO = await createExerciseDetailsUseCase({
-        reps,
-        time,
-        notes,
-        weight,
-        workoutId,
-        exerciseId,
-      });
-
-      const existingExerciseDetailsDTOs = await retrieveExerciseDetailsByIds(
-        existingWorkoutDTO.exerciseDetails.map((exerciseDetails) => exerciseDetails._id),
-      );
-      exerciseDetailsDTOs = [...existingExerciseDetailsDTOs, exerciseDetailsDTO];
+    if (!existingExerciseDetailsDTO) {
+      throw new BackendError(404, 'exerciseDetails_not_found');
     }
+
+    await editExerciseDetailsUseCase({
+      reps,
+      time,
+      notes,
+      weight,
+      workoutId,
+      exerciseId,
+      exerciseDetailsId,
+    });
+
+    exerciseDetailsDTOs = await retrieveExerciseDetailsByIds(
+      existingWorkoutDTO.exerciseDetails.map((exerciseDetails) => exerciseDetails._id),
+    );
+  } else {
+    if (!exerciseId) {
+      throw new BackendError(400, 'INVALID_EXERCISE_ID');
+    }
+
+    if (!setNumber) {
+      throw new BackendError(400, 'MISSING_SET_NUMBER');
+    }
+
+    const exerciseDetailsDTO = await createExerciseDetailsUseCase({
+      reps,
+      time,
+      notes,
+      weight,
+      setNumber,
+      workoutId,
+      exerciseId,
+    });
+
+    const existingExerciseDetailsDTOs = await retrieveExerciseDetailsByIds(
+      existingWorkoutDTO.exerciseDetails.map((exerciseDetails) => {
+        return exerciseDetails._id;
+      }),
+    );
+
+    exerciseDetailsDTOs = [...existingExerciseDetailsDTOs, exerciseDetailsDTO];
   }
 
   const workoutDTO = createWorkoutDTO(existingWorkoutDTO, exerciseDetailsDTOs);
 
   await updateWorkout(workoutDTO);
-
   return workoutDTO;
 
   function createWorkoutDTO(workout: WorkoutDTO, exerciseDetails: ExerciseDetailsDTO[]) {
@@ -107,6 +116,7 @@ interface EditWorkoutData {
   notes?: string;
   weight?: number;
   workoutId: string;
+  setNumber?: number;
   completedAt?: Date;
   exerciseId?: string;
   exerciseDetailsId?: string;

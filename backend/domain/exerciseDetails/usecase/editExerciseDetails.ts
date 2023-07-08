@@ -28,10 +28,24 @@ export const editExerciseDetailsUseCase =
       throw new BackendError(404, 'workout_not_found');
     }
 
-    const exerciseDTO = await retrieveExerciseById(exerciseId);
+    let exerciseDTO: ExerciseDTO;
 
-    if (!exerciseDTO) {
-      throw new BackendError(404, 'exercise_not_found');
+    if (exerciseId) {
+      const newExerciseDTO = await retrieveExerciseById(exerciseId);
+
+      if (!newExerciseDTO) {
+        throw new BackendError(404, 'exercise_not_found');
+      }
+
+      exerciseDTO = newExerciseDTO;
+    } else {
+      const existingExerciseDTO = await retrieveExerciseById(existingExerciseDetailsDTO.exercise._id);
+
+      if (!existingExerciseDTO) {
+        throw new BackendError(404, 'exercise_not_found');
+      }
+
+      exerciseDTO = existingExerciseDTO;
     }
 
     const exerciseDetailsDTO = createExerciseDetailsDTO(existingExerciseDetailsDTO, exerciseDTO);
@@ -62,10 +76,6 @@ export const editExerciseDetailsUseCase =
       if (!workoutId) {
         throw new BackendError(400, 'invalid_workoutId');
       }
-
-      if (!exerciseId) {
-        throw new BackendError(400, 'invalid_exerciseId');
-      }
     }
   };
 
@@ -82,6 +92,6 @@ export interface EditExerciseDetailsData {
   notes?: string;
   weight?: number;
   workoutId: string;
-  exerciseId: string;
+  exerciseId?: string;
   exerciseDetailsId: string;
 }

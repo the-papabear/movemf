@@ -8,7 +8,7 @@ export const createExerciseDetailsUseCase =
   (dependencies: CreateExerciseDetailsDependencies) => async (data: CreateExerciseDetailsData) => {
     const { generateObjectId, retrieveWorkoutById, retrieveExerciseById, persistExerciseDetails } = dependencies;
 
-    const { workoutId, exerciseId, notes, reps, time, weight } = data;
+    const { workoutId, exerciseId, notes, reps, time, weight, setNumber } = data;
 
     validateData();
 
@@ -35,6 +35,7 @@ export const createExerciseDetailsUseCase =
         notes,
         weight,
         exercise,
+        setNumber,
         workoutId,
         insertedAt: new Date(),
         _id: generateObjectId(),
@@ -80,6 +81,7 @@ export interface CreateExerciseDetailsData {
   time?: number;
   notes?: string;
   weight?: number;
+  setNumber: number;
   workoutId: string;
   exerciseId: string;
 }

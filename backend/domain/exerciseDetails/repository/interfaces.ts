@@ -9,6 +9,7 @@ export interface ExerciseDetailsDB {
   notes?: string;
   weight?: number;
   insertedAt: Date;
+  setNumber: number;
 }
 
 export interface ExerciseDetailsAggregationDB extends ExerciseDetailsDB {

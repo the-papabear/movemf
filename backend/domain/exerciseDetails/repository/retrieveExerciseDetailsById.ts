@@ -16,8 +16,8 @@ export const retrieveExerciseDetailsById = async (exerciseDetailsId: string) => 
           $match: {
             _id: new ObjectId(exerciseDetailsId),
           },
-          ...exerciseDetailsAggregation,
         },
+        ...exerciseDetailsAggregation,
       ])
       .toArray()
   )[0];

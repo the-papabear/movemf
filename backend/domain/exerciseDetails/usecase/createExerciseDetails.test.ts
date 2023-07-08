@@ -15,6 +15,7 @@ describe('createWorkoutDetailsUseCase', () => {
     reps: 1,
     time: 30,
     weight: 22,
+    setNumber: 1,
     notes: 'lorem ipsum',
     workoutId: 'workoutId',
     exerciseId: 'exerciseId',

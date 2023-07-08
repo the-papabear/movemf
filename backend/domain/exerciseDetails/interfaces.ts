@@ -10,6 +10,7 @@ export interface ExerciseDetailsDTO {
   weight?: number;
   insertedAt: Date;
   workoutId: string;
+  setNumber: number;
   exercise: ExerciseDTO;
 }
 
