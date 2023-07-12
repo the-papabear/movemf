@@ -2,18 +2,88 @@
   display: flex;
   align-items: center;
   gap: 8px;
+
+  margin-bottom: 2rem;
 }
 
-.completedAt {
-  margin: 1rem 0;
+/* Date picker component */
+.datePicker__container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .datePicker__wrapper {
   display: flex;
-  justify-content: space-between;
+  align-items: center;
 }
 
-.form__element {
-  display: flex;
+.datePicker {
+  z-index: 1;
+
+  height: 30px;
+
+  background-color: var(--grey);
+
+  border-color: transparent;
+  border-radius: 4px;
+}
+
+.dateAddBtn {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+
+  margin-left: -3px;
+}
+
+/* Exercise card */
+.exerciseDetails-cards__wrapper {
   gap: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.exercise {
+  display: grid;
+  grid-template-columns: 45% 45% 10%;
+  grid-template-rows: 30px 1fr;
+
+  background-color: var(--grey);
+
+  font-size: 14px;
+
+  padding: 0.5rem;
+  border-radius: 4px;
+}
+
+.exercise__setNumber {
+  grid-column: span 1;
+}
+
+.exercise__name {
+  grid-column-start: 2;
+}
+
+.exercise__reps {
+  grid-row-start: 2;
+}
+
+.exercise__weights {
+  grid-row-start: 2;
+  grid-column-start: 2;
+}
+
+.exercise__remove {
+  grid-column-start: 3;
+  grid-row: span 2;
+  align-self: center;
+  justify-self: end;
+}
+
+.submit-btn {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
 }

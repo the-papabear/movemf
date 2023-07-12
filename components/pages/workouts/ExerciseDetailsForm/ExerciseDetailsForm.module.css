@@ -1,0 +1,19 @@
+.select-exercise {
+  background-color: var(--grey);
+  border-color: transparent;
+  border-radius: 4px;
+  height: 30px;
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.input__wrapper {
+  gap: 0.5rem;
+  padding-left: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.input {
+  height: 30px;
+}

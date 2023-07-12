@@ -1,37 +1,43 @@
 import { useState } from 'react';
+
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import { ArrowDownRight, ArrowLeftCircle } from 'react-feather';
-import * as Collapsible from '@radix-ui/react-collapsible';
+import { ArrowLeftCircle, Plus, X } from 'react-feather';
 
 import { Button } from '@components/common/';
+import { ExerciseDTO } from '@components/pages/Exercises/interfaces';
+import { ExerciseDetailsForm } from '@components/pages/Workouts/ExerciseDetailsForm/ExerciseDetailsForm';
 
-import styles from '@components/pages/Workouts/NewWorkout/NewWorkouts.module.css';
+import s from '@components/pages/Workouts/NewWorkout/NewWorkouts.module.css';
 
 interface NewWorkoutProps {
-  exercises: any[];
+  exercises: ExerciseDTO[];
 }
 
 export const NewWorkout = ({ exercises }: NewWorkoutProps) => {
   const router = useRouter();
 
+  const [exerciseDetailsInput, setExerciseDetailsInput] = useState<any[]>([]);
+
   const [formData, setFormData] = useState({
+    notes: '',
     workoutId: '',
     exerciseId: '',
-    completedAt: new Date(Date.now()).toISOString().split('.')[0],
     reps: undefined,
     time: undefined,
-    notes: undefined,
     weight: undefined,
+    setNumber: undefined,
+    completedAt: new Date(Date.now()).toISOString().split('.')[0],
   });
 
   const handleChange = (event: any) => {
     const { name, value } = event.target;
-    setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
-  };
+    let numberValue: any;
 
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
+    if (name === 'reps' || name === 'time' || name === 'weight' || name === 'setNumber') {
+      numberValue = Number(value);
+    }
+    setFormData((prevFormData) => ({ ...prevFormData, [name]: numberValue ? numberValue : value }));
   };
 
   const createWorkout = async () => {
@@ -39,13 +45,30 @@ export const NewWorkout = ({ exercises }: NewWorkoutProps) => {
     setFormData({ ...formData, workoutId: res.data.data._id });
   };
 
-  const onFormSubmit = async () => {
+  const onFormSubmit = () => {
+    router.push('/');
+  };
+
+  const onAddExerciseClick = async () => {
     await axios.patch(`/api/workouts/${formData.workoutId}`, formData);
+
+    setExerciseDetailsInput((arr) => [...arr, formData]);
+
+    setFormData({
+      ...formData,
+      notes: '',
+      exerciseId: '',
+      reps: undefined,
+      time: undefined,
+      weight: undefined,
+      setNumber: undefined,
+      completedAt: new Date(Date.now()).toISOString().split('.')[0],
+    });
   };
 
   return (
     <>
-      <header className={styles.header}>
+      <header className={s['header']}>
         <ArrowLeftCircle
           cursor="pointer"
           onClick={() => {
@@ -54,69 +77,53 @@ export const NewWorkout = ({ exercises }: NewWorkoutProps) => {
         />
         <h2>New Workout</h2>
       </header>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="completedAt">
-          <h4 className={styles.completedAt}>Completed at</h4>
-        </label>
-        <div className={styles.datePicker__wrapper}>
-          <input type="datetime-local" name="completedAt" value={formData.completedAt} onChange={handleChange} />
-          <Button type="submit" onClick={createWorkout}>
-            Next
-          </Button>
+
+      <section className={s['datePicker__container']}>
+        <h4>Completed at</h4>
+        <div className={s['datePicker__wrapper']}>
+          <input
+            name="completedAt"
+            type="datetime-local"
+            onChange={handleChange}
+            className={s['datePicker']}
+            value={formData.completedAt}
+          />
+          {!formData.workoutId && (
+            <Button type="submit" onClick={createWorkout} className={s['dateAddBtn']}>
+              <Plus size={14} />
+            </Button>
+          )}
         </div>
-      </form>
-      {formData.workoutId && (
-        <form onSubmit={handleSubmit}>
-          <Collapsible.Root>
-            <Collapsible.Trigger>
-              <>
-                <ArrowDownRight />
-                <select name="exerciseId" id="exerciseId" onChange={handleChange}>
-                  <option value="" disabled selected hidden>
-                    Select an exercise
-                  </option>
-                  {exercises.map((exercise) => (
-                    <option value={exercise._id} key={exercise._id}>
-                      {exercise.name}
-                    </option>
-                  ))}
-                </select>
-              </>
-            </Collapsible.Trigger>
-            <Collapsible.Content>
-              {formData.exerciseId && (
-                <>
-                  <input
-                    type="number"
-                    name="reps"
-                    placeholder="Number of reps"
-                    value={formData.reps}
-                    onChange={handleChange}
-                  />
-                  <input
-                    type="number"
-                    name="weight"
-                    placeholder="Weights"
-                    value={formData.weight}
-                    onChange={handleChange}
-                  />
-                  <input
-                    type="number"
-                    name="time"
-                    placeholder="How long did it take?"
-                    value={formData.time}
-                    onChange={handleChange}
-                  />
-                  <input type="text" name="notes" placeholder="Notes" value={formData.notes} onChange={handleChange} />
-                </>
-              )}
-              <Button>Add another Exercise</Button>
-              <Button>Add Rest period</Button>
-            </Collapsible.Content>
-          </Collapsible.Root>
-          <Button>Add workout</Button>
-        </form>
-      )}
+      </section>
+
+      <section className={s['exerciseDetails-cards__wrapper']}>
+        <h5>Workout overview</h5>
+        {exerciseDetailsInput.map((exerciseDetails, index) => (
+          <div key={index} className={s['exercise']}>
+            <span className={s['exercise__setNumber']}>
+              <strong>Set</strong> {exerciseDetails.setNumber}
+            </span>
+            <span className={s['exercise__name']}>
+              {exercises.find((exercise) => exercise._id === exerciseDetails.exerciseId)?.name}
+            </span>
+            <span className={s['exercise__reps']}>
+              {exerciseDetails.reps || 0} <strong>Reps</strong>
+            </span>
+            <span className={s['exercise__weights']}>
+              {exerciseDetails.weights || 0} <strong>Kgs</strong>
+            </span>
+            <X size={14} className={s['exercise__remove']} />
+          </div>
+        ))}
+      </section>
+
+      <ExerciseDetailsForm exercises={exercises} formData={formData} handleChange={handleChange} />
+
+      {formData.exerciseId && <Button onClick={onAddExerciseClick}>Add</Button>}
+
+      <footer className={s['submit-btn']}>
+        <Button onClick={onFormSubmit}>Save workout</Button>
+      </footer>
     </>
   );
 };
