@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { removeExercise } from 'backend/domain/exercise/repository/removeExercise';
-import { makeErrorResponse, makeSuccessResponse } from 'backend/lib/makeQueryResponse';
+import { removeExercise } from '@backend/domain/exercise/repository/removeExercise';
+import { makeErrorResponse, makeSuccessResponse } from '@backend/lib/makeQueryResponse';
 
 export const deleteExercise = async (request: NextApiRequest, response: NextApiResponse) => {
   const { id } = request.query;

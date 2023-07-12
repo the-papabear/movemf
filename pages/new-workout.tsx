@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Head from 'next/head';
 
-import { NewWorkout } from '@components/pages/Workouts/NewWorkout/NewWorkouts';
+import { NewWorkout } from '@/pages/Workouts/NewWorkout/NewWorkouts';
 
 export default function Workout() {
   const [exercises, setExercises] = useState<any>();

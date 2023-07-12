@@ -1,3 +1,3 @@
-export * from '@components/common/Modal';
-export * from '@components/common/Accordion';
-export * from '@components/common/Button';
+export * from '@/common/Modal';
+export * from '@/common/Button';
+export * from '@/common/Accordion';

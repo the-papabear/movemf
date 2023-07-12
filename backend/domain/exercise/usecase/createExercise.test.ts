@@ -1,5 +1,5 @@
-import { ExerciseType } from 'backend/domain/exercise/interfaces';
-import { createExerciseUseCase } from 'backend/domain/exercise/usecase/createExercise';
+import { ExerciseType } from '@backend/domain/exercise/interfaces';
+import { createExerciseUseCase } from '@backend/domain/exercise/usecase/createExercise';
 
 describe('createExerciseUseCase', () => {
   const mockDependencies = {
@@ -21,9 +21,10 @@ describe('createExerciseUseCase', () => {
         name: '',
       };
 
-      await expect(
-        createExerciseUseCase(mockDependencies)(invalidData)
-      ).rejects.toMatchObject({ code: 400, message: 'name_missing' });
+      await expect(createExerciseUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
+        code: 400,
+        message: 'name_missing',
+      });
     });
   });
 
@@ -34,9 +35,10 @@ describe('createExerciseUseCase', () => {
         link: '',
       };
 
-      await expect(
-        createExerciseUseCase(mockDependencies)(invalidData)
-      ).rejects.toMatchObject({ code: 400, message: 'invalid_link' });
+      await expect(createExerciseUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
+        code: 400,
+        message: 'invalid_link',
+      });
     });
   });
 
@@ -51,9 +53,10 @@ describe('createExerciseUseCase', () => {
         name: 'Duplicate Name',
       });
 
-      await expect(
-        createExerciseUseCase(mockDependencies)(invalidData)
-      ).rejects.toMatchObject({ code: 409, message: 'duplicate_name' });
+      await expect(createExerciseUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
+        code: 409,
+        message: 'duplicate_name',
+      });
     });
   });
 
@@ -67,9 +70,7 @@ describe('createExerciseUseCase', () => {
     });
 
     it('should return a valid ExerciseDTO', async () => {
-      const exerciseDTO = await createExerciseUseCase(mockDependencies)(
-        validData
-      );
+      const exerciseDTO = await createExerciseUseCase(mockDependencies)(validData);
 
       assertValidExerciseDTO();
 

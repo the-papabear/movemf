@@ -1,4 +1,4 @@
-import { editWorkoutUseCase } from 'backend/domain/workout/usecase/editWorkout';
+import { editWorkoutUseCase } from '@backend/domain/workout/usecase/editWorkout';
 
 describe('editWorkoutUseCase', () => {
   const workout = { id: 'workoutId' };

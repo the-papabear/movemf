@@ -1,7 +1,7 @@
-import { exerciseDetailsAggregation } from 'backend/domain/exerciseDetails/repository/aggregations';
-import { ExerciseDetailsAggregationDB } from 'backend/domain/exerciseDetails/repository/interfaces';
-import { mapToExerciseDetailsDTO } from 'backend/domain/exerciseDetails/repository/mapper';
-import dbConnection from 'backend/mongoConnection';
+import { exerciseDetailsAggregation } from '@backend/domain/exerciseDetails/repository/aggregations';
+import { ExerciseDetailsAggregationDB } from '@backend/domain/exerciseDetails/repository/interfaces';
+import { mapToExerciseDetailsDTO } from '@backend/domain/exerciseDetails/repository/mapper';
+import dbConnection from '@backend/mongoConnection';
 import { WithId } from 'mongodb';
 
 export const retrieveExerciseDetails = async () => {

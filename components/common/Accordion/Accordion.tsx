@@ -2,7 +2,7 @@ import { PropsWithChildren } from 'react';
 
 import { Root, Item, Trigger, Content } from '@radix-ui/react-accordion';
 
-import styles from '@components/common/Accordion/Accordion.module.css';
+import styles from '@/common/Accordion/Accordion.module.css';
 
 type AccordionProps = {
   label: string;

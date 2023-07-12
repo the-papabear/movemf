@@ -1,6 +1,6 @@
 import { PropsWithChildren } from 'react';
 
-import styles from '@components/common/Button/Button.module.css';
+import styles from '@/common/Button/Button.module.css';
 
 interface ButtonProps {
   title?: string;

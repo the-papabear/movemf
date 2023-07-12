@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-import { Modal } from '@components/common';
-import { ExerciseDTO } from '@components/pages/Exercises/interfaces';
-import { CreateOrEditExercise } from '@components/pages/Exercises/CreateExercise/CreateExercise';
-import { ExercisesOverview } from '@components/pages/Exercises/ExercisesOverview/ExercisesOverview';
+import { Modal } from '@/common';
+import { ExerciseDTO } from '@/pages/Exercises/interfaces';
+import { CreateOrEditExercise } from '@/pages/Exercises/CreateExercise/CreateExercise';
+import { ExercisesOverview } from '@/pages/Exercises/ExercisesOverview/ExercisesOverview';
 
-import styles from '@components/pages/Exercises/Exercises.module.css';
+import styles from '@/pages/Exercises/Exercises.module.css';
 
 export const Exercises = () => {
   const [exercises, setExercises] = useState<ExerciseDTO[]>([]);

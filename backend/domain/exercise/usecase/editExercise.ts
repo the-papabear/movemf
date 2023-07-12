@@ -3,64 +3,61 @@ import {
   IUpdateExercise,
   IRetrieveExerciseById,
   IRetrieveExerciseByName,
-} from 'backend/domain/exercise/interfaces';
-import { BackendError } from 'backend/errors';
+} from '@backend/domain/exercise/interfaces';
+import { BackendError } from '@backend/errors';
 
-export const editExerciseUseCase =
-  (dependencies: EditExerciseDependencies) =>
-  async (data: EditExerciseData) => {
-    const { retrieveExerciseById, updateExercise, retrieveExerciseByName } =
-      dependencies;
+export const editExerciseUseCase = (dependencies: EditExerciseDependencies) => async (data: EditExerciseData) => {
+  const { retrieveExerciseById, updateExercise, retrieveExerciseByName } = dependencies;
 
-    const { exerciseId, name, link } = data;
+  const { exerciseId, name, link } = data;
 
-    validateData();
+  validateData();
 
-    const existingExerciseDTO = await retrieveExerciseById(exerciseId);
-    if (!existingExerciseDTO) {
-      throw new BackendError(404, 'exercise_not_found');
+  const existingExerciseDTO = await retrieveExerciseById(exerciseId);
+  if (!existingExerciseDTO) {
+    throw new BackendError(404, 'exercise_not_found');
+  }
+
+  if (name) {
+    const duplicateExerciseDTO = await retrieveExerciseByName(name);
+
+    if (duplicateExerciseDTO) {
+      throw new BackendError(409, 'duplicate_name');
     }
+  }
 
-    if (name) {
-      const duplicateExerciseDTO = await retrieveExerciseByName(name);
+  const exerciseDTO = createExerciseDTO(existingExerciseDTO);
 
-      if (duplicateExerciseDTO) {
-        throw new BackendError(409, 'duplicate_name');
-      }
-    }
+  await updateExercise(exerciseDTO);
 
-    const exerciseDTO = createExerciseDTO(existingExerciseDTO);
+  return exerciseDTO;
 
-    await updateExercise(exerciseDTO);
+  function createExerciseDTO(exercise: ExerciseDTO): ExerciseDTO {
+    const exerciseDTO = {
+      ...exercise,
+    };
+
+    if (name !== undefined) exerciseDTO.name = name;
+
+    if (link !== undefined) exerciseDTO.link = link;
 
     return exerciseDTO;
+  }
 
-    function createExerciseDTO(exercise: ExerciseDTO): ExerciseDTO {
-      const exerciseDTO = {
-        ...exercise,
-      };
-
-      if (name !== undefined) exerciseDTO.name = name;
-
-      if (link !== undefined) exerciseDTO.link = link;
-
-      return exerciseDTO;
+  function validateData() {
+    if (!exerciseId) {
+      throw new BackendError(400, 'missing_exerciseId');
     }
 
-    function validateData() {
-      if (!exerciseId) {
-        throw new BackendError(400, 'missing_exerciseId');
-      }
-
-      if (typeof name === 'string' && !name.trim()) {
-        throw new BackendError(400, 'invalid_name');
-      }
-
-      if (typeof link === 'string' && !link.trim()) {
-        throw new BackendError(400, 'invalid_link');
-      }
+    if (typeof name === 'string' && !name.trim()) {
+      throw new BackendError(400, 'invalid_name');
     }
-  };
+
+    if (typeof link === 'string' && !link.trim()) {
+      throw new BackendError(400, 'invalid_link');
+    }
+  }
+};
 
 interface EditExerciseData {
   name?: string;

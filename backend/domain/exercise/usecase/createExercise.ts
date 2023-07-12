@@ -3,50 +3,47 @@ import {
   ExerciseType,
   IPersistExercise,
   IRetrieveExerciseByName,
-} from 'backend/domain/exercise/interfaces';
-import { BackendError } from 'backend/errors';
-import { IGenerateObjectId } from 'backend/interfaces';
+} from '@backend/domain/exercise/interfaces';
+import { BackendError } from '@backend/errors';
+import { IGenerateObjectId } from '@backend/interfaces';
 
-export const createExerciseUseCase =
-  (dependencies: CreateExerciseDependencies) =>
-  async (data: CreateExerciseData) => {
-    const { persistExercise, generateObjectId, retrieveExerciseByName } =
-      dependencies;
+export const createExerciseUseCase = (dependencies: CreateExerciseDependencies) => async (data: CreateExerciseData) => {
+  const { persistExercise, generateObjectId, retrieveExerciseByName } = dependencies;
 
-    const { name, link, type } = data;
+  const { name, link, type } = data;
 
-    validateData();
+  validateData();
 
-    const existingExerciseDTO = await retrieveExerciseByName(name);
+  const existingExerciseDTO = await retrieveExerciseByName(name);
 
-    if (existingExerciseDTO) {
-      throw new BackendError(409, 'duplicate_name');
+  if (existingExerciseDTO) {
+    throw new BackendError(409, 'duplicate_name');
+  }
+
+  const exerciseDTO = createExerciseDTO();
+
+  await persistExercise(exerciseDTO);
+
+  return exerciseDTO;
+
+  function createExerciseDTO(): ExerciseDTO {
+    return {
+      name,
+      link,
+      type,
+      _id: generateObjectId(),
+    };
+  }
+
+  function validateData() {
+    if (!name) {
+      throw new BackendError(400, 'name_missing');
     }
-
-    const exerciseDTO = createExerciseDTO();
-
-    await persistExercise(exerciseDTO);
-
-    return exerciseDTO;
-
-    function createExerciseDTO(): ExerciseDTO {
-      return {
-        name,
-        link,
-        type,
-        _id: generateObjectId(),
-      };
+    if (typeof link === 'string' && !link.trim()) {
+      throw new BackendError(400, 'invalid_link');
     }
-
-    function validateData() {
-      if (!name) {
-        throw new BackendError(400, 'name_missing');
-      }
-      if (typeof link === 'string' && !link.trim()) {
-        throw new BackendError(400, 'invalid_link');
-      }
-    }
-  };
+  }
+};
 
 export interface CreateExerciseData {
   name: string;

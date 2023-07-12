@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongodb';
 
-import connectToDB from 'backend/mongoConnection';
+import connectToDB from '@backend/mongoConnection';
 
 export default async function handler(req: any, res: any) {
   const env = process.env.NODE_ENV;

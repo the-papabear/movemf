@@ -1,7 +1,7 @@
 import { PropsWithChildren } from 'react';
 import { Root, Trigger, Portal, Content, Arrow } from '@radix-ui/react-dropdown-menu';
 
-import styles from '@components/common/DropdownMenu/DropdownMenu.module.css';
+import styles from '@/common/DropdownMenu/DropdownMenu.module.css';
 
 interface DropdownMenuProps {
   trigger: JSX.Element;

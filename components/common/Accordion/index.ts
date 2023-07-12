@@ -1,1 +1,1 @@
-export * from 'components/common/Accordion';
+export * from '@/common/Accordion';

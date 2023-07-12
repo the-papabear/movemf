@@ -1,7 +1,7 @@
 import { ObjectId } from 'mongodb';
 
-import dbConnection from 'backend/mongoConnection';
-import { ExerciseDetailsDTO } from 'backend/domain/exerciseDetails/interfaces';
+import dbConnection from '@backend/mongoConnection';
+import { ExerciseDetailsDTO } from '@backend/domain/exerciseDetails/interfaces';
 
 export const updateExerciseDetails = async (exerciseDetails: ExerciseDetailsDTO) => {
   const connection = await dbConnection();

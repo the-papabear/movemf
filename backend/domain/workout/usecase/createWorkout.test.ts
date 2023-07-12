@@ -1,4 +1,4 @@
-import { createWorkoutUseCase } from 'backend/domain/workout/usecase/createWorkout';
+import { createWorkoutUseCase } from '@backend/domain/workout/usecase/createWorkout';
 
 describe('createWorkoutUseCase', () => {
   const mockDependencies = {
@@ -20,9 +20,7 @@ describe('createWorkoutUseCase', () => {
     });
 
     it('should return a valid workoutDTO', async () => {
-      const workoutDTO = await createWorkoutUseCase(mockDependencies)(
-        validData
-      );
+      const workoutDTO = await createWorkoutUseCase(mockDependencies)(validData);
 
       expect(workoutDTO._id).toBeDefined();
       expect(workoutDTO.exerciseDetails).toEqual([]);

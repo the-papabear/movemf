@@ -1,4 +1,4 @@
-import { editExerciseDetailsUseCase } from 'backend/domain/exerciseDetails/usecase/editExerciseDetails';
+import { editExerciseDetailsUseCase } from '@backend/domain/exerciseDetails/usecase/editExerciseDetails';
 
 describe('editExerciseDetailsUseCase', () => {
   const workout = { _id: 'workoutId' };
@@ -25,9 +25,7 @@ describe('editExerciseDetailsUseCase', () => {
         exerciseDetailsId: '',
       };
 
-      await expect(
-        editExerciseDetailsUseCase(mockDependencies)(invalidData)
-      ).rejects.toMatchObject({
+      await expect(editExerciseDetailsUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
         code: 400,
         message: 'invalid_exerciseDetailsId',
       });
@@ -41,9 +39,7 @@ describe('editExerciseDetailsUseCase', () => {
         workoutId: '',
       };
 
-      await expect(
-        editExerciseDetailsUseCase(mockDependencies)(invalidData)
-      ).rejects.toMatchObject({
+      await expect(editExerciseDetailsUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
         code: 400,
         message: 'invalid_workoutId',
       });
@@ -57,9 +53,7 @@ describe('editExerciseDetailsUseCase', () => {
         exerciseId: '',
       };
 
-      await expect(
-        editExerciseDetailsUseCase(mockDependencies)(invalidData)
-      ).rejects.toMatchObject({
+      await expect(editExerciseDetailsUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
         code: 400,
         message: 'invalid_exerciseId',
       });
@@ -75,9 +69,7 @@ describe('editExerciseDetailsUseCase', () => {
 
       mockDependencies.retrieveExerciseDetailsById.mockResolvedValueOnce(null);
 
-      await expect(
-        editExerciseDetailsUseCase(mockDependencies)(invalidData)
-      ).rejects.toMatchObject({
+      await expect(editExerciseDetailsUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
         code: 404,
         message: 'exerciseDetails_not_found',
       });
@@ -93,9 +85,7 @@ describe('editExerciseDetailsUseCase', () => {
 
       mockDependencies.retrieveWorkoutById.mockResolvedValueOnce(null);
 
-      await expect(
-        editExerciseDetailsUseCase(mockDependencies)(invalidData)
-      ).rejects.toMatchObject({
+      await expect(editExerciseDetailsUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
         code: 404,
         message: 'workout_not_found',
       });
@@ -111,9 +101,7 @@ describe('editExerciseDetailsUseCase', () => {
 
       mockDependencies.retrieveExerciseById.mockResolvedValueOnce(null);
 
-      await expect(
-        editExerciseDetailsUseCase(mockDependencies)(invalidData)
-      ).rejects.toMatchObject({
+      await expect(editExerciseDetailsUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
         code: 404,
         message: 'exercise_not_found',
       });

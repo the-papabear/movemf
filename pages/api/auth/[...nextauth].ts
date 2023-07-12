@@ -3,7 +3,7 @@ import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import NextAuth, { NextAuthOptions, SessionStrategy } from 'next-auth';
 
-import { mongoClient } from 'backend/mongoConnection';
+import { mongoClient } from '@backend/mongoConnection';
 
 const options: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,

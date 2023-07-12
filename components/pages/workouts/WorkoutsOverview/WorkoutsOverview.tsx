@@ -1,6 +1,6 @@
-import { WorkoutDTO } from '@components/pages/Workouts/interfaces';
+import { WorkoutDTO } from '@/pages/Workouts/interfaces';
 
-import styles from '@components/pages/Workouts/WorkoutsOverview/WorkoutsOverview.module.css';
+import styles from '@/pages/Workouts/WorkoutsOverview/WorkoutsOverview.module.css';
 
 interface WorkoutsOverviewProps {
   workouts: WorkoutDTO[];

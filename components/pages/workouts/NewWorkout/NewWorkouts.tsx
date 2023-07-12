@@ -4,11 +4,11 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import { ArrowLeftCircle, Plus, X } from 'react-feather';
 
-import { Button } from '@components/common/';
-import { ExerciseDTO } from '@components/pages/Exercises/interfaces';
-import { ExerciseDetailsForm } from '@components/pages/Workouts/ExerciseDetailsForm/ExerciseDetailsForm';
+import { Button } from '@/common';
+import { ExerciseDTO } from '@/pages/Exercises/interfaces';
+import { ExerciseDetailsForm } from '@/pages/Workouts/ExerciseDetailsForm/ExerciseDetailsForm';
 
-import s from '@components/pages/Workouts/NewWorkout/NewWorkouts.module.css';
+import s from '@/pages/Workouts/NewWorkout/NewWorkouts.module.css';
 
 interface NewWorkoutProps {
   exercises: ExerciseDTO[];

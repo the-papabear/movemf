@@ -1,1 +1,1 @@
-export * from '@components/common/Modal/Modal';
+export * from '@/common/Modal/Modal';

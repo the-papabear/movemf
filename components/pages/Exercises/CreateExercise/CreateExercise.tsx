@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-import { Button } from '@components/common';
+import { Button } from '@/common';
 
-import styles from '@components/pages/Exercises/CreateExercise/CreateExercise.module.css';
+import styles from '@/pages/Exercises/CreateExercise/CreateExercise.module.css';
 
 interface CreateOrEditExerciseProps {
   submitExercise: (e: any) => void;

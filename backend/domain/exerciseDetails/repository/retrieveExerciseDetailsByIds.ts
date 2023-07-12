@@ -1,9 +1,9 @@
 import { ObjectId, WithId } from 'mongodb';
 
-import dbConnection from 'backend/mongoConnection';
-import { mapToExerciseDetailsDTO } from 'backend/domain/exerciseDetails/repository/mapper';
-import { ExerciseDetailsAggregationDB } from 'backend/domain/exerciseDetails/repository/interfaces';
-import { exerciseDetailsAggregation } from 'backend/domain/exerciseDetails/repository/aggregations';
+import dbConnection from '@backend/mongoConnection';
+import { mapToExerciseDetailsDTO } from '@backend/domain/exerciseDetails/repository/mapper';
+import { ExerciseDetailsAggregationDB } from '@backend/domain/exerciseDetails/repository/interfaces';
+import { exerciseDetailsAggregation } from '@backend/domain/exerciseDetails/repository/aggregations';
 
 export const retrieveExerciseDetailsByIds = async (exerciseDetailsIds: string[]) => {
   const db = await dbConnection();

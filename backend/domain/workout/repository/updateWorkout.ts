@@ -1,7 +1,7 @@
 import { ObjectId } from 'mongodb';
 
-import dbConnection from 'backend/mongoConnection';
-import { WorkoutDTO } from 'backend/domain/workout/interfaces';
+import dbConnection from '@backend/mongoConnection';
+import { WorkoutDTO } from '@backend/domain/workout/interfaces';
 
 export const updateWorkout = async (workout: WorkoutDTO) => {
   const connection = await dbConnection();

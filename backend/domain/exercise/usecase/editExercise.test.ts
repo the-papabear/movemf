@@ -1,4 +1,4 @@
-import { editExerciseUseCase } from 'backend/domain/exercise/usecase/editExercise';
+import { editExerciseUseCase } from '@backend/domain/exercise/usecase/editExercise';
 
 describe('editExerciseUseCase', () => {
   const mockDependencies = {
@@ -24,9 +24,10 @@ describe('editExerciseUseCase', () => {
         exerciseId: '',
       };
 
-      await expect(
-        editExerciseUseCase(mockDependencies)(invalidData)
-      ).rejects.toMatchObject({ code: 400, message: 'missing_exerciseId' });
+      await expect(editExerciseUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
+        code: 400,
+        message: 'missing_exerciseId',
+      });
     });
   });
 
@@ -38,9 +39,10 @@ describe('editExerciseUseCase', () => {
       };
       mockDependencies.retrieveExerciseById.mockResolvedValueOnce(null);
 
-      await expect(
-        editExerciseUseCase(mockDependencies)(invalidData)
-      ).rejects.toMatchObject({ code: 404, message: 'exercise_not_found' });
+      await expect(editExerciseUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
+        code: 404,
+        message: 'exercise_not_found',
+      });
     });
   });
 
@@ -51,9 +53,10 @@ describe('editExerciseUseCase', () => {
         name: '',
       };
 
-      await expect(
-        editExerciseUseCase(mockDependencies)(invalidData)
-      ).rejects.toMatchObject({ code: 400, message: 'invalid_name' });
+      await expect(editExerciseUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
+        code: 400,
+        message: 'invalid_name',
+      });
     });
   });
 
@@ -64,9 +67,10 @@ describe('editExerciseUseCase', () => {
         link: '',
       };
 
-      await expect(
-        editExerciseUseCase(mockDependencies)(invalidData)
-      ).rejects.toMatchObject({ code: 400, message: 'invalid_link' });
+      await expect(editExerciseUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
+        code: 400,
+        message: 'invalid_link',
+      });
     });
   });
 
@@ -81,9 +85,10 @@ describe('editExerciseUseCase', () => {
         name: 'Duplicate Name',
       });
 
-      await expect(
-        editExerciseUseCase(mockDependencies)(invalidData)
-      ).rejects.toMatchObject({ code: 409, message: 'duplicate_name' });
+      await expect(editExerciseUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
+        code: 409,
+        message: 'duplicate_name',
+      });
     });
   });
 
@@ -110,9 +115,7 @@ describe('editExerciseUseCase', () => {
     });
 
     it('should return a valid exerciseDTO when all fields are set', async () => {
-      const exerciseDTO = await editExerciseUseCase(mockDependencies)(
-        validData
-      );
+      const exerciseDTO = await editExerciseUseCase(mockDependencies)(validData);
 
       expect(exerciseDTO._id).toBeDefined();
       expect(exerciseDTO.name).toMatch(validData.name);

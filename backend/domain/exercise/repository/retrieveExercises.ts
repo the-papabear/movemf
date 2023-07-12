@@ -1,6 +1,6 @@
-import dbConnection from 'backend/mongoConnection';
-import { ExerciseDB } from 'backend/domain/exercise/repository/interfaces';
-import { mapToExerciseDTO } from 'backend/domain/exercise/repository/mapper';
+import dbConnection from '@backend/mongoConnection';
+import { ExerciseDB } from '@backend/domain/exercise/repository/interfaces';
+import { mapToExerciseDTO } from '@backend/domain/exercise/repository/mapper';
 
 export const retrieveExercises = async () => {
   const db = await dbConnection();

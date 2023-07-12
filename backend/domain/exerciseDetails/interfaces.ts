@@ -1,6 +1,6 @@
-import { ExerciseDTO } from 'backend/domain/exercise/interfaces';
-import { EditExerciseDetailsData } from 'backend/domain/exerciseDetails/usecase/editExerciseDetails';
-import { CreateExerciseDetailsData } from 'backend/domain/exerciseDetails/usecase/createExerciseDetails';
+import { ExerciseDTO } from '@backend/domain/exercise/interfaces';
+import { EditExerciseDetailsData } from '@backend/domain/exerciseDetails/usecase/editExerciseDetails';
+import { CreateExerciseDetailsData } from '@backend/domain/exerciseDetails/usecase/createExerciseDetails';
 
 export interface ExerciseDetailsDTO {
   _id: string;

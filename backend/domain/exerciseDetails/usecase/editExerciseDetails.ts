@@ -1,11 +1,11 @@
-import { BackendError } from 'backend/errors';
+import { BackendError } from '@backend/errors';
 import {
   ExerciseDetailsDTO,
   IUpdateExerciseDetails,
   IRetrieveExerciseDetailsById,
-} from 'backend/domain/exerciseDetails/interfaces';
-import { IRetrieveWorkoutById } from 'backend/domain/workout/interfaces';
-import { ExerciseDTO, IRetrieveExerciseById } from 'backend/domain/exercise/interfaces';
+} from '@backend/domain/exerciseDetails/interfaces';
+import { IRetrieveWorkoutById } from '@backend/domain/workout/interfaces';
+import { ExerciseDTO, IRetrieveExerciseById } from '@backend/domain/exercise/interfaces';
 
 export const editExerciseDetailsUseCase =
   (dependencies: EditExerciseDetailsDependencies) => async (data: EditExerciseDetailsData) => {

@@ -1,6 +1,6 @@
-import { ExerciseDTO } from '@components/pages/Exercises/interfaces';
+import { ExerciseDTO } from '@/pages/Exercises/interfaces';
 
-import s from '@components/pages/Workouts/ExerciseDetailsForm/ExerciseDetailsForm.module.css';
+import s from '@/pages/Workouts/ExerciseDetailsForm/ExerciseDetailsForm.module.css';
 
 interface ExerciseDetailsFormProps {
   formData: any;

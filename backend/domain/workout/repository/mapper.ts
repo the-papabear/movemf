@@ -1,6 +1,6 @@
-import { WorkoutDTO } from 'backend/domain/workout/interfaces';
-import { WorkoutAggregationDB } from 'backend/domain/workout/repository/interfaces';
-import { mapToExerciseDetailsDTO } from 'backend/domain/exerciseDetails/repository/mapper';
+import { WorkoutDTO } from '@backend/domain/workout/interfaces';
+import { WorkoutAggregationDB } from '@backend/domain/workout/repository/interfaces';
+import { mapToExerciseDetailsDTO } from '@backend/domain/exerciseDetails/repository/mapper';
 
 export const mapToWorkoutDTO = (workout: WorkoutAggregationDB): WorkoutDTO => {
   return {

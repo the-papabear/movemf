@@ -1,9 +1,9 @@
 import { ObjectId } from 'mongodb';
 
-import dbConnection from 'backend/mongoConnection';
-import { ExerciseDTO } from 'backend/domain/exercise/interfaces';
-import { ExerciseDB } from 'backend/domain/exercise/repository/interfaces';
-import { mapToExerciseDTO } from 'backend/domain/exercise/repository/mapper';
+import dbConnection from '@backend/mongoConnection';
+import { ExerciseDTO } from '@backend/domain/exercise/interfaces';
+import { ExerciseDB } from '@backend/domain/exercise/repository/interfaces';
+import { mapToExerciseDTO } from '@backend/domain/exercise/repository/mapper';
 
 export const retrieveExercisesByIds = async (exerciseIds: string[]) => {
   const db = await dbConnection();

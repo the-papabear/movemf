@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 
-import { Button } from '@components/common/';
-import { WorkoutDTO } from '@components/pages/Workouts/interfaces';
-import { WorkoutsOverview } from '@components/pages/Workouts/WorkoutsOverview/WorkoutsOverview';
+import { Button } from '@/common/';
+import { WorkoutDTO } from '@/pages/Workouts/interfaces';
+import { WorkoutsOverview } from '@/pages/Workouts/WorkoutsOverview/WorkoutsOverview';
 
-import styles from '@components/pages/Workouts/Workouts.module.css';
+import styles from '@/pages/Workouts/Workouts.module.css';
 
 export const Workouts = () => {
   const router = useRouter();

@@ -1,11 +1,11 @@
 import { MoreHorizontal } from 'react-feather';
 import * as Dropdown from '@radix-ui/react-dropdown-menu';
 
-import { Button } from '@components/common';
-import { ExerciseDTO } from '@components/pages/Exercises/interfaces';
-import { DropdownMenu } from '@components/common/DropdownMenu/DropdownMenu';
+import { Button } from '@/common';
+import { ExerciseDTO } from '@/pages/Exercises/interfaces';
+import { DropdownMenu } from '@/common/DropdownMenu/DropdownMenu';
 
-import styles from '@components/pages/Exercises/ExercisesOverview/ExercisesOverview.module.css';
+import styles from '@/pages/Exercises/ExercisesOverview/ExercisesOverview.module.css';
 
 interface ExercisesOverviewProps {
   exercises: ExerciseDTO[];

@@ -1,4 +1,4 @@
-import { ExerciseDetailsDTO } from 'backend/domain/exerciseDetails/interfaces';
+import { ExerciseDetailsDTO } from '@backend/domain/exerciseDetails/interfaces';
 
 export interface WorkoutDTO {
   _id: string;

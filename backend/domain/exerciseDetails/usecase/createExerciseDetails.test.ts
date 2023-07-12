@@ -1,4 +1,4 @@
-import { createExerciseDetailsUseCase } from 'backend/domain/exerciseDetails/usecase/createExerciseDetails';
+import { createExerciseDetailsUseCase } from '@backend/domain/exerciseDetails/usecase/createExerciseDetails';
 
 describe('createWorkoutDetailsUseCase', () => {
   const workout = { _id: 'workoutId' };

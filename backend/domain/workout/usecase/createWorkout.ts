@@ -1,27 +1,25 @@
-import { IGenerateObjectId } from 'backend/interfaces';
-import { IPersistWorkout } from 'backend/domain/workout/interfaces';
+import { IGenerateObjectId } from '@backend/interfaces';
+import { IPersistWorkout } from '@backend/domain/workout/interfaces';
 
-export const createWorkoutUseCase =
-  (dependencies: CreateWorkoutDependencies) =>
-  async (data: CreateWorkoutData) => {
-    const { persistWorkout, generateObjectId } = dependencies;
+export const createWorkoutUseCase = (dependencies: CreateWorkoutDependencies) => async (data: CreateWorkoutData) => {
+  const { persistWorkout, generateObjectId } = dependencies;
 
-    const { completedAt } = data;
+  const { completedAt } = data;
 
-    const workoutDTO = createWorkoutDTO();
+  const workoutDTO = createWorkoutDTO();
 
-    await persistWorkout(workoutDTO);
+  await persistWorkout(workoutDTO);
 
-    return workoutDTO;
+  return workoutDTO;
 
-    function createWorkoutDTO() {
-      return {
-        exerciseDetails: [],
-        _id: generateObjectId(),
-        completedAt: completedAt ?? new Date(),
-      };
-    }
-  };
+  function createWorkoutDTO() {
+    return {
+      exerciseDetails: [],
+      _id: generateObjectId(),
+      completedAt: completedAt ?? new Date(),
+    };
+  }
+};
 
 interface CreateWorkoutDependencies {
   persistWorkout: IPersistWorkout;
