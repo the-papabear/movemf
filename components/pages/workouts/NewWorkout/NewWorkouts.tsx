@@ -6,7 +6,7 @@ import { ArrowLeftCircle, Plus, X } from 'react-feather';
 
 import { Button } from '@/common';
 import { ExerciseDTO } from '@/pages/Exercises/interfaces';
-import { ExerciseDetailsForm } from '@/pages/Workouts/ExerciseDetailsForm/ExerciseDetailsForm';
+import { ExerciseDetailsForm } from '@/pages/Workouts/ExerciseDetailsForm';
 
 import s from '@/pages/Workouts/NewWorkout/NewWorkouts.module.css';
 
