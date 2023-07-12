@@ -1,7 +1,8 @@
 import Head from 'next/head';
 import { Root, List, Trigger, Content } from '@radix-ui/react-tabs';
 
-import { Exercises, Workouts } from '@components/pages';
+import { Workouts } from '@components/pages/Workouts/Workouts';
+import { Exercises } from '@components/pages/Exercises/Exercises';
 
 import styles from 'styles/Home.module.css';
 
