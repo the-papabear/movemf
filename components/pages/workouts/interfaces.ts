@@ -1,3 +1,5 @@
+import { ExerciseDTO } from '@/pages/Exercises/interfaces';
+
 export interface WorkoutDTO {
   _id: string;
   completedAt: Date;
@@ -5,6 +7,7 @@ export interface WorkoutDTO {
 }
 
 export interface ExerciseDetailsDTO {
+  _id: string;
   reps?: number;
   time?: number;
   notes?: string;
@@ -12,5 +15,5 @@ export interface ExerciseDetailsDTO {
   insertedAt: Date;
   workoutId: string;
   setNumber: number;
-  exerciseId: string;
+  exercise: ExerciseDTO;
 }

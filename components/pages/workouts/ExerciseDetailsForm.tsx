@@ -1,6 +1,6 @@
 import { ExerciseDTO } from '@/pages/Exercises/interfaces';
 
-import s from '@/pages/Workouts/ExerciseDetailsForm/ExerciseDetailsForm.module.css';
+import s from 'components/pages/Workouts/ExerciseDetailsForm.module.css';
 
 interface ExerciseDetailsFormProps {
   formData: any;
@@ -18,8 +18,14 @@ export const ExerciseDetailsForm = ({ exercises, formData, handleChange }: Exerc
       {formData.workoutId && (
         <form onSubmit={handleSubmit}>
           <h5>Add new exercise</h5>
-          <select id="exerciseId" name="exerciseId" onChange={handleChange} className={s['select-exercise']}>
-            <option value="" disabled selected hidden>
+          <select
+            id="exerciseId"
+            name="exerciseId"
+            onChange={handleChange}
+            className={s['select-exercise']}
+            defaultValue="select-placeholder"
+          >
+            <option value="select-placeholder" disabled hidden>
               Select an exercise
             </option>
             {exercises.map((exercise) => (
@@ -32,6 +38,7 @@ export const ExerciseDetailsForm = ({ exercises, formData, handleChange }: Exerc
           {formData.exerciseId && (
             <div className={s['input__wrapper']}>
               <input
+                required
                 type="number"
                 name="setNumber"
                 className={s['input']}
@@ -69,11 +76,10 @@ export const ExerciseDetailsForm = ({ exercises, formData, handleChange }: Exerc
                 id="notes"
                 name="notes"
                 placeholder="Notes"
+                value={formData.notes}
                 onChange={handleChange}
                 className={s['input__full']}
-              >
-                {formData.notes}
-              </textarea>
+              ></textarea>
             </div>
           )}
         </form>

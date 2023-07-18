@@ -37,3 +37,7 @@ export interface IEditExerciseDetailsUseCase {
 export interface IUpdateExerciseDetails {
   (exerciseDetails: ExerciseDetailsDTO): Promise<void>;
 }
+
+export interface IRemoveExerciseDetails {
+  (exerciseDetailsId: string): Promise<void>;
+}

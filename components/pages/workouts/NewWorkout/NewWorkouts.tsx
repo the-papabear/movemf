@@ -9,6 +9,7 @@ import { ExerciseDTO } from '@/pages/Exercises/interfaces';
 import { ExerciseDetailsForm } from '@/pages/Workouts/ExerciseDetailsForm';
 
 import s from '@/pages/Workouts/NewWorkout/NewWorkouts.module.css';
+import { ExerciseDetailsDTO } from '@/pages/Workouts/interfaces';
 
 interface NewWorkoutProps {
   exercises: ExerciseDTO[];
@@ -17,7 +18,7 @@ interface NewWorkoutProps {
 export const NewWorkout = ({ exercises }: NewWorkoutProps) => {
   const router = useRouter();
 
-  const [exerciseDetailsInput, setExerciseDetailsInput] = useState<any[]>([]);
+  const [exerciseDetailsInput, setExerciseDetailsInput] = useState<ExerciseDetailsDTO[]>([]);
 
   const [formData, setFormData] = useState({
     notes: '',
@@ -50,9 +51,9 @@ export const NewWorkout = ({ exercises }: NewWorkoutProps) => {
   };
 
   const onAddExerciseClick = async () => {
-    await axios.patch(`/api/workouts/${formData.workoutId}`, formData);
+    const exerciseDetails = await axios.patch(`/api/workouts/${formData.workoutId}`, formData);
 
-    setExerciseDetailsInput((arr) => [...arr, formData]);
+    setExerciseDetailsInput(exerciseDetails.data.data.exerciseDetails);
 
     setFormData({
       ...formData,
@@ -64,6 +65,14 @@ export const NewWorkout = ({ exercises }: NewWorkoutProps) => {
       setNumber: undefined,
       completedAt: new Date(Date.now()).toISOString().split('.')[0],
     });
+  };
+
+  //TODO: The approach bellow makes the data between workouts and exerciseDetails to not be in sync in the database
+  //find a sexier solution for managing deleting on the BE and updating the UI
+  const onDeleteExerciseDetails = (exerciseDetailsId: string) => async () => {
+    await axios.delete(`/api/exerciseDetails/${exerciseDetailsId}`);
+    const updatedList = exerciseDetailsInput.filter((exerciseDetails) => exerciseDetails._id !== exerciseDetailsId);
+    setExerciseDetailsInput(updatedList);
   };
 
   return (
@@ -99,20 +108,13 @@ export const NewWorkout = ({ exercises }: NewWorkoutProps) => {
       <section className={s['exerciseDetails-cards__wrapper']}>
         <h5>Workout overview</h5>
         {exerciseDetailsInput.map((exerciseDetails, index) => (
-          <div key={index} className={s['exercise']}>
-            <span className={s['exercise__setNumber']}>
-              <strong>Set</strong> {exerciseDetails.setNumber}
-            </span>
-            <span className={s['exercise__name']}>
-              {exercises.find((exercise) => exercise._id === exerciseDetails.exerciseId)?.name}
-            </span>
-            <span className={s['exercise__reps']}>
-              {exerciseDetails.reps || 0} <strong>Reps</strong>
-            </span>
-            <span className={s['exercise__weights']}>
-              {exerciseDetails.weights || 0} <strong>Kgs</strong>
-            </span>
-            <X size={14} className={s['exercise__remove']} />
+          <div key={index} className={s['exercise__wrapper']}>
+            <div>
+              <span>Set {exerciseDetails.setNumber} | </span>
+              <span> {exerciseDetails.reps || 0} </span>
+              <span>{exercises.find((exercise) => exercise._id === exerciseDetails.exercise._id)!.name}</span>
+            </div>
+            <X size={14} onClick={onDeleteExerciseDetails(exerciseDetails._id)} />
           </div>
         ))}
       </section>
