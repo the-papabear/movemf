@@ -5,20 +5,24 @@ let globalWithMongo = global as typeof globalThis & {
 };
 
 export const mongoClient = async () => {
-  if (!process.env.MONGODB_CONNECTION_URI) {
-    throw new Error('invalid connection uri');
-  }
-
   let client;
 
   if (process.env.NODE_ENV === 'development') {
+    if (!process.env.MONGODB_CONNECTION_URI) {
+      throw new Error('invalid connection uri');
+    }
+
     if (!globalWithMongo._mongoClientPromise) {
       client = new MongoClient(process.env.MONGODB_CONNECTION_URI!);
       globalWithMongo._mongoClientPromise = client.connect();
     }
     return (client = globalWithMongo._mongoClientPromise);
   } else {
-    client = new MongoClient(process.env.MONGODB_URI!);
+    if (!process.env.MONGODB_URI) {
+      throw new Error('invalid connection uri');
+    }
+
+    client = new MongoClient(process.env.MONGODB_URI);
 
     const mongoConnection = await client.connect();
 
