@@ -18,7 +18,7 @@ export const editExerciseUseCase = (dependencies: EditExerciseDependencies) => a
     throw new BackendError(404, 'exercise_not_found');
   }
 
-  if (name) {
+  if (name && name !== existingExerciseDTO.name) {
     const duplicateExerciseDTO = await retrieveExerciseByName(name);
 
     if (duplicateExerciseDTO) {

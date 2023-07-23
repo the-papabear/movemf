@@ -9,5 +9,7 @@
 
 :root {
   --grey: #d6d6d6;
+  --dark-grey: #5d5e5d;
+
   --border-radius: 4px;
 }

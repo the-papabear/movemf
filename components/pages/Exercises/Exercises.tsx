@@ -2,25 +2,33 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 import { Modal } from '@/common';
-import { ExerciseDTO } from '@/pages/Exercises/interfaces';
-import { CreateOrEditExercise } from '@/pages/Exercises/CreateExercise/CreateExercise';
+import { ExerciseDTO, ExerciseData } from '@/pages/Exercises/interfaces';
+import { CreateExercise } from '@/pages/Exercises/CreateExercise/CreateExercise';
 import { ExercisesOverview } from '@/pages/Exercises/ExercisesOverview/ExercisesOverview';
 
 import styles from '@/pages/Exercises/Exercises.module.css';
 
 export const Exercises = () => {
   const [exercises, setExercises] = useState<ExerciseDTO[]>([]);
-  const [exerciseData, setExerciseData] = useState({ name: '', link: '' });
 
-  const [toggleModal, setToggleModal] = useState(false);
+  const [hasDataChanged, setHasDataChanged] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [exerciseData, setExerciseData] = useState<ExerciseData>({ id: '', name: '', link: '' });
 
-  const onModalToggle = () => {
-    setToggleModal(!toggleModal);
+  const onCreateModalToggle = () => {
+    setIsCreateModalOpen(!isCreateModalOpen);
   };
 
-  const handleDelete = (exerciseId: string) => async () => {
-    await axios.delete(`/api/exercises/${exerciseId}`);
-    setExercises(exercises.filter((exercise: ExerciseDTO) => exercise._id !== exerciseId));
+  const onEditModalToggle = (exerciseId: string, exerciseName: string, exerciseLink: string) => () => {
+    setIsEditModalOpen(!isEditModalOpen);
+
+    setExerciseData({ id: exerciseId, name: exerciseName, link: exerciseLink });
+  };
+
+  const handleChange = (event: any) => {
+    const { name, value } = event.target;
+    setExerciseData((prevFormData) => ({ ...prevFormData, [name]: value }));
   };
 
   useEffect(() => {
@@ -30,38 +38,56 @@ export const Exercises = () => {
     };
 
     getExercises();
-  }, []);
+  }, [hasDataChanged]);
 
-  const handleChange = (event: any) => {
-    const { name, value } = event.target;
-    setExerciseData((prevFormData) => ({ ...prevFormData, [name]: value }));
-  };
-
-  const handleSubmit = async (e: any) => {
+  const handleCreate = async (e: any) => {
     e.preventDefault();
-    setExerciseData({ name: '', link: '' });
 
     const exercise: ExerciseDTO = await axios
-      .post('/api/exercises', exerciseData)
+      .post('/api/exercises', { name: exerciseData.name, link: exerciseData.link })
       .then((response) => response.data.data);
-    setExercises([...exercises, exercise]);
+    setHasDataChanged(!hasDataChanged);
 
-    setToggleModal(!toggleModal);
+    setExerciseData({ id: '', name: '', link: '' });
+    setIsCreateModalOpen(!isCreateModalOpen);
+  };
+
+  const handleEdit = async (e: any) => {
+    e.preventDefault();
+    await axios.patch(`/api/exercises/${exerciseData.id}`, exerciseData).then((response) => response.data.data);
+    setHasDataChanged(!hasDataChanged);
+
+    setExerciseData({ id: '', name: '', link: '' });
+    setIsEditModalOpen(!isEditModalOpen);
+  };
+
+  const handleDelete = (exerciseId: string) => async () => {
+    await axios.delete(`/api/exercises/${exerciseId}`);
+    setHasDataChanged(!hasDataChanged);
   };
 
   return (
     <>
       <div className={styles.header}>
         <h2>Exercises</h2>
-        <Modal open={toggleModal} title="Add Exercise" toggleModal={onModalToggle} trigger={<span>Add Exercise</span>}>
-          <CreateOrEditExercise
-            exerciseData={exerciseData}
-            submitExercise={handleSubmit}
-            setExerciseData={handleChange}
-          />
+        <Modal
+          title="Add Exercise"
+          open={isCreateModalOpen}
+          toggleModal={onCreateModalToggle}
+          trigger={<span>Add Exercise</span>}
+        >
+          <CreateExercise exerciseData={exerciseData} submitExercise={handleCreate} setExerciseData={handleChange} />
         </Modal>
       </div>
-      <ExercisesOverview exercises={exercises} handleDelete={handleDelete} />
+      <ExercisesOverview
+        exercises={exercises}
+        handleDelete={handleDelete}
+        exerciseData={exerciseData}
+        submitExercise={handleEdit}
+        isModalOpen={isEditModalOpen}
+        setExerciseData={handleChange}
+        setIsModalOpen={onEditModalToggle}
+      />
     </>
   );
 };

@@ -24,6 +24,7 @@
   all: unset;
 }
 
-.dropdown__item > * {
-  width: 100%;
+.dropdown__item--dark {
+  background-color: var(--dark-grey);
+  color: white;
 }

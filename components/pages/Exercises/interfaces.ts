@@ -4,3 +4,9 @@ export interface ExerciseDTO {
   link?: string;
   type: 'EXERCISE' | 'REST';
 }
+
+export interface ExerciseData {
+  name: string;
+  link?: string;
+  id: string;
+}
