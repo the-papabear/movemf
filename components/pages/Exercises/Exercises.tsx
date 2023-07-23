@@ -71,10 +71,10 @@ export const Exercises = () => {
       <div className={styles.header}>
         <h2>Exercises</h2>
         <Modal
-          title="Add Exercise"
+          title="Add exercise"
           open={isCreateModalOpen}
           toggleModal={onCreateModalToggle}
-          trigger={<span>Add Exercise</span>}
+          trigger={<span>Add exercise</span>}
         >
           <CreateExercise exerciseData={exerciseData} submitExercise={handleCreate} setExerciseData={handleChange} />
         </Modal>
