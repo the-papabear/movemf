@@ -78,8 +78,8 @@ Current workout apps are either too simple and lack a decent UX / basic features
   erDiagram
     EXERCISE }o--|| USER : isCreatedBy
     EXERCISE {
-      string _id  REQUIRED
-      string name REQUIRED
+      string _id  "REQUIRED"
+      string name "REQUIRED"
       string link
     }
     EXERCISE ||--o{ WORKOUT_DETAILS : isUsedBy
@@ -91,8 +91,8 @@ Current workout apps are either too simple and lack a decent UX / basic features
   erDiagram
     WORKOUT }o--|| USER : isLoggedBy
     WORKOUT {
-      string _id REQUIRED
-      date completedAt REQUIRED
+      string _id "REQUIRED"
+      date completedAt "REQUIRED"
     }
     WORKOUT ||--|{ EXERCISE_DETAILS : has
 ```
@@ -103,12 +103,12 @@ Current workout apps are either too simple and lack a decent UX / basic features
   erDiagram
     EXERCISE_DETAILS }o--|| USER : creates
     EXERCISE_DETAILS {
-      string _id REQUIRED
-      date insertedAt REQUIRED
-      number setNumber REQUIRED
+      string _id "REQUIRED"
       int reps
       int time
       string notes
+      date insertedAt "REQUIRED"
+      number setNumber "REQUIRED"
       string workoutId
     }
     EXERCISE_DETAILS ||--|{ EXERCISE : uses
