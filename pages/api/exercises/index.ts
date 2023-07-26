@@ -1,11 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
+import { getExercises } from '@backend/domain/exercise/api/getExericses';
 import { createExercise } from '@backend/domain/exercise/api/createExercise';
-import { retrieveExercises } from '@backend/domain/exercise/repository/retrieveExercises';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
-    return res.status(200).json(await retrieveExercises());
+    await getExercises(res);
   }
 
   if (req.method === 'POST') {

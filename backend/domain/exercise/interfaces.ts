@@ -7,6 +7,10 @@ export interface ExerciseDTO {
   link?: string | null;
 }
 
+export interface IRetrieveExercises {
+  (): Promise<ExerciseDTO[]>;
+}
+
 export interface IRetrieveExerciseById {
   (exerciseId: string): Promise<ExerciseDTO | null>;
 }

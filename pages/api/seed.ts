@@ -1,4 +1,4 @@
-import connectToDB from '@backend/mongoConnection';
+import { MongoClient } from '@backend/mongoConnection';
 import { exerciseDetails, exercises, workouts } from '@backend/scripts/seed/seedData';
 
 export default async function handler(req: any, res: any) {
@@ -10,15 +10,14 @@ export default async function handler(req: any, res: any) {
     return res.status(405).send();
   }
 
-  const client = await connectToDB();
+  MongoClient.exec(async (db) => {
+    const collections = await db.collections();
+    await Promise.all(collections.map((collection) => db.collection(collection.collectionName).drop()));
 
-  const collections = await client.collections();
-
-  await Promise.all(collections.map((collection) => client.collection(collection.collectionName).drop()));
-
-  await client.collection('exercises').insertMany(exercises);
-  await client.collection('exerciseDetails').insertMany(exerciseDetails);
-  await client.collection('workouts').insertMany(workouts);
+    await db.collection('exercises').insertMany(exercises);
+    await db.collection('exerciseDetails').insertMany(exerciseDetails);
+    await db.collection('workouts').insertMany(workouts);
+  });
 
   res.status(200).json('Seed completed!');
 }

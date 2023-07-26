@@ -1,11 +1,13 @@
-import dbConnection from '@backend/mongoConnection';
+import { ClientSession, Db } from 'mongodb';
+
+import { IRetrieveExercises } from '@backend/domain/exercise/interfaces';
 import { ExerciseDB } from '@backend/domain/exercise/repository/interfaces';
 import { mapToExerciseDTO } from '@backend/domain/exercise/repository/mapper';
 
-export const retrieveExercises = async () => {
-  const db = await dbConnection();
+export const retrieveExercises =
+  (db: Db, session: ClientSession): IRetrieveExercises =>
+  async () => {
+    const exercises = await db.collection('exercises').find<ExerciseDB>({}, { session }).toArray();
 
-  const exercises = await db.collection('exercises').find<ExerciseDB>({}).toArray();
-
-  return exercises.map((exercise) => mapToExerciseDTO(exercise));
-};
+    return exercises.map((exercise) => mapToExerciseDTO(exercise));
+  };
