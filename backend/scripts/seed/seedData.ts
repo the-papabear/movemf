@@ -16,6 +16,7 @@ export const exerciseDetails = [
     _id: new ObjectId(),
     insertedAt: new Date(),
     exercise: exercises[0]._id,
+    workoutId: new ObjectId('64c1819bbeef6d0a84352e6a'),
   },
   {
     reps: 3,
@@ -24,6 +25,7 @@ export const exerciseDetails = [
     _id: new ObjectId(),
     insertedAt: new Date(),
     exercise: exercises[1]._id,
+    workoutId: new ObjectId('64c1819bbeef6d0a84352e6a'),
   },
   {
     time: 60,
@@ -31,6 +33,7 @@ export const exerciseDetails = [
     _id: new ObjectId(),
     insertedAt: new Date(),
     exercise: exercises[4]._id,
+    workoutId: new ObjectId('64c1819bbeef6d0a84352e6a'),
   },
   {
     reps: 10,
@@ -38,6 +41,7 @@ export const exerciseDetails = [
     _id: new ObjectId(),
     insertedAt: new Date(),
     exercise: exercises[2]._id,
+    workoutId: new ObjectId('64c1819bbeef6d0a84352e6a'),
   },
   {
     reps: 10,
@@ -45,12 +49,13 @@ export const exerciseDetails = [
     _id: new ObjectId(),
     insertedAt: new Date(),
     exercise: exercises[2]._id,
+    workoutId: new ObjectId('64c1819bbeef6d0a84352e6a'),
   },
 ];
 
 export const workouts = [
   {
-    _id: new ObjectId(),
+    _id: new ObjectId('64c1819bbeef6d0a84352e6a'),
     completedAt: new Date(),
     exerciseDetails: exerciseDetails.map((exerciseDetails) => exerciseDetails._id),
   },
