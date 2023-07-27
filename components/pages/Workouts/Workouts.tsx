@@ -15,8 +15,8 @@ export const Workouts = () => {
 
   useEffect(() => {
     const getWorkouts = async () => {
-      const { data } = await axios.get('/api/workouts');
-      setWorkouts(data);
+      const workouts = (await axios.get('/api/workouts')).data.data;
+      setWorkouts(workouts);
     };
 
     getWorkouts();

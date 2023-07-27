@@ -12,38 +12,45 @@ import { persistExerciseDetails } from '@backend/domain/exerciseDetails/reposito
 import { createExerciseDetailsUseCase } from '@backend/domain/exerciseDetails/usecase/createExerciseDetails';
 import { retrieveExerciseDetailsById } from '@backend/domain/exerciseDetails/repository/retrieveExerciseDetailsById';
 import { retrieveExerciseDetailsByIds } from '@backend/domain/exerciseDetails/repository/retrieveExerciseDetailsByIds';
+import { MongoClient } from '@backend/mongoConnection';
 
 export const editWorkout = async (request: NextApiRequest, response: NextApiResponse) => {
   const { reps, time, notes, weight, workoutId, exerciseId, exerciseDetailsId, completedAt, setNumber } = request.body;
 
   try {
-    const workout = await editWorkoutUseCase({
-      updateWorkout,
-      retrieveWorkoutById,
-      retrieveExerciseDetailsById,
-      retrieveExerciseDetailsByIds,
-      editExerciseDetailsUseCase: editExerciseDetailsUseCase({
-        retrieveWorkoutById,
-        retrieveExerciseById,
-        updateExerciseDetails,
+    const workout = MongoClient.exec(async (db, session) => {
+      const dependencies = {
         retrieveExerciseDetailsById,
-      }),
-      createExerciseDetailsUseCase: createExerciseDetailsUseCase({
-        generateObjectId,
-        retrieveWorkoutById,
-        retrieveExerciseById,
-        persistExerciseDetails,
-      }),
-    })({
-      reps,
-      time,
-      notes,
-      weight,
-      setNumber,
-      workoutId,
-      exerciseId,
-      completedAt,
-      exerciseDetailsId,
+        retrieveExerciseDetailsByIds,
+        updateWorkout: updateWorkout(db, session),
+        retrieveWorkoutById: retrieveWorkoutById(db, session),
+        editExerciseDetailsUseCase: editExerciseDetailsUseCase({
+          updateExerciseDetails,
+          retrieveExerciseDetailsById,
+          retrieveWorkoutById: retrieveWorkoutById(db, session),
+          retrieveExerciseById: retrieveExerciseById(db, session),
+        }),
+        createExerciseDetailsUseCase: createExerciseDetailsUseCase({
+          generateObjectId,
+          persistExerciseDetails,
+          retrieveWorkoutById: retrieveWorkoutById(db, session),
+          retrieveExerciseById: retrieveExerciseById(db, session),
+        }),
+      };
+
+      const data = {
+        reps,
+        time,
+        notes,
+        weight,
+        setNumber,
+        workoutId,
+        exerciseId,
+        completedAt,
+        exerciseDetailsId,
+      };
+
+      return await editWorkoutUseCase(dependencies)(data);
     });
 
     return makeSuccessResponse(response, 'WORKOUT_UPDATED_SUCCESSFULLY', workout);

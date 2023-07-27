@@ -1,13 +1,13 @@
-import { ObjectId } from 'mongodb';
+import { ClientSession, Db, ObjectId } from 'mongodb';
 
-import dbConnection from '@backend/mongoConnection';
 import { WorkoutDTO } from '@backend/domain/workout/interfaces';
 
-export const persistWorkout = async (workout: WorkoutDTO) => {
-  const connection = await dbConnection();
-
-  await connection.collection('workouts').insertOne({
-    ...workout,
-    _id: new ObjectId(workout._id),
-  });
+export const persistWorkout = (db: Db, session: ClientSession) => async (workout: WorkoutDTO) => {
+  await db.collection('workouts').insertOne(
+    {
+      ...workout,
+      _id: new ObjectId(workout._id),
+    },
+    { session },
+  );
 };
