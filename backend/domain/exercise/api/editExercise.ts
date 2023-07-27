@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
+import { MongoClient } from '@backend/mongoConnection';
 import { editExerciseUseCase } from '@backend/domain/exercise/usecase/editExercise';
 import { updateExercise } from '@backend/domain/exercise/repository/updateExercise';
 import { makeErrorResponse, makeSuccessResponse } from '@backend/lib/makeQueryResponse';
@@ -10,13 +11,23 @@ export const editExercise = async (request: NextApiRequest, response: NextApiRes
   const { id, name, link } = request.body;
 
   try {
-    const exercise = await editExerciseUseCase({
-      updateExercise,
-      retrieveExerciseById,
-      retrieveExerciseByName,
-    })({ exerciseId: id, name, link });
+    const exerciseDTO = await MongoClient.exec(async (db, session) => {
+      const dependencies = {
+        updateExercise: updateExercise(db, session),
+        retrieveExerciseById: retrieveExerciseById(db, session),
+        retrieveExerciseByName: retrieveExerciseByName(db, session),
+      };
 
-    return makeSuccessResponse(response, 'EXERCISE_EDITED_SUCCESSFULLY', exercise);
+      const data = {
+        name,
+        link,
+        exerciseId: id,
+      };
+
+      return await editExerciseUseCase(dependencies)(data);
+    });
+
+    return makeSuccessResponse(response, 'EXERCISE_EDITED_SUCCESSFULLY', exerciseDTO);
   } catch (e: any) {
     makeErrorResponse(response, e.code, e.message);
   }

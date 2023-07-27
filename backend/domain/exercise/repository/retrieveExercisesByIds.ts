@@ -1,18 +1,17 @@
-import { ObjectId } from 'mongodb';
+import { ClientSession, Db, ObjectId } from 'mongodb';
 
-import dbConnection from '@backend/mongoConnection';
-import { ExerciseDTO } from '@backend/domain/exercise/interfaces';
 import { ExerciseDB } from '@backend/domain/exercise/repository/interfaces';
 import { mapToExerciseDTO } from '@backend/domain/exercise/repository/mapper';
 
-export const retrieveExercisesByIds = async (exerciseIds: string[]) => {
-  const db = await dbConnection();
-
+export const retrieveExercisesByIds = (db: Db, session: ClientSession) => async (exerciseIds: string[]) => {
   const exercises = await db
     .collection('exercises')
-    .find<ExerciseDB>({
-      _id: { $in: exerciseIds.map((id) => new ObjectId(id)) },
-    })
+    .find<ExerciseDB>(
+      {
+        _id: { $in: exerciseIds.map((id) => new ObjectId(id)) },
+      },
+      { session },
+    )
     .toArray();
 
   return exercises.map((exercise) => mapToExerciseDTO(exercise));

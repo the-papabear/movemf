@@ -1,12 +1,9 @@
-import { ObjectId } from 'mongodb';
+import { ClientSession, Db, ObjectId } from 'mongodb';
 
-import dbConnection from '@backend/mongoConnection';
 import { ExerciseDTO } from '@backend/domain/exercise/interfaces';
 
-export const updateExercise = async (exercise: ExerciseDTO) => {
-  const connection = await dbConnection();
-
-  await connection
+export const updateExercise = (db: Db, session: ClientSession) => async (exercise: ExerciseDTO) => {
+  await db
     .collection('exercises')
-    .replaceOne({ _id: new ObjectId(exercise._id) }, { name: exercise.name, link: exercise.link });
+    .replaceOne({ _id: new ObjectId(exercise._id) }, { name: exercise.name, link: exercise.link }, { session });
 };

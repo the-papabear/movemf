@@ -1,9 +1,5 @@
-import { ObjectId } from 'mongodb';
+import { ClientSession, Db, ObjectId } from 'mongodb';
 
-import dbConnection from '@backend/mongoConnection';
-
-export const removeExercise = async (exerciseId: string) => {
-  const connection = await dbConnection();
-
-  await connection.collection('exercises').deleteOne({ _id: new ObjectId(exerciseId) });
+export const removeExercise = (db: Db, session: ClientSession) => async (exerciseId: string) => {
+  await db.collection('exercises').deleteOne({ _id: new ObjectId(exerciseId) }, { session });
 };
