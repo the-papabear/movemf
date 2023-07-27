@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
+import { MongoClient } from '@backend/mongoConnection';
 import { generateObjectId } from '@backend/lib/generateObjectId';
 import { updateWorkout } from '@backend/domain/workout/repository/updateWorkout';
 import { editWorkoutUseCase } from '@backend/domain/workout/usecase/editWorkout';
@@ -12,7 +13,6 @@ import { persistExerciseDetails } from '@backend/domain/exerciseDetails/reposito
 import { createExerciseDetailsUseCase } from '@backend/domain/exerciseDetails/usecase/createExerciseDetails';
 import { retrieveExerciseDetailsById } from '@backend/domain/exerciseDetails/repository/retrieveExerciseDetailsById';
 import { retrieveExerciseDetailsByIds } from '@backend/domain/exerciseDetails/repository/retrieveExerciseDetailsByIds';
-import { MongoClient } from '@backend/mongoConnection';
 
 export const editWorkout = async (request: NextApiRequest, response: NextApiResponse) => {
   const { reps, time, notes, weight, workoutId, exerciseId, exerciseDetailsId, completedAt, setNumber } = request.body;
@@ -20,21 +20,21 @@ export const editWorkout = async (request: NextApiRequest, response: NextApiResp
   try {
     const workout = MongoClient.exec(async (db, session) => {
       const dependencies = {
-        retrieveExerciseDetailsById,
-        retrieveExerciseDetailsByIds,
         updateWorkout: updateWorkout(db, session),
         retrieveWorkoutById: retrieveWorkoutById(db, session),
+        retrieveExerciseDetailsById: retrieveExerciseDetailsById(db, session),
+        retrieveExerciseDetailsByIds: retrieveExerciseDetailsByIds(db, session),
         editExerciseDetailsUseCase: editExerciseDetailsUseCase({
-          updateExerciseDetails,
-          retrieveExerciseDetailsById,
           retrieveWorkoutById: retrieveWorkoutById(db, session),
           retrieveExerciseById: retrieveExerciseById(db, session),
+          updateExerciseDetails: updateExerciseDetails(db, session),
+          retrieveExerciseDetailsById: retrieveExerciseDetailsById(db, session),
         }),
         createExerciseDetailsUseCase: createExerciseDetailsUseCase({
           generateObjectId,
-          persistExerciseDetails,
           retrieveWorkoutById: retrieveWorkoutById(db, session),
           retrieveExerciseById: retrieveExerciseById(db, session),
+          persistExerciseDetails: persistExerciseDetails(db, session),
         }),
       };
 
