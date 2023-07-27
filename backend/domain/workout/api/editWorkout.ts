@@ -18,7 +18,7 @@ export const editWorkout = async (request: NextApiRequest, response: NextApiResp
   const { reps, time, notes, weight, workoutId, exerciseId, exerciseDetailsId, completedAt, setNumber } = request.body;
 
   try {
-    const workout = MongoClient.exec(async (db, session) => {
+    const workout = await MongoClient.exec(async (db, session) => {
       const dependencies = {
         updateWorkout: updateWorkout(db, session),
         retrieveWorkoutById: retrieveWorkoutById(db, session),

@@ -11,8 +11,8 @@ export default function Workout() {
     getExercises();
 
     async function getExercises() {
-      const { data } = await axios.get('/api/exercises');
-      setExercises(data);
+      const exercises = (await axios.get('/api/exercises')).data.data;
+      setExercises(exercises);
     }
   }, []);
 

@@ -9,7 +9,7 @@ export const createWorkout = async (request: NextApiRequest, response: NextApiRe
   const { completedAt } = request.body;
 
   try {
-    const workout = MongoClient.exec(async (db, session) => {
+    const workout = await MongoClient.exec(async (db, session) => {
       const dependencies = {
         generateObjectId,
         persistWorkout: persistWorkout(db, session),
@@ -17,7 +17,9 @@ export const createWorkout = async (request: NextApiRequest, response: NextApiRe
 
       const data = { completedAt };
 
-      return await createWorkoutUseCase(dependencies)(data);
+      const res = await createWorkoutUseCase(dependencies)(data);
+
+      return res;
     });
 
     return makeSuccessResponse(response, 'WORKOUT_CREATED_SUCCESSFULLY', workout);

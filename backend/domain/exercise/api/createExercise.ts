@@ -11,7 +11,7 @@ export const createExercise = async (request: NextApiRequest, response: NextApiR
   const { name, link, type } = request.body;
 
   try {
-    const exerciseDTO = MongoClient.exec(async (db, session) => {
+    const exerciseDTO = await MongoClient.exec(async (db, session) => {
       const dependencies = {
         generateObjectId,
         persistExercise: persistExercise(db, session),
