@@ -68,6 +68,11 @@ Current workout apps are either too simple and lack a decent UX / basic features
 ```mermaid
   erDiagram
     USER ||--o{ WORKOUT : logs
+    USER {
+      string _id
+      string name
+      string email "REQUIRED"
+    }
     USER ||--o{ EXERCISE : creates
     USER ||--o{ EXERCISE_DETAILS: creates
 ```
@@ -81,6 +86,7 @@ Current workout apps are either too simple and lack a decent UX / basic features
       string _id  "REQUIRED"
       string name "REQUIRED"
       string link
+      string userId "REQUIRED"
     }
     EXERCISE ||--o{ WORKOUT_DETAILS : isUsedBy
 ```
@@ -93,6 +99,7 @@ Current workout apps are either too simple and lack a decent UX / basic features
     WORKOUT {
       string _id "REQUIRED"
       date completedAt "REQUIRED"
+      string userId "REQUIRED"
     }
     WORKOUT ||--|{ EXERCISE_DETAILS : has
 ```
@@ -110,6 +117,7 @@ Current workout apps are either too simple and lack a decent UX / basic features
       date insertedAt "REQUIRED"
       number setNumber "REQUIRED"
       string workoutId
+      string userId "REQUIRED"
     }
     EXERCISE_DETAILS ||--|{ EXERCISE : uses
 ```
