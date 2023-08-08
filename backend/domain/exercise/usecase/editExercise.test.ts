@@ -5,6 +5,7 @@ describe('editExerciseUseCase', () => {
     updateExercise: jest.fn(),
     retrieveExerciseByName: jest.fn(),
     retrieveExerciseById: jest.fn().mockResolvedValue({
+      userId: 'user',
       name: 'Pull-up',
       link: 'pull-up.com',
       _id: 'existingExerciseId',
@@ -12,6 +13,7 @@ describe('editExerciseUseCase', () => {
   };
 
   const validData = {
+    userId: 'userId',
     link: 'editedLink.com',
     name: 'Edited exercise name',
     exerciseId: 'existingExerciseId',

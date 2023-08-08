@@ -7,6 +7,7 @@ const persistExercise = (db: Db, session: ClientSession) => async (exercise: Exe
     {
       ...exercise,
       _id: new ObjectId(exercise._id),
+      userId: new ObjectId(exercise.userId),
     },
     { session },
   );

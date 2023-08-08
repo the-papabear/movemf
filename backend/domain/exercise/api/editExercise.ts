@@ -7,7 +7,7 @@ import { makeErrorResponse, makeSuccessResponse } from '@backend/lib/makeQueryRe
 import { retrieveExerciseById } from '@backend/domain/exercise/repository/retrieveExerciseById';
 import { retrieveExerciseByName } from '@backend/domain/exercise/repository/retrieveExerciseByName';
 
-export const editExercise = async (request: NextApiRequest, response: NextApiResponse) => {
+export const editExercise = async (request: NextApiRequest, response: NextApiResponse, userId: string) => {
   const { id, name, link } = request.body;
 
   try {
@@ -21,6 +21,7 @@ export const editExercise = async (request: NextApiRequest, response: NextApiRes
       const data = {
         name,
         link,
+        userId,
         exerciseId: id,
       };
 

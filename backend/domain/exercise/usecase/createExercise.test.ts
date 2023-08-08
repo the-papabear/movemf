@@ -9,6 +9,7 @@ describe('createExerciseUseCase', () => {
   };
 
   const validData = {
+    userId: 'user',
     name: 'Pull-up',
     link: 'pullups.com',
     type: 'exercise' as ExerciseType,
@@ -24,20 +25,6 @@ describe('createExerciseUseCase', () => {
       await expect(createExerciseUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
         code: 400,
         message: 'name_missing',
-      });
-    });
-  });
-
-  describe('given an empty link', () => {
-    it('should throw an error', async () => {
-      const invalidData = {
-        ...validData,
-        link: '',
-      };
-
-      await expect(createExerciseUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
-        code: 400,
-        message: 'invalid_link',
       });
     });
   });

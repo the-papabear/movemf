@@ -9,7 +9,7 @@ import { BackendError } from '@backend/errors';
 export const editExerciseUseCase = (dependencies: EditExerciseDependencies) => async (data: EditExerciseData) => {
   const { retrieveExerciseById, updateExercise, retrieveExerciseByName } = dependencies;
 
-  const { exerciseId, name, link } = data;
+  const { exerciseId, name, link, userId } = data;
 
   validateData();
 
@@ -19,7 +19,7 @@ export const editExerciseUseCase = (dependencies: EditExerciseDependencies) => a
   }
 
   if (name && name !== existingExerciseDTO.name) {
-    const duplicateExerciseDTO = await retrieveExerciseByName(name);
+    const duplicateExerciseDTO = await retrieveExerciseByName(name, userId);
 
     if (duplicateExerciseDTO) {
       throw new BackendError(409, 'duplicate_name');
@@ -61,6 +61,7 @@ export const editExerciseUseCase = (dependencies: EditExerciseDependencies) => a
 
 interface EditExerciseData {
   name?: string;
+  userId: string;
   exerciseId: string;
   link?: string | null;
 }

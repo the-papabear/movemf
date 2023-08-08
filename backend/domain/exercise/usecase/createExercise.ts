@@ -10,11 +10,11 @@ import { IGenerateObjectId } from '@backend/interfaces';
 export const createExerciseUseCase = (dependencies: CreateExerciseDependencies) => async (data: CreateExerciseData) => {
   const { persistExercise, generateObjectId, retrieveExerciseByName } = dependencies;
 
-  const { name, link, type } = data;
+  const { name, link, type, userId } = data;
 
   validateData();
 
-  const existingExerciseDTO = await retrieveExerciseByName(name);
+  const existingExerciseDTO = await retrieveExerciseByName(name, userId);
 
   if (existingExerciseDTO) {
     throw new BackendError(409, 'duplicate_name');
@@ -31,6 +31,7 @@ export const createExerciseUseCase = (dependencies: CreateExerciseDependencies) 
       name,
       link,
       type,
+      userId,
       _id: generateObjectId(),
     };
   }
@@ -39,8 +40,9 @@ export const createExerciseUseCase = (dependencies: CreateExerciseDependencies) 
     if (!name) {
       throw new BackendError(400, 'name_missing');
     }
-    if (typeof link === 'string' && !link.trim()) {
-      throw new BackendError(400, 'invalid_link');
+
+    if (!userId) {
+      throw new BackendError(400, 'userId_missing');
     }
   }
 };
@@ -48,6 +50,7 @@ export const createExerciseUseCase = (dependencies: CreateExerciseDependencies) 
 export interface CreateExerciseData {
   name: string;
   link?: string;
+  userId: string;
   type: ExerciseType;
 }
 

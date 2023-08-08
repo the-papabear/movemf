@@ -7,7 +7,7 @@ import { createExerciseUseCase } from '@backend/domain/exercise/usecase/createEx
 import { retrieveExerciseByName } from '@backend/domain/exercise/repository/retrieveExerciseByName';
 import { MongoClient } from '@backend/mongoConnection';
 
-export const createExercise = async (request: NextApiRequest, response: NextApiResponse) => {
+export const createExercise = async (request: NextApiRequest, response: NextApiResponse, userId: string) => {
   const { name, link, type } = request.body;
 
   try {
@@ -22,6 +22,7 @@ export const createExercise = async (request: NextApiRequest, response: NextApiR
         name,
         link,
         type,
+        userId,
       };
 
       return await createExerciseUseCase(dependencies)(data);

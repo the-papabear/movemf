@@ -1,4 +1,6 @@
 import { ObjectId } from 'mongodb';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '../auth/[...nextauth]';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 import { makeErrorResponse } from '@backend/lib/makeQueryResponse';
@@ -9,6 +11,11 @@ import { deleteExercise } from '@backend/domain/exercise/api/deleteExercise';
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { id } = req.query;
 
+  const session = await getServerSession(req, res, authOptions);
+
+  const user = session?.user as any;
+  const userId = user.id;
+
   if (!ObjectId.isValid(id as string)) {
     return makeErrorResponse(res, 400, 'INVALID_OBJECTID_FORMAT');
   }
@@ -18,7 +25,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   if (req.method === 'PATCH') {
-    return await editExercise(req, res);
+    return await editExercise(req, res, userId);
   }
 
   if (req.method === 'DELETE') {

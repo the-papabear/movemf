@@ -3,12 +3,13 @@ export type ExerciseType = 'EXERCISE' | 'REST';
 export interface ExerciseDTO {
   _id: string;
   name: string;
+  userId: string;
   type: ExerciseType;
   link?: string | null;
 }
 
 export interface IRetrieveExercises {
-  (): Promise<ExerciseDTO[]>;
+  (userId: string): Promise<ExerciseDTO[]>;
 }
 
 export interface IRetrieveExerciseById {
@@ -20,7 +21,7 @@ export interface IRetrieveExercisesByIds {
 }
 
 export interface IRetrieveExerciseByName {
-  (exerciseName: string): Promise<ExerciseDTO | null>;
+  (exerciseName: string, userId: string): Promise<ExerciseDTO | null>;
 }
 
 export interface IPersistExercise {
