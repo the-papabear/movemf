@@ -1,35 +1,30 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import CredentialsProvider from 'next-auth/providers/credentials';
+import GoogleProvider from 'next-auth/providers/google';
+import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
 import NextAuth, { NextAuthOptions, SessionStrategy } from 'next-auth';
 
 import { MongoClient } from '@backend/mongoConnection';
 
-const options: NextAuthOptions = {
+export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
+  adapter: MongoDBAdapter(MongoClient.connectToClient(), { databaseName: process.env.MONGODB_DATABASE }),
   session: {
     strategy: 'jwt' as SessionStrategy,
   },
-  // adapter: MongoDBAdapter,
   providers: [
-    CredentialsProvider({
-      name: 'credentials',
-      authorize: async (credentials): Promise<any> => {},
-      credentials: {
-        email: {
-          type: 'text',
-          label: 'Email',
-          placeholder: 'Type in your email',
-        },
-        password: {
-          type: 'password',
-          label: 'Password',
-          placeholder: 'Type in your password',
-        },
-      },
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
   ],
+  callbacks: {
+    session: ({ session, token }) => ({
+      ...session,
+      user: {
+        ...session.user,
+        id: token.sub,
+      },
+    }),
+  },
 };
 
-export default async function auth(req: NextApiRequest, res: NextApiResponse) {
-  return await NextAuth(req, res, options);
-}
+export default NextAuth(authOptions);

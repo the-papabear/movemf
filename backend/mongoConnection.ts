@@ -17,7 +17,7 @@ export class MongoClient {
     return this.client;
   }
 
-  static async waitForConnectivity(retries: number = 60) {
+  static async connectToClient(retries: number = 60) {
     const driver = MongoClient.getClient();
 
     for (let retry = 0; retry < retries; retry++) {
@@ -25,7 +25,7 @@ export class MongoClient {
 
       try {
         await driver.db('admin').command({ ping: 1 });
-        return;
+        return driver;
       } catch (err) {}
     }
 

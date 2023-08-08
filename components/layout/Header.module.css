@@ -3,3 +3,15 @@
   align-items: center;
   justify-content: space-between;
 }
+
+.header__logo {
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.header__username {
+  display: flex;
+  gap: 0.5rem;
+  font-weight: bold;
+  align-items: center;
+}
