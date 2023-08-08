@@ -7,6 +7,7 @@ export const persistWorkout = (db: Db, session: ClientSession) => async (workout
     {
       ...workout,
       _id: new ObjectId(workout._id),
+      userId: new ObjectId(workout.userId),
     },
     { session },
   );

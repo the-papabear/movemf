@@ -14,7 +14,7 @@ import { createExerciseDetailsUseCase } from '@backend/domain/exerciseDetails/us
 import { retrieveExerciseDetailsById } from '@backend/domain/exerciseDetails/repository/retrieveExerciseDetailsById';
 import { retrieveExerciseDetailsByIds } from '@backend/domain/exerciseDetails/repository/retrieveExerciseDetailsByIds';
 
-export const editWorkout = async (request: NextApiRequest, response: NextApiResponse) => {
+export const editWorkout = async (request: NextApiRequest, response: NextApiResponse, userId: string) => {
   const { reps, time, notes, weight, workoutId, exerciseId, exerciseDetailsId, completedAt, setNumber } = request.body;
 
   try {
@@ -43,6 +43,7 @@ export const editWorkout = async (request: NextApiRequest, response: NextApiResp
         time,
         notes,
         weight,
+        userId,
         setNumber,
         workoutId,
         exerciseId,

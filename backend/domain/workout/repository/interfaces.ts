@@ -4,6 +4,7 @@ import { ExerciseDetailsAggregationDB } from '@backend/domain/exerciseDetails/re
 
 export interface WorkoutDB {
   _id: ObjectId;
+  userId: ObjectId;
   completedAt: Date;
 }
 

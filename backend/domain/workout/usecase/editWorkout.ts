@@ -114,6 +114,7 @@ interface EditWorkoutData {
   reps?: number;
   time?: number;
   notes?: string;
+  userId: string;
   weight?: number;
   workoutId: string;
   setNumber?: number;

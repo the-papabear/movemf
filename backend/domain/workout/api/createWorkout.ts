@@ -1,11 +1,12 @@
-import { persistWorkout } from '@backend/domain/workout/repository/persistWorkout';
-import { createWorkoutUseCase } from '@backend/domain/workout/usecase/createWorkout';
-import { generateObjectId } from '@backend/lib/generateObjectId';
-import { makeErrorResponse, makeSuccessResponse } from '@backend/lib/makeQueryResponse';
-import { MongoClient } from '@backend/mongoConnection';
 import { NextApiRequest, NextApiResponse } from 'next';
 
-export const createWorkout = async (request: NextApiRequest, response: NextApiResponse) => {
+import { MongoClient } from '@backend/mongoConnection';
+import { generateObjectId } from '@backend/lib/generateObjectId';
+import { persistWorkout } from '@backend/domain/workout/repository/persistWorkout';
+import { createWorkoutUseCase } from '@backend/domain/workout/usecase/createWorkout';
+import { makeErrorResponse, makeSuccessResponse } from '@backend/lib/makeQueryResponse';
+
+export const createWorkout = async (request: NextApiRequest, response: NextApiResponse, userId: string) => {
   const { completedAt } = request.body;
 
   try {
@@ -15,7 +16,7 @@ export const createWorkout = async (request: NextApiRequest, response: NextApiRe
         persistWorkout: persistWorkout(db, session),
       };
 
-      const data = { completedAt };
+      const data = { completedAt, userId };
 
       const res = await createWorkoutUseCase(dependencies)(data);
 

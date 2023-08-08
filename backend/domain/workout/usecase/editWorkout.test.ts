@@ -14,6 +14,7 @@ describe('editWorkoutUseCase', () => {
   };
 
   const validData = {
+    userId: 'userId',
     workoutId: 'workoutId',
     exerciseId: 'exerciseId',
     exerciseDetailsId: 'exerciseDetailsId',

@@ -2,6 +2,7 @@ import { ExerciseDetailsDTO } from '@backend/domain/exerciseDetails/interfaces';
 
 export interface WorkoutDTO {
   _id: string;
+  userId: string;
   completedAt: Date;
   exerciseDetails: ExerciseDetailsDTO[];
 }
