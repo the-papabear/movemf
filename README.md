@@ -7,7 +7,7 @@
 ### Y u build dis?
 
 As part of my skill development plan I had the task of creating a working app using React and MongoDB (with some other bits in between to make life a bit easier).
-In order for this demo app to become a reality and its implementations not complete chaos, I forged this document to have a relatively clear path of what I’m about to build. Over time I got proved that the path was not entirely clear. Documenting and breaking the whole cake in to bite-sized chunks however prevented chaos from ensuing though (BREAK BIG WORK ITEMS INTO SMALLER CHUNKS PEOPLE!).
+In order for this demo app to become a reality and its implementations not complete chaos, I forged this document to have a relatively clear path of what I’m about to build. Over time I got proved that the path was not entirely clear. However, documenting and breaking the whole cake in to bite-sized chunks prevented chaos from ensuing (BREAK BIG WORK ITEMS INTO SMALLER CHUNKS PEOPLE!).
 
 The requirements my mentor gave me were the following: `Create an app what has a CRUD and uses MongoDB's views, query search, and auth.`
 
@@ -68,6 +68,11 @@ Current workout apps are either too simple and lack a decent UX / basic features
 ```mermaid
   erDiagram
     USER ||--o{ WORKOUT : logs
+    USER {
+      string _id
+      string name
+      string email "REQUIRED"
+    }
     USER ||--o{ EXERCISE : creates
     USER ||--o{ EXERCISE_DETAILS: creates
 ```
@@ -81,6 +86,7 @@ Current workout apps are either too simple and lack a decent UX / basic features
       string _id  "REQUIRED"
       string name "REQUIRED"
       string link
+      string userId "REQUIRED"
     }
     EXERCISE ||--o{ WORKOUT_DETAILS : isUsedBy
 ```
@@ -93,6 +99,7 @@ Current workout apps are either too simple and lack a decent UX / basic features
     WORKOUT {
       string _id "REQUIRED"
       date completedAt "REQUIRED"
+      string userId "REQUIRED"
     }
     WORKOUT ||--|{ EXERCISE_DETAILS : has
 ```
@@ -110,6 +117,7 @@ Current workout apps are either too simple and lack a decent UX / basic features
       date insertedAt "REQUIRED"
       number setNumber "REQUIRED"
       string workoutId
+      string userId "REQUIRED"
     }
     EXERCISE_DETAILS ||--|{ EXERCISE : uses
 ```
