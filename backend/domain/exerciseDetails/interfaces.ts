@@ -43,5 +43,5 @@ export interface IRemoveExerciseDetails {
 }
 
 export interface IRetrieveExerciseDetailsByExerciseId {
-  (exerciseId: string): Promise<ExerciseDetailsDTO[]>;
+  (exerciseId: string): Promise<{ _id: string; workoutId: string }[]>;
 }

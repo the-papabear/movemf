@@ -3,8 +3,9 @@ import { IRemoveWorkoutUseCase } from '@backend/domain/workout/interfaces';
 import { IRemoveExercise, IRetrieveExerciseById } from '@backend/domain/exercise/interfaces';
 import { IRetrieveExerciseDetailsByExerciseId } from '@backend/domain/exerciseDetails/interfaces';
 
-export const deleteExercise = (dependencies: DeleteExerciseDependencies) => async (data: DeleteExerciseData) => {
-  const { removeExercise, removeWorkout, retrieveExerciseById, retrieveExerciseDetailsByExerciseId } = dependencies;
+export const deleteExerciseUseCase = (dependencies: DeleteExerciseDependencies) => async (data: DeleteExerciseData) => {
+  const { removeExercise, removeWorkoutUseCase, retrieveExerciseById, retrieveExerciseDetailsByExerciseId } =
+    dependencies;
 
   const { exerciseId } = data;
 
@@ -21,9 +22,11 @@ export const deleteExercise = (dependencies: DeleteExerciseDependencies) => asyn
   const exDetailsDTOs = await retrieveExerciseDetailsByExerciseId(exerciseId);
 
   if (exDetailsDTOs.length) {
-    exDetailsDTOs.map(async (exDetails) => {
-      await removeWorkout(exDetails.workoutId);
-    });
+    await Promise.all(
+      exDetailsDTOs.map(async (exDetails) => {
+        await removeWorkoutUseCase({ workoutId: exDetails.workoutId });
+      }),
+    );
   }
 
   await removeExercise(exerciseId);
@@ -35,7 +38,7 @@ interface DeleteExerciseData {
 
 interface DeleteExerciseDependencies {
   removeExercise: IRemoveExercise;
-  removeWorkout: IRemoveWorkoutUseCase;
+  removeWorkoutUseCase: IRemoveWorkoutUseCase;
   retrieveExerciseById: IRetrieveExerciseById;
   retrieveExerciseDetailsByExerciseId: IRetrieveExerciseDetailsByExerciseId;
 }
