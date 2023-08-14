@@ -24,18 +24,10 @@ export default function Home() {
       ) : (
         <Root defaultValue="workouts-tab" className={styles.wrapper}>
           <List className={styles.tabList}>
-            <Trigger
-              value="workouts-tab"
-              className={styles.tabTrigger}
-              onClick={() => router.replace('/', '/workouts')}
-            >
+            <Trigger value="workouts-tab" className={styles.tabTrigger}>
               Workouts
             </Trigger>
-            <Trigger
-              value="exercises-tab"
-              className={styles.tabTrigger}
-              onClick={() => router.replace('/', '/exercises')}
-            >
+            <Trigger value="exercises-tab" className={styles.tabTrigger}>
               Exercises
             </Trigger>
           </List>
