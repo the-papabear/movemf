@@ -31,3 +31,7 @@ export interface IPersistExercise {
 export interface IUpdateExercise {
   (exercise: ExerciseDTO): Promise<void>;
 }
+
+export interface IRemoveExercise {
+  (exerciseId: string): Promise<void>;
+}

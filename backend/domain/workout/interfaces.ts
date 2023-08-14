@@ -7,6 +7,10 @@ export interface WorkoutDTO {
   exerciseDetails: ExerciseDetailsDTO[];
 }
 
+export interface IRetrieveWorkouts {
+  (userId: string): Promise<WorkoutDTO[]>;
+}
+
 export interface IRetrieveWorkoutById {
   (workoutId: string): Promise<WorkoutDTO | null>;
 }
@@ -17,4 +21,12 @@ export interface IPersistWorkout {
 
 export interface IEditWorkout {
   (workoutDTO: WorkoutDTO): Promise<void>;
+}
+
+export interface IRemoveWorkout {
+  (workoutId: string): Promise<void>;
+}
+
+export interface IRemoveWorkoutUseCase {
+  (workoutId: string): Promise<void>;
 }

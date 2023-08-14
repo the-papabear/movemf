@@ -41,3 +41,7 @@ export interface IUpdateExerciseDetails {
 export interface IRemoveExerciseDetails {
   (exerciseDetailsId: string): Promise<void>;
 }
+
+export interface IRetrieveExerciseDetailsByExerciseId {
+  (exerciseId: string): Promise<ExerciseDetailsDTO[]>;
+}
