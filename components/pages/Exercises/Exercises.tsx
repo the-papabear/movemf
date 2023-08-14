@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 import { Modal } from '@/common';
+import { ExercisesOverview } from '@/pages/Exercises/ExercisesOverview';
 import { ExerciseDTO, ExerciseData } from '@/pages/Exercises/interfaces';
 import { CreateExercise } from '@/pages/Exercises/CreateExercise/CreateExercise';
-import { ExercisesOverview } from '@/pages/Exercises/ExercisesOverview/ExercisesOverview';
 
 import styles from '@/pages/Exercises/Exercises.module.css';
 
