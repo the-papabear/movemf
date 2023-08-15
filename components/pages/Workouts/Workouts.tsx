@@ -24,7 +24,7 @@ export const Workouts = () => {
 
   return (
     <div>
-      <div className={styles.header}>
+      <div className="flex justify-between">
         <h2>Workouts</h2>
         <Button onClick={() => router.push('/new-workout')}>Add workout</Button>
       </div>

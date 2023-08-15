@@ -8,11 +8,10 @@ interface WorkoutsOverviewProps {
 
 export const WorkoutsOverview = ({ workouts }: WorkoutsOverviewProps) => {
   return (
-    <div className={styles.workoutsOverview__wrapper}>
-      <h4 style={{ margin: '1rem 0' }}>Completed at</h4>
+    <div className="flex flex-col p-4">
       {workouts.map((workout, index) => (
-        <span className={styles.workoutsOverview__item} key={index}>
-          {new Date(workout.completedAt).toLocaleString()}
+        <span className="p-2 rounded hover:bg-gray-300 cursor-default" key={index}>
+          {workout.name || 'Unnamed workout'} - {new Date(workout.completedAt).toLocaleString()}
         </span>
       ))}
     </div>
