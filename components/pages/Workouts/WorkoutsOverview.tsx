@@ -1,7 +1,5 @@
 import { WorkoutDTO } from '@/pages/Workouts/interfaces';
 
-import styles from '@/pages/Workouts/WorkoutsOverview/WorkoutsOverview.module.css';
-
 interface WorkoutsOverviewProps {
   workouts: WorkoutDTO[];
 }
