@@ -4,9 +4,7 @@ import { useRouter } from 'next/router';
 
 import { Button } from '@/common/';
 import { WorkoutDTO } from '@/pages/Workouts/interfaces';
-import { WorkoutsOverview } from '@/pages/Workouts/WorkoutsOverview/WorkoutsOverview';
-
-import styles from '@/pages/Workouts/Workouts.module.css';
+import { WorkoutsOverview } from '@/pages/Workouts/WorkoutsOverview';
 
 export const Workouts = () => {
   const router = useRouter();
