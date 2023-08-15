@@ -6,10 +6,8 @@ import { ArrowLeftCircle, Plus, X } from 'react-feather';
 
 import { Button } from '@/common';
 import { ExerciseDTO } from '@/pages/Exercises/interfaces';
-import { ExerciseDetailsForm } from '@/pages/Workouts/ExerciseDetailsForm';
-
-import s from '@/pages/Workouts/NewWorkout/NewWorkouts.module.css';
 import { ExerciseDetailsDTO } from '@/pages/Workouts/interfaces';
+import { ExerciseDetailsForm } from '@/pages/Workouts/ExerciseDetailsForm';
 
 interface NewWorkoutProps {
   exercises: ExerciseDTO[];
@@ -21,6 +19,7 @@ export const NewWorkout = ({ exercises }: NewWorkoutProps) => {
   const [exerciseDetailsInput, setExerciseDetailsInput] = useState<ExerciseDetailsDTO[]>([]);
 
   const [formData, setFormData] = useState({
+    name: '',
     notes: '',
     workoutId: '',
     exerciseId: '',
@@ -42,7 +41,10 @@ export const NewWorkout = ({ exercises }: NewWorkoutProps) => {
   };
 
   const createWorkout = async () => {
-    const res = await axios.post('/api/workouts/', new Date(formData.completedAt));
+    const res = await axios.post('/api/workouts/', {
+      name: formData.name,
+      completedAt: new Date(formData.completedAt),
+    });
     setFormData({ ...formData, workoutId: res.data.data._id });
   };
 
@@ -77,38 +79,48 @@ export const NewWorkout = ({ exercises }: NewWorkoutProps) => {
 
   return (
     <>
-      <header className={s['header']}>
+      <header className="flex align-center gap-4">
         <ArrowLeftCircle
           cursor="pointer"
           onClick={() => {
             router.push('/');
           }}
         />
-        <h2>New Workout</h2>
+        <h2 className="text-xl font-bold">New Workout</h2>
       </header>
 
-      <section className={s['datePicker__container']}>
-        <h4>Completed at</h4>
-        <div className={s['datePicker__wrapper']}>
-          <input
-            name="completedAt"
-            type="datetime-local"
-            onChange={handleChange}
-            className={s['datePicker']}
-            value={formData.completedAt}
-          />
-          {!formData.workoutId && (
-            <Button type="submit" onClick={createWorkout} className={s['dateAddBtn']}>
-              <Plus size={14} />
-            </Button>
-          )}
+      <section className="flex flex-col md:flex-row justify-between">
+        <div>
+          <h4>Name</h4>
+          <input type="text" name="name" onChange={handleChange} value={formData.name} />
+        </div>
+        <div>
+          <h4>Completed at</h4>
+          <div className="flex items-center">
+            <input
+              name="completedAt"
+              type="datetime-local"
+              onChange={handleChange}
+              value={formData.completedAt}
+              className="z-10 h-8 p-2 bg-gray-300 rounded-l border-transparent"
+            />
+            {!formData.workoutId && (
+              <Button
+                type="submit"
+                onClick={createWorkout}
+                className="z-10 h-8 p-2 bg-gray-300 rounded-r rounded-l-none border-transparent"
+              >
+                <Plus size={14} />
+              </Button>
+            )}
+          </div>
         </div>
       </section>
 
-      <section className={s['exerciseDetails-cards__wrapper']}>
+      <section className="flex flex-col gap-4">
         <h5>Workout overview</h5>
         {exerciseDetailsInput.map((exerciseDetails, index) => (
-          <div key={index} className={s['exercise__wrapper']}>
+          <div key={index} className="flex items-center justify-between bg-gray-300 text-base p-2 rounded">
             <div>
               <span>Set {exerciseDetails.setNumber} | </span>
               <span> {exerciseDetails.reps || 0} </span>
@@ -121,9 +133,9 @@ export const NewWorkout = ({ exercises }: NewWorkoutProps) => {
 
       <ExerciseDetailsForm exercises={exercises} formData={formData} handleChange={handleChange} />
 
-      {formData.exerciseId && <Button onClick={onAddExerciseClick}>Add</Button>}
+      {formData.exerciseId && <Button onClick={onAddExerciseClick}>Add Exercise</Button>}
 
-      <footer className={s['submit-btn']}>
+      <footer className="flex justify-center items-end">
         <Button onClick={onFormSubmit}>Save workout</Button>
       </footer>
     </>

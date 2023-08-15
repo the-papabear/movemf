@@ -4,7 +4,7 @@ import { IPersistWorkout } from '@backend/domain/workout/interfaces';
 export const createWorkoutUseCase = (dependencies: CreateWorkoutDependencies) => async (data: CreateWorkoutData) => {
   const { persistWorkout, generateObjectId } = dependencies;
 
-  const { completedAt, userId } = data;
+  const { completedAt, userId, name } = data;
 
   const workoutDTO = createWorkoutDTO();
 
@@ -14,6 +14,7 @@ export const createWorkoutUseCase = (dependencies: CreateWorkoutDependencies) =>
 
   function createWorkoutDTO() {
     return {
+      name,
       userId,
       exerciseDetails: [],
       _id: generateObjectId(),
@@ -28,6 +29,7 @@ interface CreateWorkoutDependencies {
 }
 
 interface CreateWorkoutData {
+  name: string;
   userId: string;
   completedAt?: Date;
 }

@@ -18,7 +18,7 @@ export const editWorkoutUseCase = (dependencies: EditWorkoutDependencies) => asy
     createExerciseDetailsUseCase,
   } = dependencies;
 
-  const { workoutId, exerciseDetailsId, exerciseId, notes, reps, time, weight, completedAt, setNumber } = data;
+  const { workoutId, exerciseDetailsId, exerciseId, notes, reps, time, weight, completedAt, setNumber, name } = data;
 
   validateData();
 
@@ -89,6 +89,7 @@ export const editWorkoutUseCase = (dependencies: EditWorkoutDependencies) => asy
       exerciseDetails: exerciseDetails,
     };
 
+    if (name !== undefined) workoutDTO.name = name;
     if (completedAt !== undefined) workoutDTO.completedAt = new Date(completedAt);
 
     return workoutDTO;
@@ -113,6 +114,7 @@ interface EditWorkoutDependencies {
 interface EditWorkoutData {
   reps?: number;
   time?: number;
+  name?: string;
   notes?: string;
   userId: string;
   weight?: number;

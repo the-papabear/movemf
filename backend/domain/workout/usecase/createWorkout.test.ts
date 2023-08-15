@@ -7,6 +7,7 @@ describe('createWorkoutUseCase', () => {
   };
 
   const validData = {
+    name: 'workout',
     userId: 'userId',
     completedAt: new Date(),
   };

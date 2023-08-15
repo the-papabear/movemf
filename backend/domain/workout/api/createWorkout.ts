@@ -7,7 +7,7 @@ import { createWorkoutUseCase } from '@backend/domain/workout/usecase/createWork
 import { makeErrorResponse, makeSuccessResponse } from '@backend/lib/makeQueryResponse';
 
 export const createWorkout = async (request: NextApiRequest, response: NextApiResponse, userId: string) => {
-  const { completedAt } = request.body;
+  const { completedAt, name } = request.body;
 
   try {
     const workout = await MongoClient.exec(async (db, session) => {
@@ -16,7 +16,7 @@ export const createWorkout = async (request: NextApiRequest, response: NextApiRe
         persistWorkout: persistWorkout(db, session),
       };
 
-      const data = { completedAt, userId };
+      const data = { completedAt, userId, name };
 
       const res = await createWorkoutUseCase(dependencies)(data);
 

@@ -2,6 +2,7 @@ import { ExerciseDTO } from '@/pages/Exercises/interfaces';
 
 export interface WorkoutDTO {
   _id: string;
+  name: string;
   completedAt: Date;
   exerciseDetails: ExerciseDetailsDTO;
 }

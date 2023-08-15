@@ -15,7 +15,8 @@ import { retrieveExerciseDetailsById } from '@backend/domain/exerciseDetails/rep
 import { retrieveExerciseDetailsByIds } from '@backend/domain/exerciseDetails/repository/retrieveExerciseDetailsByIds';
 
 export const editWorkout = async (request: NextApiRequest, response: NextApiResponse, userId: string) => {
-  const { reps, time, notes, weight, workoutId, exerciseId, exerciseDetailsId, completedAt, setNumber } = request.body;
+  const { reps, time, notes, weight, workoutId, exerciseId, exerciseDetailsId, completedAt, setNumber, name } =
+    request.body;
 
   try {
     const workout = await MongoClient.exec(async (db, session) => {
@@ -41,6 +42,7 @@ export const editWorkout = async (request: NextApiRequest, response: NextApiResp
       const data = {
         reps,
         time,
+        name,
         notes,
         weight,
         userId,

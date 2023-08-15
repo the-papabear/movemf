@@ -3,6 +3,7 @@ import { DeleteWorkoutData } from '@backend/domain/workout/usecase/deleteWorkout
 
 export interface WorkoutDTO {
   _id: string;
+  name: string;
   userId: string;
   completedAt: Date;
   exerciseDetails: ExerciseDetailsDTO[];
