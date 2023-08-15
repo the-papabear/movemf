@@ -3,7 +3,7 @@ import axios from 'axios';
 import Head from 'next/head';
 import { useSession } from 'next-auth/react';
 
-import { NewWorkout } from '@/pages/Workouts/NewWorkout/NewWorkouts';
+import { NewWorkout } from '@/pages/Workouts/NewWorkout';
 
 export default function Workout() {
   const { status } = useSession();
