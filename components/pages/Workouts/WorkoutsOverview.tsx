@@ -8,7 +8,7 @@ interface WorkoutsOverviewProps {
 
 export const WorkoutsOverview = ({ workouts }: WorkoutsOverviewProps) => {
   const onDuplicateClick = async (workout: WorkoutDTO) => {
-    const { completedAt, ...parsedWorkout } = workout;
+    const { completedAt, _id, ...parsedWorkout } = workout;
 
     await axios.post('/api/workouts', parsedWorkout);
   };
