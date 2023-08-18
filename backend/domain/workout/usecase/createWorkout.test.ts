@@ -4,11 +4,13 @@ describe('createWorkoutUseCase', () => {
   const mockDependencies = {
     persistWorkout: jest.fn(),
     generateObjectId: jest.fn(() => 'id'),
+    retrieveExerciseDetailsById: jest.fn().mockResolvedValue([]),
   };
 
   const validData = {
     name: 'workout',
     userId: 'userId',
+    exerciseDetails: [],
     completedAt: new Date(),
   };
 
