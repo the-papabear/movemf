@@ -1,6 +1,6 @@
 import { BackendError } from '@backend/errors';
-import { SetDTO, IUpdateSet, IRetrieveSetById } from '@backend/domain/set/interfaces';
 import { IRetrieveWorkoutById } from '@backend/domain/workout/interfaces';
+import { SetDTO, IUpdateSet, IRetrieveSetById } from '@backend/domain/set/interfaces';
 import { ExerciseDTO, IRetrieveExerciseById } from '@backend/domain/exercise/interfaces';
 
 export const editSetUseCase = (dependencies: EditSetDependencies) => async (data: EditSetData) => {

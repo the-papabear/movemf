@@ -7,7 +7,7 @@ import { setAggregation } from '@backend/domain/set/repository/aggregations';
 export const retrieveSetById = (db: Db, session: ClientSession) => async (setId: string) => {
   const set = (
     await db
-      .collection('set')
+      .collection('sets')
       .aggregate<WithId<SetAggregationDB>>(
         [
           {

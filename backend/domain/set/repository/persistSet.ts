@@ -1,9 +1,9 @@
 import { ClientSession, Db, ObjectId } from 'mongodb';
 
-import { SetDTO } from '@backend/domain/exerciseDetails/interfaces';
+import { SetDTO } from '@backend/domain/set/interfaces';
 
-export const persistExerciseDetails = (db: Db, session: ClientSession) => async (exerciseDetails: SetDTO) => {
-  await db.collection('exerciseDetails').insertOne(
+export const persistSet = (db: Db, session: ClientSession) => async (exerciseDetails: SetDTO) => {
+  await db.collection('sets').insertOne(
     {
       ...exerciseDetails,
       _id: new ObjectId(exerciseDetails._id),

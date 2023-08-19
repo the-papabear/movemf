@@ -3,7 +3,7 @@ import { ClientSession, Db, ObjectId } from 'mongodb';
 import { SetDTO } from '@backend/domain/set/interfaces';
 
 export const updateSet = (db: Db, session: ClientSession) => async (set: SetDTO) => {
-  await db.collection('set').replaceOne(
+  await db.collection('sets').replaceOne(
     { _id: new ObjectId(set._id) },
     {
       ...set,

@@ -1,15 +1,15 @@
 import { editSetUseCase } from '@backend/domain/set/usecase/editSet';
 
 describe('editSetUseCase', () => {
+  const set = { _id: 'setId' };
   const workout = { _id: 'workoutId' };
   const exercise = { _id: 'exerciseId' };
-  const set = { _id: 'setId' };
 
   const mockDependencies = {
     updateSet: jest.fn(),
+    retrieveSetById: jest.fn().mockResolvedValue(set),
     retrieveWorkoutById: jest.fn().mockResolvedValue(workout),
     retrieveExerciseById: jest.fn().mockResolvedValue(exercise),
-    retrieveSetById: jest.fn().mockResolvedValue(set),
   };
 
   const validData = {

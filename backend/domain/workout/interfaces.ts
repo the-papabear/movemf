@@ -4,9 +4,9 @@ import { DeleteWorkoutData } from '@backend/domain/workout/usecase/deleteWorkout
 export interface WorkoutDTO {
   _id: string;
   name: string;
+  set: SetDTO[];
   userId: string;
   completedAt: Date;
-  set: SetDTO[];
 }
 
 export interface IRetrieveWorkouts {

@@ -1,7 +1,7 @@
 import { BackendError } from '@backend/errors';
 import { IGenerateObjectId } from '@backend/interfaces';
 import { IPersistWorkout } from '@backend/domain/workout/interfaces';
-import { SetDTO, IRetrieveSetById } from '@backend/domain/set/interfaces';
+import { IRetrieveSetById, SetDTO } from '@backend/domain/set/interfaces';
 
 export const createWorkoutUseCase = (dependencies: CreateWorkoutDependencies) => async (data: CreateWorkoutData) => {
   const { persistWorkout, generateObjectId, retrieveSetById } = dependencies;
@@ -35,13 +35,13 @@ export const createWorkoutUseCase = (dependencies: CreateWorkoutDependencies) =>
 
 interface CreateWorkoutDependencies {
   persistWorkout: IPersistWorkout;
-  generateObjectId: IGenerateObjectId;
   retrieveSetById: IRetrieveSetById;
+  generateObjectId: IGenerateObjectId;
 }
 
 interface CreateWorkoutData {
   name: string;
+  set: SetDTO[];
   userId: string;
   completedAt?: Date;
-  set: SetDTO[];
 }

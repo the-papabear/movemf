@@ -4,7 +4,7 @@ import { SetDB } from '@backend/domain/set/repository/interfaces';
 
 export const retrieveSetByExerciseId = (db: Db, session: ClientSession) => async (exerciseId: string) => {
   const set = await db
-    .collection('set')
+    .collection('sets')
     .find<WithId<SetDB>>({ exercise: new ObjectId(exerciseId) }, { session })
     .toArray();
 

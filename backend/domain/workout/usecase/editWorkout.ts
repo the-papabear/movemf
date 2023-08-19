@@ -35,10 +35,10 @@ export const editWorkoutUseCase = (dependencies: EditWorkoutDependencies) => asy
       reps,
       time,
       notes,
+      setId,
       weight,
       workoutId,
       exerciseId,
-      setId,
     });
 
     setDTOs = await retrieveSetByIds(existingWorkoutDTO.set.map((set) => set._id));
@@ -75,10 +75,10 @@ export const editWorkoutUseCase = (dependencies: EditWorkoutDependencies) => asy
   await updateWorkout(workoutDTO);
   return workoutDTO;
 
-  function createWorkoutDTO(workout: WorkoutDTO, set: SetDTO[]) {
+  function createWorkoutDTO(workout: WorkoutDTO, sets: SetDTO[]) {
     const workoutDTO = {
       ...workout,
-      set: set,
+      sets,
     };
 
     if (name !== undefined) workoutDTO.name = name;
@@ -96,17 +96,18 @@ export const editWorkoutUseCase = (dependencies: EditWorkoutDependencies) => asy
 
 interface EditWorkoutDependencies {
   updateWorkout: IEditWorkout;
-  retrieveWorkoutById: IRetrieveWorkoutById;
   editSetUseCase: IEditSetUseCase;
   retrieveSetById: IRetrieveSetById;
   createSetUseCase: ICreateSetUseCase;
   retrieveSetByIds: IRetrieveSetByIds;
+  retrieveWorkoutById: IRetrieveWorkoutById;
 }
 
 interface EditWorkoutData {
   reps?: number;
   time?: number;
   name?: string;
+  setId?: string;
   notes?: string;
   userId: string;
   weight?: number;
@@ -114,5 +115,4 @@ interface EditWorkoutData {
   setNumber?: number;
   completedAt?: Date;
   exerciseId?: string;
-  setId?: string;
 }

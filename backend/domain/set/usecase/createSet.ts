@@ -1,8 +1,8 @@
-import { WorkoutDTO, IRetrieveWorkoutById } from '@backend/domain/workout/interfaces';
-import { ExerciseDTO, IRetrieveExerciseById } from '@backend/domain/exercise/interfaces';
 import { BackendError } from '@backend/errors';
-import { SetDTO, IPersistSet } from '@backend/domain/set/interfaces';
 import { IGenerateObjectId } from '@backend/interfaces';
+import { SetDTO, IPersistSet } from '@backend/domain/set/interfaces';
+import { IRetrieveWorkoutById } from '@backend/domain/workout/interfaces';
+import { ExerciseDTO, IRetrieveExerciseById } from '@backend/domain/exercise/interfaces';
 
 export const createSetUseCase = (dependencies: CreateSetDependencies) => async (data: CreateSetData) => {
   const { generateObjectId, retrieveWorkoutById, retrieveExerciseById, persistSet } = dependencies;

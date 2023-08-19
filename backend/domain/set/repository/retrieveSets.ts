@@ -4,9 +4,9 @@ import { mapToSetDTO } from '@backend/domain/set/repository/mapper';
 import { SetAggregationDB } from '@backend/domain/set/repository/interfaces';
 import { setAggregation } from '@backend/domain/set/repository/aggregations';
 
-export const retrieveSet = (db: Db, session: ClientSession) => async () => {
+export const retrieveSets = (db: Db, session: ClientSession) => async () => {
   const set = await db
-    .collection('set')
+    .collection('sets')
     .aggregate<WithId<SetAggregationDB>>([...setAggregation], { session })
     .toArray();
 
