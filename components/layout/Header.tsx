@@ -1,13 +1,19 @@
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { signIn, signOut, useSession } from 'next-auth/react';
+import * as AvatarCircle from '@radix-ui/react-avatar';
 
 import { Button } from '@/common';
-import $ from '@/layout/Header.module.css';
+import logo from 'public/logo.svg';
+import { DropdownMenu } from '@/common/DropdownMenu/DropdownMenu';
+import { DropdownMenuItem } from '@/common/DropdownMenu/DropdownMenuItem';
 
 export const Header = () => {
   const router = useRouter();
   const { status, data } = useSession();
-  const username = data?.user?.name;
+
+  const profileImg = data?.user?.image;
+  const usernameInitials = data?.user?.name![0];
 
   const onUserSignIn = () => {
     signIn();
@@ -20,18 +26,29 @@ export const Header = () => {
   };
 
   return (
-    <div className={$['header__wrapper']}>
-      <span className={$['header__logo']} onClick={() => router.push('/')}>
-        🏋️ MoveMF
-      </span>
+    <div className="flex items-center justify-between">
+      <Image width={45} height={45} alt="logo" src={logo} onClick={() => router.push('/')} />
       {status === 'unauthenticated' ? (
         <Button onClick={onUserSignIn}>Sign In</Button>
       ) : (
-        <div className={$['header__username']}>
-          <span>Hello, {username?.split(' ')[0] || 'My Friend'}!</span>
-          <Button onClick={onUserSignOut}>Sign Out</Button>
-        </div>
+        <>
+          <DropdownMenu trigger={<Avatar initials={usernameInitials} profileImg={profileImg} />}>
+            <DropdownMenuItem name="Sign out" onItemClick={onUserSignOut} />
+          </DropdownMenu>
+        </>
       )}
     </div>
+  );
+};
+
+//TODO: FIX ANY
+const Avatar = ({ initials, profileImg }: any) => {
+  return (
+    <AvatarCircle.Root className="bg-gray-300 inline-flex h-[45px] w-[45px] select-none items-center justify-center overflow-hidden rounded-full align-middle">
+      <AvatarCircle.Image src={profileImg || ''} />
+      <AvatarCircle.Fallback className="text-violet11 leading-1 flex h-full w-full items-center justify-center bg-white text-[15px] font-medium">
+        {initials}
+      </AvatarCircle.Fallback>
+    </AvatarCircle.Root>
   );
 };

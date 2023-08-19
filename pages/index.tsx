@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import { useRouter } from 'next/router';
+import { redirect } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { Root, List, Trigger, Content } from '@radix-ui/react-tabs';
 
@@ -10,7 +10,6 @@ import styles from 'styles/Home.module.css';
 
 export default function Home() {
   const { status } = useSession();
-  const router = useRouter();
 
   return (
     <>

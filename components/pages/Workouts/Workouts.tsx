@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 
+import logo from 'public/logo.svg';
 import { Button } from '@/common/';
 import { WorkoutDTO } from '@/pages/Workouts/interfaces';
 import { WorkoutsOverview } from '@/pages/Workouts/WorkoutsOverview';

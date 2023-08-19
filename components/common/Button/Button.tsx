@@ -1,7 +1,5 @@
 import { PropsWithChildren } from 'react';
 
-import styles from '@/common/Button/Button.module.css';
-
 interface ButtonProps {
   title?: string;
   className?: string;
@@ -22,7 +20,10 @@ export const Button = ({
     <button
       disabled={disabled}
       type={type}
-      className={[styles['btn'], className].join(' ')}
+      className={[
+        'cursor-pointer inline-block px-3 h-8 bg-gray-400 border border-gray-400 rounded text-white hover:shadow-lg hover:transition-all',
+        className,
+      ].join(' ')}
       onClick={onClick}
       placeholder={title}
     >
