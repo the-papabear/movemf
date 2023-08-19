@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongodb';
 
-import { ExerciseDetailsAggregationDB } from '@backend/domain/exerciseDetails/repository/interfaces';
+import { SetAggregationDB } from '@backend/domain/set/repository/interfaces';
 
 export interface WorkoutDB {
   _id: ObjectId;
@@ -10,5 +10,5 @@ export interface WorkoutDB {
 }
 
 export interface WorkoutAggregationDB extends WorkoutDB {
-  exerciseDetails: ExerciseDetailsAggregationDB[];
+  set: SetAggregationDB[];
 }

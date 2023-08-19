@@ -7,35 +7,34 @@ import { editWorkoutUseCase } from '@backend/domain/workout/usecase/editWorkout'
 import { makeErrorResponse, makeSuccessResponse } from '@backend/lib/makeQueryResponse';
 import { retrieveWorkoutById } from '@backend/domain/workout/repository/retrieveWorkoutById';
 import { retrieveExerciseById } from '@backend/domain/exercise/repository/retrieveExerciseById';
-import { updateExerciseDetails } from '@backend/domain/exerciseDetails/repository/updateExerciseDetails';
-import { editExerciseDetailsUseCase } from '@backend/domain/exerciseDetails/usecase/editExerciseDetails';
-import { persistExerciseDetails } from '@backend/domain/exerciseDetails/repository/persistExerciseDetails';
-import { createExerciseDetailsUseCase } from '@backend/domain/exerciseDetails/usecase/createExerciseDetails';
-import { retrieveExerciseDetailsById } from '@backend/domain/exerciseDetails/repository/retrieveExerciseDetailsById';
-import { retrieveExerciseDetailsByIds } from '@backend/domain/exerciseDetails/repository/retrieveExerciseDetailsByIds';
+import { updateSet } from '@backend/domain/set/repository/updateSet';
+import { editSetUseCase } from '@backend/domain/set/usecase/editSet';
+import { persistSet } from '@backend/domain/set/repository/persistSet';
+import { createSetUseCase } from '@backend/domain/set/usecase/createSet';
+import { retrieveSetById } from '@backend/domain/set/repository/retrieveSetById';
+import { retrieveSetByIds } from '@backend/domain/set/repository/retrieveSetByIds';
 
 export const editWorkout = async (request: NextApiRequest, response: NextApiResponse, userId: string) => {
-  const { reps, time, notes, weight, workoutId, exerciseId, exerciseDetailsId, completedAt, setNumber, name } =
-    request.body;
+  const { reps, time, notes, weight, workoutId, exerciseId, setId, completedAt, setNumber, name } = request.body;
 
   try {
     const workout = await MongoClient.exec(async (db, session) => {
       const dependencies = {
         updateWorkout: updateWorkout(db, session),
         retrieveWorkoutById: retrieveWorkoutById(db, session),
-        retrieveExerciseDetailsById: retrieveExerciseDetailsById(db, session),
-        retrieveExerciseDetailsByIds: retrieveExerciseDetailsByIds(db, session),
-        editExerciseDetailsUseCase: editExerciseDetailsUseCase({
+        retrieveSetById: retrieveSetById(db, session),
+        retrieveSetByIds: retrieveSetByIds(db, session),
+        editSetUseCase: editSetUseCase({
           retrieveWorkoutById: retrieveWorkoutById(db, session),
           retrieveExerciseById: retrieveExerciseById(db, session),
-          updateExerciseDetails: updateExerciseDetails(db, session),
-          retrieveExerciseDetailsById: retrieveExerciseDetailsById(db, session),
+          updateSet: updateSet(db, session),
+          retrieveSetById: retrieveSetById(db, session),
         }),
-        createExerciseDetailsUseCase: createExerciseDetailsUseCase({
+        createSetUseCase: createSetUseCase({
           generateObjectId,
           retrieveWorkoutById: retrieveWorkoutById(db, session),
           retrieveExerciseById: retrieveExerciseById(db, session),
-          persistExerciseDetails: persistExerciseDetails(db, session),
+          persistSet: persistSet(db, session),
         }),
       };
 
@@ -50,7 +49,7 @@ export const editWorkout = async (request: NextApiRequest, response: NextApiResp
         workoutId,
         exerciseId,
         completedAt,
-        exerciseDetailsId,
+        setId,
       };
 
       return await editWorkoutUseCase(dependencies)(data);

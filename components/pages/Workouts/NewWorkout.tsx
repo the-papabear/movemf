@@ -6,8 +6,8 @@ import { ArrowLeftCircle, Plus, X } from 'react-feather';
 
 import { Button } from '@/common';
 import { ExerciseDTO } from '@/pages/Exercises/interfaces';
-import { ExerciseDetailsDTO } from '@/pages/Workouts/interfaces';
-import { ExerciseDetailsForm } from '@/pages/Workouts/ExerciseDetailsForm';
+import { SetDTO } from '@/pages/Workouts/interfaces';
+import { SetForm } from '@/pages/Workouts/SetForm';
 
 interface NewWorkoutProps {
   exercises: ExerciseDTO[];
@@ -16,7 +16,7 @@ interface NewWorkoutProps {
 export const NewWorkout = ({ exercises }: NewWorkoutProps) => {
   const router = useRouter();
 
-  const [exerciseDetailsInput, setExerciseDetailsInput] = useState<ExerciseDetailsDTO[]>([]);
+  const [setInput, setSetInput] = useState<SetDTO[]>([]);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -53,9 +53,9 @@ export const NewWorkout = ({ exercises }: NewWorkoutProps) => {
   };
 
   const onAddExerciseClick = async () => {
-    const exerciseDetails = await axios.patch(`/api/workouts/${formData.workoutId}`, formData);
+    const set = await axios.patch(`/api/workouts/${formData.workoutId}`, formData);
 
-    setExerciseDetailsInput(exerciseDetails.data.data.exerciseDetails);
+    setSetInput(set.data.data.set);
 
     setFormData({
       ...formData,
@@ -69,12 +69,12 @@ export const NewWorkout = ({ exercises }: NewWorkoutProps) => {
     });
   };
 
-  //TODO: The approach bellow makes the data between workouts and exerciseDetails to not be in sync in the database
+  //TODO: The approach bellow makes the data between workouts and set to not be in sync in the database
   //find a sexier solution for managing deleting on the BE and updating the UI
-  const onDeleteExerciseDetails = (exerciseDetailsId: string) => async () => {
-    await axios.delete(`/api/exerciseDetails/${exerciseDetailsId}`);
-    const updatedList = exerciseDetailsInput.filter((exerciseDetails) => exerciseDetails._id !== exerciseDetailsId);
-    setExerciseDetailsInput(updatedList);
+  const onDeleteSet = (setId: string) => async () => {
+    await axios.delete(`/api/set/${setId}`);
+    const updatedList = setInput.filter((set) => set._id !== setId);
+    setSetInput(updatedList);
   };
 
   return (
@@ -119,19 +119,19 @@ export const NewWorkout = ({ exercises }: NewWorkoutProps) => {
 
       <section className="flex flex-col gap-4">
         <h5>Workout overview</h5>
-        {exerciseDetailsInput.map((exerciseDetails, index) => (
+        {setInput.map((set, index) => (
           <div key={index} className="flex items-center justify-between bg-gray-300 text-base p-2 rounded">
             <div>
-              <span>Set {exerciseDetails.setNumber} | </span>
-              <span> {exerciseDetails.reps || 0} </span>
-              <span>{exercises.find((exercise) => exercise._id === exerciseDetails.exercise._id)!.name}</span>
+              <span>Set {set.setNumber} | </span>
+              <span> {set.reps || 0} </span>
+              <span>{exercises.find((exercise) => exercise._id === set.exercise._id)!.name}</span>
             </div>
-            <X size={14} onClick={onDeleteExerciseDetails(exerciseDetails._id)} />
+            <X size={14} onClick={onDeleteSet(set._id)} />
           </div>
         ))}
       </section>
 
-      <ExerciseDetailsForm exercises={exercises} formData={formData} handleChange={handleChange} />
+      <SetForm exercises={exercises} formData={formData} handleChange={handleChange} />
 
       {formData.exerciseId && <Button onClick={onAddExerciseClick}>Add Exercise</Button>}
 

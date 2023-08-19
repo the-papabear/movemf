@@ -2,22 +2,22 @@ import { editWorkoutUseCase } from '@backend/domain/workout/usecase/editWorkout'
 
 describe('editWorkoutUseCase', () => {
   const workout = { id: 'workoutId' };
-  const exerciseDetails = { id: 'exerciseDetailsId' };
+  const set = { id: 'setId' };
 
   const mockDependencies = {
     updateWorkout: jest.fn(),
-    editExerciseDetailsUseCase: jest.fn(),
-    createExerciseDetailsUseCase: jest.fn(),
-    retrieveExerciseDetailsByIds: jest.fn(),
+    editSetUseCase: jest.fn(),
+    createSetUseCase: jest.fn(),
+    retrieveSetByIds: jest.fn(),
     retrieveWorkoutById: jest.fn().mockResolvedValue(workout),
-    retrieveExerciseDetailsById: jest.fn().mockResolvedValue(exerciseDetails),
+    retrieveSetById: jest.fn().mockResolvedValue(set),
   };
 
   const validData = {
     userId: 'userId',
     workoutId: 'workoutId',
     exerciseId: 'exerciseId',
-    exerciseDetailsId: 'exerciseDetailsId',
+    setId: 'setId',
   };
 
   describe('given invalid workoutId', () => {
@@ -50,21 +50,21 @@ describe('editWorkoutUseCase', () => {
     });
   });
 
-  describe('given no exerciseDetails found for the given exerciseDetailsId', () => {
+  describe('given no set found for the given setId', () => {
     it('should throw an error', async () => {
       const invalidData = {
         ...validData,
-        exerciseDetailsId: 'non_existent',
+        setId: 'non_existent',
       };
 
-      mockDependencies.retrieveExerciseDetailsById.mockResolvedValueOnce(null);
+      mockDependencies.retrieveSetById.mockResolvedValueOnce(null);
 
       await expect(editWorkoutUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
         code: 404,
-        message: 'exerciseDetails_not_found',
+        message: 'set_not_found',
       });
     });
   });
 
-  //TODO: Implement validation test cases for exerciseDetails input && valid data cases
+  //TODO: Implement validation test cases for set input && valid data cases
 });

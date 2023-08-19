@@ -8,8 +8,8 @@ import { makeErrorResponse, makeSuccessResponse } from '@backend/lib/makeQueryRe
 import { deleteExerciseUseCase } from '@backend/domain/exercise/usecase/deleteExercise';
 import { retrieveWorkoutById } from '@backend/domain/workout/repository/retrieveWorkoutById';
 import { retrieveExerciseById } from '@backend/domain/exercise/repository/retrieveExerciseById';
-import { removeExerciseDetails } from '@backend/domain/exerciseDetails/repository/removeExerciseDetails';
-import { retrieveExerciseDetailsByExerciseId } from '@backend/domain/exerciseDetails/repository/retrieveExerciseDetailsByExerciseId';
+import { removeSet } from '@backend/domain/set/repository/removeSet';
+import { retrieveSetByExerciseId } from '@backend/domain/set/repository/retrieveSetByExerciseId';
 
 export const deleteExercise = async (request: NextApiRequest, response: NextApiResponse) => {
   const { id } = request.query;
@@ -19,11 +19,11 @@ export const deleteExercise = async (request: NextApiRequest, response: NextApiR
       const dependencies = {
         removeExercise: removeExercise(db, session),
         retrieveExerciseById: retrieveExerciseById(db, session),
-        retrieveExerciseDetailsByExerciseId: retrieveExerciseDetailsByExerciseId(db, session),
+        retrieveSetByExerciseId: retrieveSetByExerciseId(db, session),
         removeWorkoutUseCase: deleteWorkoutUseCase({
           removeWorkout: removeWorkout(db, session),
           retrieveWorkoutById: retrieveWorkoutById(db, session),
-          removeExerciseDetails: removeExerciseDetails(db, session),
+          removeSet: removeSet(db, session),
         }),
       };
 

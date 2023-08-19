@@ -1,4 +1,4 @@
-export const exerciseDetailsAggregation = [
+export const setAggregation = [
   {
     $lookup: {
       from: 'exercises',

@@ -2,7 +2,7 @@ import { ObjectId } from 'mongodb';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 import { makeErrorResponse } from '@backend/lib/makeQueryResponse';
-import { deleteExerciseDetails } from '@backend/domain/exerciseDetails/api/deleteExerciseDetails';
+import { deleteSet } from '@backend/domain/set/api/deleteSet';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { id } = req.query;
@@ -12,6 +12,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   if (req.method === 'DELETE') {
-    await deleteExerciseDetails(req, res);
+    await deleteSet(req, res);
   }
 }

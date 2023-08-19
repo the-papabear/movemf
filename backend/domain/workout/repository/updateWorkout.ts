@@ -9,7 +9,7 @@ export const updateWorkout = (db: Db, session: ClientSession) => async (workout:
       name: workout.name,
       completedAt: workout.completedAt,
       userId: new ObjectId(workout.userId),
-      exerciseDetails: workout.exerciseDetails.map((exerciseDetails) => new ObjectId(exerciseDetails._id)),
+      set: workout.set.map((set) => new ObjectId(set._id)),
     },
     { session },
   );

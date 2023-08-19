@@ -1,24 +1,18 @@
 import { BackendError } from '@backend/errors';
 import {
-  ExerciseDetailsDTO,
-  IEditExerciseDetailsUseCase,
-  IRetrieveExerciseDetailsById,
-  IRetrieveExerciseDetailsByIds,
-  ICreateExerciseDetailsUseCase,
-} from '@backend/domain/exerciseDetails/interfaces';
+  SetDTO,
+  IEditSetUseCase,
+  IRetrieveSetById,
+  IRetrieveSetByIds,
+  ICreateSetUseCase,
+} from '@backend/domain/set/interfaces';
 import { WorkoutDTO, IEditWorkout, IRetrieveWorkoutById } from '@backend/domain/workout/interfaces';
 
 export const editWorkoutUseCase = (dependencies: EditWorkoutDependencies) => async (data: EditWorkoutData) => {
-  const {
-    updateWorkout,
-    retrieveWorkoutById,
-    editExerciseDetailsUseCase,
-    retrieveExerciseDetailsById,
-    retrieveExerciseDetailsByIds,
-    createExerciseDetailsUseCase,
-  } = dependencies;
+  const { updateWorkout, retrieveWorkoutById, editSetUseCase, retrieveSetById, retrieveSetByIds, createSetUseCase } =
+    dependencies;
 
-  const { workoutId, exerciseDetailsId, exerciseId, notes, reps, time, weight, completedAt, setNumber, name } = data;
+  const { workoutId, setId, exerciseId, notes, reps, time, weight, completedAt, setNumber, name } = data;
 
   validateData();
 
@@ -28,28 +22,26 @@ export const editWorkoutUseCase = (dependencies: EditWorkoutDependencies) => asy
     throw new BackendError(404, 'workout_not_found');
   }
 
-  let exerciseDetailsDTOs: ExerciseDetailsDTO[] = [];
+  let setDTOs: SetDTO[] = [];
 
-  if (exerciseDetailsId) {
-    const existingExerciseDetailsDTO = await retrieveExerciseDetailsById(exerciseDetailsId);
+  if (setId) {
+    const existingSetDTO = await retrieveSetById(setId);
 
-    if (!existingExerciseDetailsDTO) {
-      throw new BackendError(404, 'exerciseDetails_not_found');
+    if (!existingSetDTO) {
+      throw new BackendError(404, 'set_not_found');
     }
 
-    await editExerciseDetailsUseCase({
+    await editSetUseCase({
       reps,
       time,
       notes,
       weight,
       workoutId,
       exerciseId,
-      exerciseDetailsId,
+      setId,
     });
 
-    exerciseDetailsDTOs = await retrieveExerciseDetailsByIds(
-      existingWorkoutDTO.exerciseDetails.map((exerciseDetails) => exerciseDetails._id),
-    );
+    setDTOs = await retrieveSetByIds(existingWorkoutDTO.set.map((set) => set._id));
   } else {
     if (!exerciseId) {
       throw new BackendError(400, 'INVALID_EXERCISE_ID');
@@ -59,7 +51,7 @@ export const editWorkoutUseCase = (dependencies: EditWorkoutDependencies) => asy
       throw new BackendError(400, 'MISSING_SET_NUMBER');
     }
 
-    const exerciseDetailsDTO = await createExerciseDetailsUseCase({
+    const setDTO = await createSetUseCase({
       reps,
       time,
       notes,
@@ -69,24 +61,24 @@ export const editWorkoutUseCase = (dependencies: EditWorkoutDependencies) => asy
       exerciseId,
     });
 
-    const existingExerciseDetailsDTOs = await retrieveExerciseDetailsByIds(
-      existingWorkoutDTO.exerciseDetails.map((exerciseDetails) => {
-        return exerciseDetails._id;
+    const existingSetDTOs = await retrieveSetByIds(
+      existingWorkoutDTO.set.map((set) => {
+        return set._id;
       }),
     );
 
-    exerciseDetailsDTOs = [...existingExerciseDetailsDTOs, exerciseDetailsDTO];
+    setDTOs = [...existingSetDTOs, setDTO];
   }
 
-  const workoutDTO = createWorkoutDTO(existingWorkoutDTO, exerciseDetailsDTOs);
+  const workoutDTO = createWorkoutDTO(existingWorkoutDTO, setDTOs);
 
   await updateWorkout(workoutDTO);
   return workoutDTO;
 
-  function createWorkoutDTO(workout: WorkoutDTO, exerciseDetails: ExerciseDetailsDTO[]) {
+  function createWorkoutDTO(workout: WorkoutDTO, set: SetDTO[]) {
     const workoutDTO = {
       ...workout,
-      exerciseDetails: exerciseDetails,
+      set: set,
     };
 
     if (name !== undefined) workoutDTO.name = name;
@@ -105,10 +97,10 @@ export const editWorkoutUseCase = (dependencies: EditWorkoutDependencies) => asy
 interface EditWorkoutDependencies {
   updateWorkout: IEditWorkout;
   retrieveWorkoutById: IRetrieveWorkoutById;
-  editExerciseDetailsUseCase: IEditExerciseDetailsUseCase;
-  retrieveExerciseDetailsById: IRetrieveExerciseDetailsById;
-  createExerciseDetailsUseCase: ICreateExerciseDetailsUseCase;
-  retrieveExerciseDetailsByIds: IRetrieveExerciseDetailsByIds;
+  editSetUseCase: IEditSetUseCase;
+  retrieveSetById: IRetrieveSetById;
+  createSetUseCase: ICreateSetUseCase;
+  retrieveSetByIds: IRetrieveSetByIds;
 }
 
 interface EditWorkoutData {
@@ -122,5 +114,5 @@ interface EditWorkoutData {
   setNumber?: number;
   completedAt?: Date;
   exerciseId?: string;
-  exerciseDetailsId?: string;
+  setId?: string;
 }

@@ -1,33 +1,33 @@
-import { editExerciseDetailsUseCase } from '@backend/domain/exerciseDetails/usecase/editExerciseDetails';
+import { editSetUseCase } from '@backend/domain/set/usecase/editSet';
 
-describe('editExerciseDetailsUseCase', () => {
+describe('editSetUseCase', () => {
   const workout = { _id: 'workoutId' };
   const exercise = { _id: 'exerciseId' };
-  const exerciseDetails = { _id: 'exerciseDetailsId' };
+  const set = { _id: 'setId' };
 
   const mockDependencies = {
-    updateExerciseDetails: jest.fn(),
+    updateSet: jest.fn(),
     retrieveWorkoutById: jest.fn().mockResolvedValue(workout),
     retrieveExerciseById: jest.fn().mockResolvedValue(exercise),
-    retrieveExerciseDetailsById: jest.fn().mockResolvedValue(exerciseDetails),
+    retrieveSetById: jest.fn().mockResolvedValue(set),
   };
 
   const validData = {
     workoutId: 'workoutId',
     exerciseId: 'exerciseId',
-    exerciseDetailsId: 'exerciseDetailsId',
+    setId: 'setId',
   };
 
-  describe('given no exerciseDetailsId', () => {
+  describe('given no setId', () => {
     it('should throw an error', async () => {
       const invalidData = {
         ...validData,
-        exerciseDetailsId: '',
+        setId: '',
       };
 
-      await expect(editExerciseDetailsUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
+      await expect(editSetUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
         code: 400,
-        message: 'invalid_exerciseDetailsId',
+        message: 'invalid_setId',
       });
     });
   });
@@ -39,7 +39,7 @@ describe('editExerciseDetailsUseCase', () => {
         workoutId: '',
       };
 
-      await expect(editExerciseDetailsUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
+      await expect(editSetUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
         code: 400,
         message: 'invalid_workoutId',
       });
@@ -53,25 +53,25 @@ describe('editExerciseDetailsUseCase', () => {
         exerciseId: '',
       };
 
-      await expect(editExerciseDetailsUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
+      await expect(editSetUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
         code: 400,
         message: 'invalid_exerciseId',
       });
     });
   });
 
-  describe('given no exerciseDetails for the given exerciseDetailsId', () => {
+  describe('given no set for the given setId', () => {
     it('should throw an error', async () => {
       const invalidData = {
         ...validData,
-        exerciseDetailsId: 'non_existent',
+        setId: 'non_existent',
       };
 
-      mockDependencies.retrieveExerciseDetailsById.mockResolvedValueOnce(null);
+      mockDependencies.retrieveSetById.mockResolvedValueOnce(null);
 
-      await expect(editExerciseDetailsUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
+      await expect(editSetUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
         code: 404,
-        message: 'exerciseDetails_not_found',
+        message: 'set_not_found',
       });
     });
   });
@@ -85,7 +85,7 @@ describe('editExerciseDetailsUseCase', () => {
 
       mockDependencies.retrieveWorkoutById.mockResolvedValueOnce(null);
 
-      await expect(editExerciseDetailsUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
+      await expect(editSetUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
         code: 404,
         message: 'workout_not_found',
       });
@@ -101,7 +101,7 @@ describe('editExerciseDetailsUseCase', () => {
 
       mockDependencies.retrieveExerciseById.mockResolvedValueOnce(null);
 
-      await expect(editExerciseDetailsUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
+      await expect(editSetUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
         code: 404,
         message: 'exercise_not_found',
       });

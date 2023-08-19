@@ -1,11 +1,10 @@
 import { BackendError } from '@backend/errors';
 import { IRemoveWorkoutUseCase } from '@backend/domain/workout/interfaces';
 import { IRemoveExercise, IRetrieveExerciseById } from '@backend/domain/exercise/interfaces';
-import { IRetrieveExerciseDetailsByExerciseId } from '@backend/domain/exerciseDetails/interfaces';
+import { IRetrieveSetByExerciseId } from '@backend/domain/set/interfaces';
 
 export const deleteExerciseUseCase = (dependencies: DeleteExerciseDependencies) => async (data: DeleteExerciseData) => {
-  const { removeExercise, removeWorkoutUseCase, retrieveExerciseById, retrieveExerciseDetailsByExerciseId } =
-    dependencies;
+  const { removeExercise, removeWorkoutUseCase, retrieveExerciseById, retrieveSetByExerciseId } = dependencies;
 
   const { exerciseId } = data;
 
@@ -19,7 +18,7 @@ export const deleteExerciseUseCase = (dependencies: DeleteExerciseDependencies) 
     throw new BackendError(404, 'EXERCISE_NOT_FOUND');
   }
 
-  const exDetailsDTOs = await retrieveExerciseDetailsByExerciseId(exerciseId);
+  const exDetailsDTOs = await retrieveSetByExerciseId(exerciseId);
 
   if (exDetailsDTOs.length) {
     await Promise.all(
@@ -40,5 +39,5 @@ interface DeleteExerciseDependencies {
   removeExercise: IRemoveExercise;
   removeWorkoutUseCase: IRemoveWorkoutUseCase;
   retrieveExerciseById: IRetrieveExerciseById;
-  retrieveExerciseDetailsByExerciseId: IRetrieveExerciseDetailsByExerciseId;
+  retrieveSetByExerciseId: IRetrieveSetByExerciseId;
 }

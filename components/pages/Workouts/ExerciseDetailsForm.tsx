@@ -1,14 +1,14 @@
 import { ExerciseDTO } from '@/pages/Exercises/interfaces';
 
-import s from 'components/pages/Workouts/ExerciseDetailsForm.module.css';
+import s from 'components/pages/Workouts/SetForm.module.css';
 
-interface ExerciseDetailsFormProps {
+interface SetFormProps {
   formData: any;
   exercises: ExerciseDTO[];
   handleChange: (e: any) => void;
 }
 
-export const ExerciseDetailsForm = ({ exercises, formData, handleChange }: ExerciseDetailsFormProps) => {
+export const SetForm = ({ exercises, formData, handleChange }: SetFormProps) => {
   const handleSubmit = (e: any) => {
     e.preventDefault();
   };

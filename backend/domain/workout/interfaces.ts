@@ -1,4 +1,4 @@
-import { ExerciseDetailsDTO } from '@backend/domain/exerciseDetails/interfaces';
+import { SetDTO } from '@backend/domain/set/interfaces';
 import { DeleteWorkoutData } from '@backend/domain/workout/usecase/deleteWorkout';
 
 export interface WorkoutDTO {
@@ -6,7 +6,7 @@ export interface WorkoutDTO {
   name: string;
   userId: string;
   completedAt: Date;
-  exerciseDetails: ExerciseDetailsDTO[];
+  set: SetDTO[];
 }
 
 export interface IRetrieveWorkouts {

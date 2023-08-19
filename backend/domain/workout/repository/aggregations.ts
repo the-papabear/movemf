@@ -1,10 +1,10 @@
 export const workoutAggregation = [
   {
     $lookup: {
-      from: 'exerciseDetails',
-      localField: 'exerciseDetails',
+      from: 'set',
+      localField: 'set',
       foreignField: '_id',
-      as: 'exerciseDetails',
+      as: 'set',
       pipeline: [
         {
           $lookup: {
@@ -26,7 +26,7 @@ export const workoutAggregation = [
   },
   {
     $addFields: {
-      exerciseDetails: '$exerciseDetails',
+      set: '$set',
     },
   },
 ];

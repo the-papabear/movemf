@@ -8,7 +8,7 @@ export const exercises = [
   { _id: new ObjectId(), name: 'Rest', type: 'REST' },
 ];
 
-export const exerciseDetails = [
+export const set = [
   {
     reps: 3,
     weight: 10,
@@ -57,6 +57,6 @@ export const workouts = [
   {
     _id: new ObjectId('64c1819bbeef6d0a84352e6a'),
     completedAt: new Date(),
-    exerciseDetails: exerciseDetails.map((exerciseDetails) => exerciseDetails._id),
+    set: set.map((set) => set._id),
   },
 ];

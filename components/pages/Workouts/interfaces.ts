@@ -4,10 +4,10 @@ export interface WorkoutDTO {
   _id: string;
   name: string;
   completedAt: Date;
-  exerciseDetails: ExerciseDetailsDTO;
+  set: SetDTO;
 }
 
-export interface ExerciseDetailsDTO {
+export interface SetDTO {
   _id: string;
   reps?: number;
   time?: number;

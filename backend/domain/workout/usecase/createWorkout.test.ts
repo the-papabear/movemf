@@ -4,13 +4,13 @@ describe('createWorkoutUseCase', () => {
   const mockDependencies = {
     persistWorkout: jest.fn(),
     generateObjectId: jest.fn(() => 'id'),
-    retrieveExerciseDetailsById: jest.fn().mockResolvedValue([]),
+    retrieveSetById: jest.fn().mockResolvedValue([]),
   };
 
   const validData = {
     name: 'workout',
     userId: 'userId',
-    exerciseDetails: [],
+    set: [],
     completedAt: new Date(),
   };
 
@@ -27,7 +27,7 @@ describe('createWorkoutUseCase', () => {
       const workoutDTO = await createWorkoutUseCase(mockDependencies)(validData);
 
       expect(workoutDTO._id).toBeDefined();
-      expect(workoutDTO.exerciseDetails).toEqual([]);
+      expect(workoutDTO.set).toEqual([]);
       expect(workoutDTO.completedAt).toEqual(validData.completedAt);
     });
   });

@@ -1,21 +1,19 @@
 import { BackendError } from '@backend/errors';
 import { IGenerateObjectId } from '@backend/interfaces';
 import { IPersistWorkout } from '@backend/domain/workout/interfaces';
-import { ExerciseDetailsDTO, IRetrieveExerciseDetailsById } from '@backend/domain/exerciseDetails/interfaces';
+import { SetDTO, IRetrieveSetById } from '@backend/domain/set/interfaces';
 
 export const createWorkoutUseCase = (dependencies: CreateWorkoutDependencies) => async (data: CreateWorkoutData) => {
-  const { persistWorkout, generateObjectId, retrieveExerciseDetailsById } = dependencies;
+  const { persistWorkout, generateObjectId, retrieveSetById } = dependencies;
 
-  const { completedAt, userId, name, exerciseDetails } = data;
+  const { completedAt, userId, name, set } = data;
 
   const workoutDTO = createWorkoutDTO();
 
-  if (exerciseDetails && exerciseDetails.length) {
-    const existingExDetails = await Promise.all(
-      exerciseDetails.map(async (exerciseDetails) => await retrieveExerciseDetailsById(exerciseDetails._id)),
-    );
+  if (set && set.length) {
+    const existingExDetails = await Promise.all(set.map(async (set) => await retrieveSetById(set._id)));
 
-    if (existingExDetails.length !== exerciseDetails.length) {
+    if (existingExDetails.length !== set.length) {
       throw new BackendError(404, 'EXERCISE_DETAILS_NOT_FOUND');
     }
   }
@@ -29,7 +27,7 @@ export const createWorkoutUseCase = (dependencies: CreateWorkoutDependencies) =>
       name,
       userId,
       _id: generateObjectId(),
-      exerciseDetails: exerciseDetails || [],
+      set: set || [],
       completedAt: completedAt ?? new Date(),
     };
   }
@@ -38,12 +36,12 @@ export const createWorkoutUseCase = (dependencies: CreateWorkoutDependencies) =>
 interface CreateWorkoutDependencies {
   persistWorkout: IPersistWorkout;
   generateObjectId: IGenerateObjectId;
-  retrieveExerciseDetailsById: IRetrieveExerciseDetailsById;
+  retrieveSetById: IRetrieveSetById;
 }
 
 interface CreateWorkoutData {
   name: string;
   userId: string;
   completedAt?: Date;
-  exerciseDetails: ExerciseDetailsDTO[];
+  set: SetDTO[];
 }

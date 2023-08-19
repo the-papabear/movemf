@@ -1,9 +1,9 @@
 import { BackendError } from '@backend/errors';
-import { IRemoveExerciseDetails } from '@backend/domain/exerciseDetails/interfaces';
+import { IRemoveSet } from '@backend/domain/set/interfaces';
 import { IRemoveWorkout, IRetrieveWorkoutById } from '@backend/domain/workout/interfaces';
 
 export const deleteWorkoutUseCase = (dependencies: DeleteWorkoutDependencies) => async (data: DeleteWorkoutData) => {
-  const { retrieveWorkoutById, removeExerciseDetails, removeWorkout } = dependencies;
+  const { retrieveWorkoutById, removeSet, removeWorkout } = dependencies;
 
   const { workoutId } = data;
 
@@ -17,7 +17,7 @@ export const deleteWorkoutUseCase = (dependencies: DeleteWorkoutDependencies) =>
     throw new BackendError(404, 'WORKOUT_NOT_FOUND');
   }
 
-  await Promise.all(workoutDTO.exerciseDetails.map(async (exDetails) => await removeExerciseDetails(exDetails._id)));
+  await Promise.all(workoutDTO.set.map(async (exDetails) => await removeSet(exDetails._id)));
 
   await removeWorkout(workoutId);
 };
@@ -25,7 +25,7 @@ export const deleteWorkoutUseCase = (dependencies: DeleteWorkoutDependencies) =>
 interface DeleteWorkoutDependencies {
   removeWorkout: IRemoveWorkout;
   retrieveWorkoutById: IRetrieveWorkoutById;
-  removeExerciseDetails: IRemoveExerciseDetails;
+  removeSet: IRemoveSet;
 }
 
 export interface DeleteWorkoutData {

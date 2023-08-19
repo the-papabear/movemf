@@ -1,11 +1,11 @@
-import { createExerciseDetailsUseCase } from '@backend/domain/exerciseDetails/usecase/createExerciseDetails';
+import { createSetUseCase } from '@backend/domain/set/usecase/createSet';
 
 describe('createWorkoutDetailsUseCase', () => {
   const workout = { _id: 'workoutId' };
   const exercise = { _id: 'exerciseId' };
 
   const mockDependencies = {
-    persistExerciseDetails: jest.fn(),
+    persistSet: jest.fn(),
     generateObjectId: jest.fn(() => 'id'),
     retrieveWorkoutById: jest.fn().mockResolvedValue(workout),
     retrieveExerciseById: jest.fn().mockResolvedValue(exercise),
@@ -28,7 +28,7 @@ describe('createWorkoutDetailsUseCase', () => {
         workoutId: '',
       };
 
-      await expect(createExerciseDetailsUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
+      await expect(createSetUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
         code: 400,
         message: 'missing_workoutId',
       });
@@ -42,7 +42,7 @@ describe('createWorkoutDetailsUseCase', () => {
         exerciseId: '',
       };
 
-      await expect(createExerciseDetailsUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
+      await expect(createSetUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
         code: 400,
         message: 'missing_exerciseId',
       });
@@ -58,7 +58,7 @@ describe('createWorkoutDetailsUseCase', () => {
 
       mockDependencies.retrieveWorkoutById.mockResolvedValueOnce(null);
 
-      await expect(createExerciseDetailsUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
+      await expect(createSetUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
         code: 404,
         message: 'workout_not_found',
       });
@@ -74,7 +74,7 @@ describe('createWorkoutDetailsUseCase', () => {
 
       mockDependencies.retrieveExerciseById.mockResolvedValueOnce(null);
 
-      await expect(createExerciseDetailsUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
+      await expect(createSetUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
         code: 404,
         message: 'exercise_not_found',
       });
@@ -88,7 +88,7 @@ describe('createWorkoutDetailsUseCase', () => {
         reps: -1,
       };
 
-      await expect(createExerciseDetailsUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
+      await expect(createSetUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
         code: 400,
         message: 'invalid_reps',
       });
@@ -102,7 +102,7 @@ describe('createWorkoutDetailsUseCase', () => {
         time: -1,
       };
 
-      await expect(createExerciseDetailsUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
+      await expect(createSetUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
         code: 400,
         message: 'invalid_time',
       });
@@ -116,7 +116,7 @@ describe('createWorkoutDetailsUseCase', () => {
         weight: -1,
       };
 
-      await expect(createExerciseDetailsUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
+      await expect(createSetUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
         code: 400,
         message: 'invalid_weight',
       });
@@ -130,7 +130,7 @@ describe('createWorkoutDetailsUseCase', () => {
         notes: ' ',
       };
 
-      await expect(createExerciseDetailsUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
+      await expect(createSetUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
         code: 400,
         message: 'invalid_notes',
       });
@@ -138,25 +138,25 @@ describe('createWorkoutDetailsUseCase', () => {
   });
 
   describe('given valid data', () => {
-    it('should call persistExerciseDetails', async () => {
-      mockDependencies.persistExerciseDetails.mockReset();
+    it('should call persistSet', async () => {
+      mockDependencies.persistSet.mockReset();
 
-      await createExerciseDetailsUseCase(mockDependencies)(validData);
+      await createSetUseCase(mockDependencies)(validData);
 
-      expect(mockDependencies.persistExerciseDetails).toHaveBeenCalledTimes(1);
+      expect(mockDependencies.persistSet).toHaveBeenCalledTimes(1);
     });
 
-    it('should return a valid exerciseDetailsDTO', async () => {
-      const exerciseDetailsDTO = await createExerciseDetailsUseCase(mockDependencies)(validData);
+    it('should return a valid setDTO', async () => {
+      const setDTO = await createSetUseCase(mockDependencies)(validData);
 
-      expect(exerciseDetailsDTO._id).toBeDefined();
-      expect(exerciseDetailsDTO.insertedAt).toBeDefined();
-      expect(exerciseDetailsDTO.reps).toEqual(validData.reps);
-      expect(exerciseDetailsDTO.time).toEqual(validData.time);
-      expect(exerciseDetailsDTO.notes).toEqual(validData.notes);
-      expect(exerciseDetailsDTO.weight).toEqual(validData.weight);
-      expect(exerciseDetailsDTO.workoutId).toEqual(validData.workoutId);
-      expect(exerciseDetailsDTO.exercise._id).toEqual(validData.exerciseId);
+      expect(setDTO._id).toBeDefined();
+      expect(setDTO.insertedAt).toBeDefined();
+      expect(setDTO.reps).toEqual(validData.reps);
+      expect(setDTO.time).toEqual(validData.time);
+      expect(setDTO.notes).toEqual(validData.notes);
+      expect(setDTO.weight).toEqual(validData.weight);
+      expect(setDTO.workoutId).toEqual(validData.workoutId);
+      expect(setDTO.exercise._id).toEqual(validData.exerciseId);
     });
   });
 });

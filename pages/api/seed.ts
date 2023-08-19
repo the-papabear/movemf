@@ -1,5 +1,5 @@
 import { MongoClient } from '@backend/mongoConnection';
-import { exerciseDetails, exercises, workouts } from '@backend/scripts/seed/seedData';
+import { set, exercises, workouts } from '@backend/scripts/seed/seedData';
 
 export default async function handler(req: any, res: any) {
   const env = process.env.NODE_ENV;
@@ -15,7 +15,7 @@ export default async function handler(req: any, res: any) {
     await Promise.all(collections.map((collection) => db.collection(collection.collectionName).drop()));
 
     await db.collection('exercises').insertMany(exercises);
-    await db.collection('exerciseDetails').insertMany(exerciseDetails);
+    await db.collection('set').insertMany(set);
     await db.collection('workouts').insertMany(workouts);
   });
 
