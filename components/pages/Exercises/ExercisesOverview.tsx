@@ -1,8 +1,7 @@
 import { MoreHorizontal } from 'react-feather';
 
 import { Dialog } from '@/common/Dialog';
-import { Button, Modal } from '@/common';
-import { DropdownMenu } from '@/common/DropdownMenu/DropdownMenu';
+import { Button, Modal, DropdownMenu } from '@/common';
 import { ExerciseDTO, ExerciseData } from '@/pages/Exercises/interfaces';
 import { EditExercise } from '@/pages/Exercises/EditExercise/EditExercise';
 

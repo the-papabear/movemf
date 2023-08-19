@@ -1,12 +1,10 @@
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { signIn, signOut, useSession } from 'next-auth/react';
 import * as AvatarCircle from '@radix-ui/react-avatar';
+import { signIn, signOut, useSession } from 'next-auth/react';
 
-import { Button } from '@/common';
 import logo from 'public/logo.svg';
-import { DropdownMenu } from '@/common/DropdownMenu/DropdownMenu';
-import { DropdownMenuItem } from '@/common/DropdownMenu/DropdownMenuItem';
+import { Button, DropdownMenu, DropdownMenuItem } from '@/common';
 
 export const Header = () => {
   const router = useRouter();
