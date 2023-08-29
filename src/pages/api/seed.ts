@@ -1,5 +1,5 @@
-import { MongoClient } from '@backend/mongoConnection';
-import { set, exercises, workouts } from '@backend/scripts/seed/seedData';
+import { MongoClient } from '@/backend/mongoConnection';
+import { set, exercises, workouts } from '@/backend/scripts/seed/seedData';
 
 export default async function handler(req: any, res: any) {
   const env = process.env.NODE_ENV;

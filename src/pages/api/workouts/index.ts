@@ -2,8 +2,8 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '../auth/[...nextauth]';
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { getWorkouts } from '@backend/domain/workout/api/getWorkouts';
-import { createWorkout } from '@backend/domain/workout/api/createWorkout';
+import { getWorkouts } from '@/backend/domain/workout/api/getWorkouts';
+import { createWorkout } from '@/backend/domain/workout/api/createWorkout';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getServerSession(req, res, authOptions);

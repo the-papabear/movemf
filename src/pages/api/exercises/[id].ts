@@ -3,10 +3,10 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '../auth/[...nextauth]';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import { makeErrorResponse } from '@backend/lib/makeQueryResponse';
-import { getExercise } from '@backend/domain/exercise/api/getExercise';
-import { editExercise } from '@backend/domain/exercise/api/editExercise';
-import { deleteExercise } from '@backend/domain/exercise/api/deleteExercise';
+import { makeErrorResponse } from '@/backend/lib/makeQueryResponse';
+import { getExercise } from '@/backend/domain/exercise/api/getExercise';
+import { editExercise } from '@/backend/domain/exercise/api/editExercise';
+import { deleteExercise } from '@/backend/domain/exercise/api/deleteExercise';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { id } = req.query;

@@ -3,9 +3,9 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '../auth/[...nextauth]';
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { makeErrorResponse } from '@backend/lib/makeQueryResponse';
-import { getWorkout } from '@backend/domain/workout/api/getWorkout';
-import { editWorkout } from '@backend/domain/workout/api/editWorkout';
+import { makeErrorResponse } from '@/backend/lib/makeQueryResponse';
+import { getWorkout } from '@/backend/domain/workout/api/getWorkout';
+import { editWorkout } from '@/backend/domain/workout/api/editWorkout';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { id } = req.query;
