@@ -1,3 +1,7 @@
 {
-  "cSpell.words": ["movemf"]
+  "cSpell.words": [
+    "movemf"
+  ],
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true
 }

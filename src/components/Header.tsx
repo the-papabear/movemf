@@ -4,7 +4,7 @@ import * as AvatarCircle from '@radix-ui/react-avatar';
 import { signIn, signOut, useSession } from 'next-auth/react';
 
 import logo from 'public/logo.svg';
-import { Button, DropdownMenu, DropdownMenuItem } from '@/common';
+import { Button, DropdownMenu, DropdownMenuItem } from '@/components';
 
 export const Header = () => {
   const router = useRouter();

@@ -8,8 +8,8 @@
     "build": "next build",
     "start": "next start",
     "test": "jest --watch",
-    "startLocalMongo": "node backend/scripts/startLocalMongo.mjs",
-    "stopLocalMongo": "node backend/scripts/stopLocalMongo.mjs"
+    "startLocalMongo": "node src/backend/scripts/startLocalMongo.mjs",
+    "stopLocalMongo": "node src/backend/scripts/stopLocalMongo.mjs"
   },
   "dependencies": {
     "@next-auth/mongodb-adapter": "^1.1.3",

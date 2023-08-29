@@ -1,12 +1,11 @@
+'use client';
+
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-import { Modal } from '@/common';
-import { ExercisesOverview } from '@/pages/Exercises/ExercisesOverview';
-import { ExerciseDTO, ExerciseData } from '@/pages/Exercises/interfaces';
-import { CreateExercise } from '@/pages/Exercises/CreateExercise/CreateExercise';
-
-import styles from '@/pages/Exercises/Exercises.module.css';
+import { ExercisesOverview } from '@/components/pages/Exercises/ExercisesOverview';
+import { ExerciseDTO, ExerciseData } from '@/components/pages/Exercises/interfaces';
+import { CreateExercise } from '@/components/pages/Exercises/CreateExercise/CreateExercise';
 
 export const Exercises = () => {
   const [exercises, setExercises] = useState<ExerciseDTO[]>([]);
@@ -68,16 +67,16 @@ export const Exercises = () => {
 
   return (
     <>
-      <div className={styles.header}>
+      <div className="flex justify-between">
         <h2>Exercises</h2>
-        <Modal
+        {/* <Modal
           title="Add exercise"
           open={isCreateModalOpen}
           toggleModal={onCreateModalToggle}
           trigger={<span>Add exercise</span>}
         >
           <CreateExercise exerciseData={exerciseData} submitExercise={handleCreate} setExerciseData={handleChange} />
-        </Modal>
+        </Modal> */}
       </div>
       <ExercisesOverview
         exercises={exercises}

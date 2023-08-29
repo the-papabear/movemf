@@ -1,33 +1,23 @@
-import Head from 'next/head';
+'use client';
+
 import { useSession } from 'next-auth/react';
 import { Root, List, Trigger, Content } from '@radix-ui/react-tabs';
 
-import { Workouts } from '@/pages/Workouts/Workouts';
-import { Exercises } from '@/pages/Exercises/Exercises';
-
-import styles from 'styles/Home.module.css';
+import { Workouts } from '@/components/pages/Workouts/Workouts';
+import { Exercises } from '@/components/pages/Exercises/Exercises';
 
 export default function Home() {
   const { status } = useSession();
 
   return (
     <>
-      <Head>
-        <title>MoveMF - Get a move on!</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
       {status === 'unauthenticated' ? (
         <span>You must log in</span>
       ) : (
-        <Root defaultValue="workouts-tab" className={styles.wrapper}>
-          <List className={styles.tabList}>
-            <Trigger value="workouts-tab" className={styles.tabTrigger}>
-              Workouts
-            </Trigger>
-            <Trigger value="exercises-tab" className={styles.tabTrigger}>
-              Exercises
-            </Trigger>
+        <Root defaultValue="workouts-tab">
+          <List>
+            <Trigger value="workouts-tab">Workouts</Trigger>
+            <Trigger value="exercises-tab">Exercises</Trigger>
           </List>
           <Content value="workouts-tab">
             <Workouts />

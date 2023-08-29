@@ -1,6 +1,8 @@
+'use client';
+
 import axios from 'axios';
 
-import { WorkoutDTO } from '@/pages/Workouts/interfaces';
+import { WorkoutDTO } from '@/components/pages/Workouts/interfaces';
 
 interface WorkoutsOverviewProps {
   workouts: WorkoutDTO[];

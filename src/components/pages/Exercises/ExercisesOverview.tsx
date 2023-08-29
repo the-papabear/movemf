@@ -1,9 +1,8 @@
 import { MoreHorizontal } from 'react-feather';
 
-import { Dialog } from '@/common/Dialog';
-import { Button, Modal, DropdownMenu } from '@/common';
-import { ExerciseDTO, ExerciseData } from '@/pages/Exercises/interfaces';
-import { EditExercise } from '@/pages/Exercises/EditExercise/EditExercise';
+import { Dialog, Button, DropdownMenu } from '@/components';
+import { ExerciseDTO, ExerciseData } from '@/components/pages/Exercises/interfaces';
+import { EditExercise } from '@/components/pages/Exercises/EditExercise/EditExercise';
 
 interface ExercisesOverviewProps {
   isModalOpen: boolean;
@@ -38,7 +37,7 @@ export const ExercisesOverview = ({
                     </a>
                   </Button>
                 )}
-                <Modal
+                {/* <Modal
                   open={isModalOpen}
                   title={exercise.name}
                   trigger={<span>Edit</span>}
@@ -49,7 +48,7 @@ export const ExercisesOverview = ({
                     submitExercise={submitExercise}
                     setExerciseData={setExerciseData}
                   />
-                </Modal>
+                </Modal> */}
                 <Dialog trigger={<Button className="bg-gray-700 text-white">Delete</Button>}>
                   <div className="flex flex-col gap-4">
                     <span className="text-left">
