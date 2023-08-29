@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import { redirect } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { Root, List, Trigger, Content } from '@radix-ui/react-tabs';
 
