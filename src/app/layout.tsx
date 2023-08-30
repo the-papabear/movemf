@@ -1,17 +1,21 @@
 'use client';
 
 import '@/app/globals.css';
-import { Header } from '@/components/';
+import { Header, Footer } from '@/components/';
 import { NextAuthProvider } from '@/app/providers';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body>
+    <html lang="en" className="h-full">
+      <head>
+        <title>MoveMF - Get a move on</title>
+      </head>
+      <body className="h-full">
         <NextAuthProvider>
-          <div className="flex gap-4 items-center flex-col max-w-5xl m-0 p-4">
+          <div className="flex flex-col items-center max-w-5xl m-auto p-4 h-full">
             <Header />
-            {children}
+            <div className="flex-1 w-full">{children}</div>
+            <Footer />
           </div>
         </NextAuthProvider>
       </body>

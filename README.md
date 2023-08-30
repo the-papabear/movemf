@@ -34,7 +34,7 @@ Current workout apps are either too simple and lack a decent UX / basic features
 - Database: MongoDB
 - API: Next.js
 - Authentication: Next Auth + MongoDB
-- UI: Next.js + React + Radix
+- UI: Next.js + React + Radix UI + TailwindCSS
 
 ---
 
@@ -51,13 +51,12 @@ Current workout apps are either too simple and lack a decent UX / basic features
 
 ### Functionality summary
 
-- 🟥 The user is able to login / logout from the app
+- ✅ The user is able to login / logout from the app
 - ✅ The user can log a new workout
 - ✅ The user can view a history of his workouts
 - ✅ The user can view a list of added exercises
 - ✅ The user can add previously added exercises to the workout
-- 🟥 The user can duplicate a past completed workout
-- 🟥 The user can search his list of exercises
+- ✅ The user can duplicate a past completed workout
 
 ---
 
