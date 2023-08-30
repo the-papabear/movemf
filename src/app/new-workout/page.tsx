@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
+
 import axios from 'axios';
 import Head from 'next/head';
 import { useSession } from 'next-auth/react';
 
-import { NewWorkout } from '@/pages/Workouts/NewWorkout';
+import { NewWorkout } from '@/components/pages/Workouts/NewWorkout';
 
 export default function Workout() {
   const { status } = useSession();

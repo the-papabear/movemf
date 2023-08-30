@@ -1,5 +1,5 @@
-import { ExerciseType } from '@backend/domain/exercise/interfaces';
-import { createExerciseUseCase } from '@backend/domain/exercise/usecase/createExercise';
+import { ExerciseType } from '@/backend/domain/exercise/interfaces';
+import { createExerciseUseCase } from '@/backend/domain/exercise/usecase/createExercise';
 
 describe('createExerciseUseCase', () => {
   const mockDependencies = {

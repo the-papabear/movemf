@@ -1,4 +1,4 @@
-import { ExerciseDTO } from '@/pages/Exercises/interfaces';
+import { ExerciseDTO } from '@/components/pages/Exercises/interfaces';
 
 export interface WorkoutDTO {
   _id: string;

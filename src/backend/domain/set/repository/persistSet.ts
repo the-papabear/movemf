@@ -1,6 +1,6 @@
 import { ClientSession, Db, ObjectId } from 'mongodb';
 
-import { SetDTO } from '@backend/domain/set/interfaces';
+import { SetDTO } from '@/backend/domain/set/interfaces';
 
 export const persistSet = (db: Db, session: ClientSession) => async (exerciseDetails: SetDTO) => {
   await db.collection('sets').insertOne(

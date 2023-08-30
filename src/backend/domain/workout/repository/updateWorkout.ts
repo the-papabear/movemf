@@ -1,6 +1,6 @@
 import { ClientSession, Db, ObjectId } from 'mongodb';
 
-import { WorkoutDTO } from '@backend/domain/workout/interfaces';
+import { WorkoutDTO } from '@/backend/domain/workout/interfaces';
 
 export const updateWorkout = (db: Db, session: ClientSession) => async (workout: WorkoutDTO) => {
   await db.collection('workouts').replaceOne(

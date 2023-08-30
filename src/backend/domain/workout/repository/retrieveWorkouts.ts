@@ -1,8 +1,8 @@
 import { ClientSession, Db, ObjectId, WithId } from 'mongodb';
 
-import { mapToWorkoutDTO } from '@backend/domain/workout/repository/mapper';
-import { WorkoutAggregationDB } from '@backend/domain/workout/repository/interfaces';
-import { workoutAggregation } from '@backend/domain/workout/repository/aggregations';
+import { mapToWorkoutDTO } from '@/backend/domain/workout/repository/mapper';
+import { WorkoutAggregationDB } from '@/backend/domain/workout/repository/interfaces';
+import { workoutAggregation } from '@/backend/domain/workout/repository/aggregations';
 
 const retrieveWorkouts = (db: Db, session: ClientSession) => async (userId: string) => {
   const workouts = await db

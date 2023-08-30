@@ -3,8 +3,8 @@ import {
   IUpdateExercise,
   IRetrieveExerciseById,
   IRetrieveExerciseByName,
-} from '@backend/domain/exercise/interfaces';
-import { BackendError } from '@backend/errors';
+} from '@/backend/domain/exercise/interfaces';
+import { BackendError } from '@/backend/errors';
 
 export const editExerciseUseCase = (dependencies: EditExerciseDependencies) => async (data: EditExerciseData) => {
   const { retrieveExerciseById, updateExercise, retrieveExerciseByName } = dependencies;

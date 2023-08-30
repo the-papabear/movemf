@@ -1,6 +1,6 @@
 import { ClientSession, Db, ObjectId, WithId } from 'mongodb';
 
-import { SetDB } from '@backend/domain/set/repository/interfaces';
+import { SetDB } from '@/backend/domain/set/repository/interfaces';
 
 export const retrieveSetByExerciseId = (db: Db, session: ClientSession) => async (exerciseId: string) => {
   const set = await db

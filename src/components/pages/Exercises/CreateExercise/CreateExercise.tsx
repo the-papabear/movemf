@@ -1,4 +1,4 @@
-import { Button } from '@/common';
+import { Button } from '@/components';
 
 import styles from '@/pages/Exercises/CreateExercise/CreateExercise.module.css';
 

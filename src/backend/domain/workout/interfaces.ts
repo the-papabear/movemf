@@ -1,5 +1,5 @@
-import { SetDTO } from '@backend/domain/set/interfaces';
-import { DeleteWorkoutData } from '@backend/domain/workout/usecase/deleteWorkout';
+import { SetDTO } from '@/backend/domain/set/interfaces';
+import { DeleteWorkoutData } from '@/backend/domain/workout/usecase/deleteWorkout';
 
 export interface WorkoutDTO {
   _id: string;

@@ -1,7 +1,7 @@
-import { BackendError } from '@backend/errors';
-import { IRemoveWorkoutUseCase } from '@backend/domain/workout/interfaces';
-import { IRemoveExercise, IRetrieveExerciseById } from '@backend/domain/exercise/interfaces';
-import { IRetrieveSetByExerciseId } from '@backend/domain/set/interfaces';
+import { BackendError } from '@/backend/errors';
+import { IRemoveWorkoutUseCase } from '@/backend/domain/workout/interfaces';
+import { IRemoveExercise, IRetrieveExerciseById } from '@/backend/domain/exercise/interfaces';
+import { IRetrieveSetByExerciseId } from '@/backend/domain/set/interfaces';
 
 export const deleteExerciseUseCase = (dependencies: DeleteExerciseDependencies) => async (data: DeleteExerciseData) => {
   const { removeExercise, removeWorkoutUseCase, retrieveExerciseById, retrieveSetByExerciseId } = dependencies;

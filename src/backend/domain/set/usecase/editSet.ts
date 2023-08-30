@@ -1,7 +1,7 @@
-import { BackendError } from '@backend/errors';
-import { IRetrieveWorkoutById } from '@backend/domain/workout/interfaces';
-import { SetDTO, IUpdateSet, IRetrieveSetById } from '@backend/domain/set/interfaces';
-import { ExerciseDTO, IRetrieveExerciseById } from '@backend/domain/exercise/interfaces';
+import { BackendError } from '@/backend/errors';
+import { IRetrieveWorkoutById } from '@/backend/domain/workout/interfaces';
+import { SetDTO, IUpdateSet, IRetrieveSetById } from '@/backend/domain/set/interfaces';
+import { ExerciseDTO, IRetrieveExerciseById } from '@/backend/domain/exercise/interfaces';
 
 export const editSetUseCase = (dependencies: EditSetDependencies) => async (data: EditSetData) => {
   const { retrieveWorkoutById, retrieveExerciseById, updateSet, retrieveSetById } = dependencies;

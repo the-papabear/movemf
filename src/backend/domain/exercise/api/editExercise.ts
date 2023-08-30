@@ -1,11 +1,11 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { MongoClient } from '@backend/mongoConnection';
-import { editExerciseUseCase } from '@backend/domain/exercise/usecase/editExercise';
-import { updateExercise } from '@backend/domain/exercise/repository/updateExercise';
-import { makeErrorResponse, makeSuccessResponse } from '@backend/lib/makeQueryResponse';
-import { retrieveExerciseById } from '@backend/domain/exercise/repository/retrieveExerciseById';
-import { retrieveExerciseByName } from '@backend/domain/exercise/repository/retrieveExerciseByName';
+import { MongoClient } from '@/backend/mongoConnection';
+import { editExerciseUseCase } from '@/backend/domain/exercise/usecase/editExercise';
+import { updateExercise } from '@/backend/domain/exercise/repository/updateExercise';
+import { makeErrorResponse, makeSuccessResponse } from '@/backend/lib/makeQueryResponse';
+import { retrieveExerciseById } from '@/backend/domain/exercise/repository/retrieveExerciseById';
+import { retrieveExerciseByName } from '@/backend/domain/exercise/repository/retrieveExerciseByName';
 
 export const editExercise = async (request: NextApiRequest, response: NextApiResponse, userId: string) => {
   const { id, name, link } = request.body;

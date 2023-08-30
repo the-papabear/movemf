@@ -1,5 +1,5 @@
-import { BackendError } from '@backend/errors';
-import { IRemoveSet, IRetrieveSetById } from '@backend/domain/set/interfaces';
+import { BackendError } from '@/backend/errors';
+import { IRemoveSet, IRetrieveSetById } from '@/backend/domain/set/interfaces';
 
 export const deleteSetUseCase = (dependencies: DeleteSetDependencies) => async (data: DeleteSetData) => {
   const { retrieveSetById, removeSet } = dependencies;

@@ -1,4 +1,4 @@
-import { createSetUseCase } from '@backend/domain/set/usecase/createSet';
+import { createSetUseCase } from '@/backend/domain/set/usecase/createSet';
 
 describe('createWorkoutDetailsUseCase', () => {
   const workout = { _id: 'workoutId' };

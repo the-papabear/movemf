@@ -1,11 +1,11 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { MongoClient } from '@backend/mongoConnection';
-import { generateObjectId } from '@backend/lib/generateObjectId';
-import { persistWorkout } from '@backend/domain/workout/repository/persistWorkout';
-import { createWorkoutUseCase } from '@backend/domain/workout/usecase/createWorkout';
-import { makeErrorResponse, makeSuccessResponse } from '@backend/lib/makeQueryResponse';
-import { retrieveSetById } from '@backend/domain/set/repository/retrieveSetById';
+import { MongoClient } from '@/backend/mongoConnection';
+import { generateObjectId } from '@/backend/lib/generateObjectId';
+import { persistWorkout } from '@/backend/domain/workout/repository/persistWorkout';
+import { createWorkoutUseCase } from '@/backend/domain/workout/usecase/createWorkout';
+import { makeErrorResponse, makeSuccessResponse } from '@/backend/lib/makeQueryResponse';
+import { retrieveSetById } from '@/backend/domain/set/repository/retrieveSetById';
 
 export const createWorkout = async (request: NextApiRequest, response: NextApiResponse, userId: string) => {
   const { completedAt, name, set } = request.body;

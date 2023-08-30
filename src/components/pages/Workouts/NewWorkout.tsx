@@ -4,10 +4,10 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import { ArrowLeftCircle, Plus, X } from 'react-feather';
 
-import { Button } from '@/common';
-import { SetDTO } from '@/pages/Workouts/interfaces';
-import { ExerciseDTO } from '@/pages/Exercises/interfaces';
-import { SetForm } from '@/pages/Workouts/ExerciseDetailsForm';
+import { Button } from '@/components/';
+import { SetDTO } from '@/components/pages/Workouts/interfaces';
+import { ExerciseDTO } from '@/components/pages/Exercises/interfaces';
+import { SetForm } from '@/components/pages/Workouts/ExerciseDetailsForm';
 
 interface NewWorkoutProps {
   exercises: ExerciseDTO[];

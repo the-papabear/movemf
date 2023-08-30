@@ -1,6 +1,6 @@
-import { BackendError } from '@backend/errors';
-import { IRemoveWorkout, IRetrieveWorkoutById } from '@backend/domain/workout/interfaces';
-import { IRemoveSet } from '@backend/domain/set/interfaces';
+import { BackendError } from '@/backend/errors';
+import { IRemoveWorkout, IRetrieveWorkoutById } from '@/backend/domain/workout/interfaces';
+import { IRemoveSet } from '@/backend/domain/set/interfaces';
 
 export const deleteWorkoutUseCase = (dependencies: DeleteWorkoutDependencies) => async (data: DeleteWorkoutData) => {
   const { retrieveWorkoutById, removeSet, removeWorkout } = dependencies;

@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongodb';
 
-import { SetAggregationDB } from '@backend/domain/set/repository/interfaces';
+import { SetAggregationDB } from '@/backend/domain/set/repository/interfaces';
 
 export interface WorkoutDB {
   _id: ObjectId;

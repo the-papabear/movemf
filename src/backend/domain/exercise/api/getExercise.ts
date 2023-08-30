@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { MongoClient } from '@backend/mongoConnection';
-import { makeErrorResponse, makeSuccessResponse } from '@backend/lib/makeQueryResponse';
-import { retrieveExerciseById } from '@backend/domain/exercise/repository/retrieveExerciseById';
+import { MongoClient } from '@/backend/mongoConnection';
+import { makeErrorResponse, makeSuccessResponse } from '@/backend/lib/makeQueryResponse';
+import { retrieveExerciseById } from '@/backend/domain/exercise/repository/retrieveExerciseById';
 
 export const getExercise = async (request: NextApiRequest, response: NextApiResponse) => {
   const { id } = request.query;

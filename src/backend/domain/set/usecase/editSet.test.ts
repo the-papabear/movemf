@@ -1,4 +1,4 @@
-import { editSetUseCase } from '@backend/domain/set/usecase/editSet';
+import { editSetUseCase } from '@/backend/domain/set/usecase/editSet';
 
 describe('editSetUseCase', () => {
   const set = { _id: 'setId' };

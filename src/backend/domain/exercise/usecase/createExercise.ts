@@ -3,9 +3,9 @@ import {
   ExerciseType,
   IPersistExercise,
   IRetrieveExerciseByName,
-} from '@backend/domain/exercise/interfaces';
-import { BackendError } from '@backend/errors';
-import { IGenerateObjectId } from '@backend/interfaces';
+} from '@/backend/domain/exercise/interfaces';
+import { BackendError } from '@/backend/errors';
+import { IGenerateObjectId } from '@/backend/interfaces';
 
 export const createExerciseUseCase = (dependencies: CreateExerciseDependencies) => async (data: CreateExerciseData) => {
   const { persistExercise, generateObjectId, retrieveExerciseByName } = dependencies;

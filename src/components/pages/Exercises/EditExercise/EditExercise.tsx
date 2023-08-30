@@ -1,6 +1,6 @@
-import { Button } from '@/common';
+import { Button } from '@/components';
 
-import { ExerciseData } from '@/pages/Exercises/interfaces';
+import { ExerciseData } from '@/components/pages/Exercises/interfaces';
 
 import s from '@/pages/Exercises/EditExercise/EditExercise.module.css';
 

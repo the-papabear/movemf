@@ -1,4 +1,4 @@
-import { ExerciseDTO } from '@/pages/Exercises/interfaces';
+import { ExerciseDTO } from '@/components/pages/Exercises/interfaces';
 
 import s from 'components/pages/Workouts/ExerciseDetailsForm.module.css';
 

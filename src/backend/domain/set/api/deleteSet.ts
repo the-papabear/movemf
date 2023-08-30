@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { makeErrorResponse, makeSuccessResponse } from '@backend/lib/makeQueryResponse';
-import { removeSet } from '@backend/domain/set/repository/removeSet';
-import { MongoClient } from '@backend/mongoConnection';
+import { makeErrorResponse, makeSuccessResponse } from '@/backend/lib/makeQueryResponse';
+import { removeSet } from '@/backend/domain/set/repository/removeSet';
+import { MongoClient } from '@/backend/mongoConnection';
 
 export const deleteSet = async (request: NextApiRequest, response: NextApiResponse) => {
   const { id } = request.query;

@@ -1,4 +1,4 @@
-import { editExerciseUseCase } from '@backend/domain/exercise/usecase/editExercise';
+import { editExerciseUseCase } from '@/backend/domain/exercise/usecase/editExercise';
 
 describe('editExerciseUseCase', () => {
   const mockDependencies = {

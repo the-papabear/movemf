@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongodb';
 
-import { ExerciseDB } from '@backend/domain/exercise/repository/interfaces';
+import { ExerciseDB } from '@/backend/domain/exercise/repository/interfaces';
 
 export interface SetBase {
   _id: ObjectId;

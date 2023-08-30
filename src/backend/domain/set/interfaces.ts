@@ -1,6 +1,6 @@
-import { ExerciseDTO } from '@backend/domain/exercise/interfaces';
-import { EditSetData } from '@backend/domain/set/usecase/editSet';
-import { CreateSetData } from '@backend/domain/set/usecase/createSet';
+import { ExerciseDTO } from '@/backend/domain/exercise/interfaces';
+import { EditSetData } from '@/backend/domain/set/usecase/editSet';
+import { CreateSetData } from '@/backend/domain/set/usecase/createSet';
 
 export interface SetDTO {
   _id: string;

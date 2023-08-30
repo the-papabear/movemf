@@ -1,4 +1,4 @@
-import { createWorkoutUseCase } from '@backend/domain/workout/usecase/createWorkout';
+import { createWorkoutUseCase } from '@/backend/domain/workout/usecase/createWorkout';
 
 describe('createWorkoutUseCase', () => {
   const mockDependencies = {

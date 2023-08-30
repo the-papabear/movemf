@@ -1,15 +1,15 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { MongoClient } from '@backend/mongoConnection';
-import { removeWorkout } from '@backend/domain/workout/repository/removeWorkout';
-import { removeExercise } from '@backend/domain/exercise/repository/removeExercise';
-import { deleteWorkoutUseCase } from '@backend/domain/workout/usecase/deleteWorkout';
-import { makeErrorResponse, makeSuccessResponse } from '@backend/lib/makeQueryResponse';
-import { deleteExerciseUseCase } from '@backend/domain/exercise/usecase/deleteExercise';
-import { retrieveWorkoutById } from '@backend/domain/workout/repository/retrieveWorkoutById';
-import { retrieveExerciseById } from '@backend/domain/exercise/repository/retrieveExerciseById';
-import { removeSet } from '@backend/domain/set/repository/removeSet';
-import { retrieveSetByExerciseId } from '@backend/domain/set/repository/retrieveSetByExerciseId';
+import { MongoClient } from '@/backend/mongoConnection';
+import { removeWorkout } from '@/backend/domain/workout/repository/removeWorkout';
+import { removeExercise } from '@/backend/domain/exercise/repository/removeExercise';
+import { deleteWorkoutUseCase } from '@/backend/domain/workout/usecase/deleteWorkout';
+import { makeErrorResponse, makeSuccessResponse } from '@/backend/lib/makeQueryResponse';
+import { deleteExerciseUseCase } from '@/backend/domain/exercise/usecase/deleteExercise';
+import { retrieveWorkoutById } from '@/backend/domain/workout/repository/retrieveWorkoutById';
+import { retrieveExerciseById } from '@/backend/domain/exercise/repository/retrieveExerciseById';
+import { removeSet } from '@/backend/domain/set/repository/removeSet';
+import { retrieveSetByExerciseId } from '@/backend/domain/set/repository/retrieveSetByExerciseId';
 
 export const deleteExercise = async (request: NextApiRequest, response: NextApiResponse) => {
   const { id } = request.query;
