@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 import { useRouter, usePathname } from 'next/navigation';
 import * as AvatarCircle from '@radix-ui/react-avatar';

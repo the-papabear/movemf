@@ -1,3 +1,5 @@
+'use client';
+
 import { Item } from '@radix-ui/react-dropdown-menu';
 
 interface DropdownMenuItemProps {

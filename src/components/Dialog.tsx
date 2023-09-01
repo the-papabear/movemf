@@ -1,3 +1,5 @@
+'use client';
+
 import { PropsWithChildren } from 'react';
 import { Root, Trigger, Portal, Overlay, Content, Close } from '@radix-ui/react-dialog';
 

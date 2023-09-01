@@ -1,3 +1,5 @@
+'use client';
+
 import { PropsWithChildren } from 'react';
 import { Root, Trigger, Portal, Content, Arrow } from '@radix-ui/react-dropdown-menu';
 
