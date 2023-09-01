@@ -1,10 +1,10 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextApiRequest } from 'next';
 
 import { MongoClient } from '@/backend/mongoConnection';
 import { makeErrorResponse, makeSuccessResponse } from '@/backend/lib/makeQueryResponse';
 import { retrieveWorkoutById } from '@/backend/domain/workout/repository/retrieveWorkoutById';
 
-export const getWorkout = async (request: NextApiRequest, response: NextApiResponse) => {
+export const getWorkout = async (request: NextApiRequest) => {
   const { id } = request.query;
 
   try {
@@ -12,8 +12,8 @@ export const getWorkout = async (request: NextApiRequest, response: NextApiRespo
       return await retrieveWorkoutById(db, session)(id as string);
     });
 
-    return makeSuccessResponse(response, undefined, workout);
+    return makeSuccessResponse('', workout);
   } catch (e: any) {
-    return makeErrorResponse(response, e.code, e.message);
+    return makeErrorResponse(e.code, e.message);
   }
 };

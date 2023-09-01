@@ -1,4 +1,4 @@
-import { ExerciseDTO } from '@/components/pages/Exercises/interfaces';
+import { ExerciseDTO } from '@/app/exercises/interfaces';
 
 import s from 'components/pages/Workouts/ExerciseDetailsForm.module.css';
 
@@ -22,7 +22,7 @@ export const SetForm = ({ exercises, formData, handleChange }: SetFormProps) => 
             id="exerciseId"
             name="exerciseId"
             onChange={handleChange}
-            className={s['select-exercise']}
+            className="bg-gray-400 border-transparent rounded h-[30px] w-full mb-10"
             defaultValue="select-placeholder"
           >
             <option value="select-placeholder" disabled hidden>
@@ -36,12 +36,12 @@ export const SetForm = ({ exercises, formData, handleChange }: SetFormProps) => 
           </select>
 
           {formData.exerciseId && (
-            <div className={s['input__wrapper']}>
+            <div className="flex flex-col gap-2 px-4">
               <input
                 required
                 type="number"
                 name="setNumber"
-                className={s['input']}
+                className="h-[30px]"
                 onChange={handleChange}
                 placeholder="Set Number"
                 value={formData.setNumber}
@@ -49,7 +49,7 @@ export const SetForm = ({ exercises, formData, handleChange }: SetFormProps) => 
               <input
                 name="reps"
                 type="number"
-                className={s['input']}
+                className="h-[30px]"
                 value={formData.reps}
                 onChange={handleChange}
                 placeholder="Number of reps"
@@ -57,7 +57,7 @@ export const SetForm = ({ exercises, formData, handleChange }: SetFormProps) => 
               <input
                 type="number"
                 name="weight"
-                className={s['input']}
+                className="h-[30px]"
                 placeholder="Weights"
                 value={formData.weight}
                 onChange={handleChange}
@@ -65,7 +65,7 @@ export const SetForm = ({ exercises, formData, handleChange }: SetFormProps) => 
               <input
                 type="number"
                 name="time"
-                className={s['input']}
+                className="h-[30px]"
                 placeholder="Time"
                 value={formData.time}
                 onChange={handleChange}
@@ -78,7 +78,6 @@ export const SetForm = ({ exercises, formData, handleChange }: SetFormProps) => 
                 placeholder="Notes"
                 value={formData.notes}
                 onChange={handleChange}
-                className={s['input__full']}
               ></textarea>
             </div>
           )}

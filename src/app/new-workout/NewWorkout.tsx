@@ -5,9 +5,9 @@ import { useRouter } from 'next/router';
 import { ArrowLeftCircle, Plus, X } from 'react-feather';
 
 import { Button } from '@/components/';
-import { SetDTO } from '@/components/pages/Workouts/interfaces';
-import { ExerciseDTO } from '@/components/pages/Exercises/interfaces';
-import { SetForm } from '@/components/pages/Workouts/ExerciseDetailsForm';
+import { SetDTO } from '@/app/interfaces';
+import { ExerciseDTO } from '@/app/exercises/interfaces';
+import { SetForm } from '@/app/new-workout/ExerciseDetailsForm';
 
 interface NewWorkoutProps {
   exercises: ExerciseDTO[];

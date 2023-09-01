@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
+import { getUserId } from '@/backend/lib/getUserId';
 import { MongoClient } from '@/backend/mongoConnection';
 import { editExerciseUseCase } from '@/backend/domain/exercise/usecase/editExercise';
 import { updateExercise } from '@/backend/domain/exercise/repository/updateExercise';
@@ -7,7 +8,9 @@ import { makeErrorResponse, makeSuccessResponse } from '@/backend/lib/makeQueryR
 import { retrieveExerciseById } from '@/backend/domain/exercise/repository/retrieveExerciseById';
 import { retrieveExerciseByName } from '@/backend/domain/exercise/repository/retrieveExerciseByName';
 
-export const editExercise = async (request: NextApiRequest, response: NextApiResponse, userId: string) => {
+export const editExercise = async (request: NextApiRequest, response: NextApiResponse) => {
+  const userId = await getUserId(request, response);
+
   const { id, name, link } = request.body;
 
   try {
@@ -28,8 +31,8 @@ export const editExercise = async (request: NextApiRequest, response: NextApiRes
       return await editExerciseUseCase(dependencies)(data);
     });
 
-    return makeSuccessResponse(response, 'EXERCISE_EDITED_SUCCESSFULLY', exerciseDTO);
+    return makeSuccessResponse('EXERCISE_EDITED_SUCCESSFULLY', exerciseDTO);
   } catch (e: any) {
-    makeErrorResponse(response, e.code, e.message);
+    makeErrorResponse(e.code, e.message);
   }
 };

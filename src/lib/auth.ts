@@ -1,6 +1,6 @@
 import GoogleProvider from 'next-auth/providers/google';
 import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
-import NextAuth, { NextAuthOptions, SessionStrategy } from 'next-auth';
+import { NextAuthOptions, SessionStrategy } from 'next-auth';
 
 import { MongoClient } from '@/backend/mongoConnection';
 
@@ -26,5 +26,3 @@ export const authOptions: NextAuthOptions = {
     }),
   },
 };
-
-export default NextAuth(authOptions);

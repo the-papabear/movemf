@@ -1,13 +1,15 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
+import { getUserId } from '@/backend/lib/getUserId';
 import { MongoClient } from '@/backend/mongoConnection';
 import { generateObjectId } from '@/backend/lib/generateObjectId';
+import { retrieveSetById } from '@/backend/domain/set/repository/retrieveSetById';
 import { persistWorkout } from '@/backend/domain/workout/repository/persistWorkout';
 import { createWorkoutUseCase } from '@/backend/domain/workout/usecase/createWorkout';
 import { makeErrorResponse, makeSuccessResponse } from '@/backend/lib/makeQueryResponse';
-import { retrieveSetById } from '@/backend/domain/set/repository/retrieveSetById';
 
-export const createWorkout = async (request: NextApiRequest, response: NextApiResponse, userId: string) => {
+export const createWorkout = async (request: NextApiRequest, response: NextApiResponse) => {
+  const userId = await getUserId(request, response);
   const { completedAt, name, set } = request.body;
 
   try {
@@ -25,8 +27,8 @@ export const createWorkout = async (request: NextApiRequest, response: NextApiRe
       return res;
     });
 
-    return makeSuccessResponse(response, 'WORKOUT_CREATED_SUCCESSFULLY', workout);
+    return makeSuccessResponse('WORKOUT_CREATED_SUCCESSFULLY', workout);
   } catch (e: any) {
-    return makeErrorResponse(response, e.code, e.message);
+    return makeErrorResponse(e.code, e.message);
   }
 };

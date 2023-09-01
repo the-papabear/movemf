@@ -1,17 +1,20 @@
-import { NextApiResponse } from 'next';
+import { NextApiRequest, NextApiResponse } from 'next';
 
+import { getUserId } from '@/backend/lib/getUserId';
 import { MongoClient } from '@/backend/mongoConnection';
 import { makeErrorResponse, makeSuccessResponse } from '@/backend/lib/makeQueryResponse';
 import { retrieveExercises } from '@/backend/domain/exercise/repository/retrieveExercises';
 
-export const getExercises = async (response: NextApiResponse, userId: string) => {
+export async function getExercises(req: NextApiRequest, res: NextApiResponse) {
+  const userId = await getUserId(req, res);
+
   try {
     const exercises = await MongoClient.exec(async (db, session) => {
       return await retrieveExercises(db, session)(userId);
     });
 
-    return makeSuccessResponse(response, undefined, exercises);
+    return makeSuccessResponse('', exercises);
   } catch (e: any) {
-    return makeErrorResponse(response, e.code, e.message);
+    return makeErrorResponse(e.code, e.message);
   }
-};
+}

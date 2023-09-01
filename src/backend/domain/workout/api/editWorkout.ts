@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
+import { getUserId } from '@/backend/lib/getUserId';
 import { MongoClient } from '@/backend/mongoConnection';
 import { generateObjectId } from '@/backend/lib/generateObjectId';
 import { editSetUseCase } from '@/backend/domain/set/usecase/editSet';
@@ -14,7 +15,8 @@ import { makeErrorResponse, makeSuccessResponse } from '@/backend/lib/makeQueryR
 import { retrieveWorkoutById } from '@/backend/domain/workout/repository/retrieveWorkoutById';
 import { retrieveExerciseById } from '@/backend/domain/exercise/repository/retrieveExerciseById';
 
-export const editWorkout = async (request: NextApiRequest, response: NextApiResponse, userId: string) => {
+export const editWorkout = async (request: NextApiRequest, response: NextApiResponse) => {
+  const userId = await getUserId(request, response);
   const { reps, time, notes, weight, workoutId, exerciseId, setId, completedAt, setNumber, name } = request.body;
 
   try {
@@ -55,8 +57,8 @@ export const editWorkout = async (request: NextApiRequest, response: NextApiResp
       return await editWorkoutUseCase(dependencies)(data);
     });
 
-    return makeSuccessResponse(response, 'WORKOUT_UPDATED_SUCCESSFULLY', workout);
+    return makeSuccessResponse('WORKOUT_UPDATED_SUCCESSFULLY', workout);
   } catch (e: any) {
-    return makeErrorResponse(response, e.code, e.message);
+    return makeErrorResponse(e.code, e.message);
   }
 };

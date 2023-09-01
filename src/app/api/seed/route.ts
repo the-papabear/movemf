@@ -1,7 +1,9 @@
+import { NextResponse } from 'next/server';
+
 import { MongoClient } from '@/backend/mongoConnection';
 import { set, exercises, workouts } from '@/backend/scripts/seed/seedData';
 
-export default async function handler(req: any, res: any) {
+export default async function GET(req: any, res: any) {
   const env = process.env.NODE_ENV;
 
   if (env === 'production') return;
@@ -19,5 +21,5 @@ export default async function handler(req: any, res: any) {
     await db.collection('workouts').insertMany(workouts);
   });
 
-  res.status(200).json('Seed completed!');
+  return NextResponse.json({ status: 200, message: 'Seed completed successfully!' }, { status: 200 });
 }

@@ -1,10 +1,10 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextApiRequest } from 'next';
 
 import { makeErrorResponse, makeSuccessResponse } from '@/backend/lib/makeQueryResponse';
 import { removeSet } from '@/backend/domain/set/repository/removeSet';
 import { MongoClient } from '@/backend/mongoConnection';
 
-export const deleteSet = async (request: NextApiRequest, response: NextApiResponse) => {
+export const deleteSet = async (request: NextApiRequest) => {
   const { id } = request.query;
 
   try {
@@ -12,8 +12,8 @@ export const deleteSet = async (request: NextApiRequest, response: NextApiRespon
       await removeSet(db, session)(id as string);
     });
 
-    return makeSuccessResponse(response, 'EXERCISE_DETAILS_DELETED_SUCCESSFULLY');
+    return makeSuccessResponse('EXERCISE_DETAILS_DELETED_SUCCESSFULLY');
   } catch (e) {
-    return makeErrorResponse(response, 400);
+    return makeErrorResponse(400);
   }
 };

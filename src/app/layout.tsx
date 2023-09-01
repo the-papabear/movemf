@@ -1,8 +1,11 @@
 'use client';
 
-import '@/app/globals.css';
+import { useSession } from 'next-auth/react';
+
 import { Header, Footer } from '@/components/';
 import { NextAuthProvider } from '@/app/providers';
+
+import '@/app/globals.css';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
