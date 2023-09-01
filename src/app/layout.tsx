@@ -1,17 +1,21 @@
 'use client';
 
-import { useSession } from 'next-auth/react';
-
 import { Header, Footer } from '@/components/';
 import { NextAuthProvider } from '@/app/providers';
+import { Metadata } from 'next';
 
 import '@/app/globals.css';
+
+// export const metadata: Metadata = {
+//   title: 'MoveMF',
+//   description: 'MoveMF - A workout diary app',
+// };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className="h-full">
       <head>
-        <title>MoveMF - Get a move on</title>
+        <title>MoveMF - A workout diary app</title>
       </head>
       <body className="h-full">
         <NextAuthProvider>

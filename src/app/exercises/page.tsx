@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+
 import axios from 'axios';
 import { MoreHorizontal } from 'react-feather';
 
@@ -12,8 +13,9 @@ const Exercises = () => {
 
   useEffect(() => {
     const getExercises = async () => {
-      const exercises = (await axios.get('/api/exercises')).data.data;
-      setExercises(exercises);
+      const res = await axios.get('/api/exercises');
+
+      setExercises(res.data.data);
     };
 
     getExercises();
@@ -24,19 +26,23 @@ const Exercises = () => {
       <Button className="my-8">Add Exercise</Button>
 
       <table className="w-full">
-        <tr className="border-b-[1px] border-lime-500 rounded">
-          <th className="text-xs font-light text-left">Name</th>
-          <th className="text-xs font-light text-right">Actions</th>
-        </tr>
-        {exercises.map((exercise, index) => (
-          <tr key={index}>
-            <td>{exercise.name}</td>
-            <td>{exercise.link}</td>
-            <td>
-              <MoreHorizontal />
-            </td>
+        <thead>
+          <tr className="border-b-[1px] border-lime-500 rounded">
+            <th className="text-xs font-light text-left">Name</th>
+            <th className="text-xs font-light text-right">Actions</th>
           </tr>
-        ))}
+        </thead>
+        <tbody>
+          {exercises.map((exercise, index) => (
+            <tr key={index}>
+              <td>{exercise.name}</td>
+              <td>{exercise.link}</td>
+              <td>
+                <MoreHorizontal />
+              </td>
+            </tr>
+          ))}
+        </tbody>
       </table>
     </>
   );

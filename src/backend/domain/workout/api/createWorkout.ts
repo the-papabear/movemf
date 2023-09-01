@@ -1,6 +1,7 @@
+import { getServerSession } from 'next-auth/next';
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { getUserId } from '@/backend/lib/getUserId';
+import { authOptions } from '@/lib/auth';
 import { MongoClient } from '@/backend/mongoConnection';
 import { generateObjectId } from '@/backend/lib/generateObjectId';
 import { retrieveSetById } from '@/backend/domain/set/repository/retrieveSetById';
@@ -9,7 +10,8 @@ import { createWorkoutUseCase } from '@/backend/domain/workout/usecase/createWor
 import { makeErrorResponse, makeSuccessResponse } from '@/backend/lib/makeQueryResponse';
 
 export const createWorkout = async (request: NextApiRequest, response: NextApiResponse) => {
-  const userId = await getUserId(request, response);
+  const authSession: any = await getServerSession(authOptions);
+
   const { completedAt, name, set } = request.body;
 
   try {
@@ -20,7 +22,7 @@ export const createWorkout = async (request: NextApiRequest, response: NextApiRe
         retrieveSetById: retrieveSetById(db, session),
       };
 
-      const data = { completedAt, userId, name, set };
+      const data = { completedAt, userId: authSession.user.id, name, set };
 
       const res = await createWorkoutUseCase(dependencies)(data);
 

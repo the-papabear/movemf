@@ -1,6 +1,7 @@
+import { getServerSession } from 'next-auth/next';
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { getUserId } from '@/backend/lib/getUserId';
+import { authOptions } from '@/lib/auth';
 import { MongoClient } from '@/backend/mongoConnection';
 import { editExerciseUseCase } from '@/backend/domain/exercise/usecase/editExercise';
 import { updateExercise } from '@/backend/domain/exercise/repository/updateExercise';
@@ -9,7 +10,7 @@ import { retrieveExerciseById } from '@/backend/domain/exercise/repository/retri
 import { retrieveExerciseByName } from '@/backend/domain/exercise/repository/retrieveExerciseByName';
 
 export const editExercise = async (request: NextApiRequest, response: NextApiResponse) => {
-  const userId = await getUserId(request, response);
+  const authSession: any = await getServerSession(authOptions);
 
   const { id, name, link } = request.body;
 
@@ -24,8 +25,8 @@ export const editExercise = async (request: NextApiRequest, response: NextApiRes
       const data = {
         name,
         link,
-        userId,
         exerciseId: id,
+        userId: authSession.user.id,
       };
 
       return await editExerciseUseCase(dependencies)(data);

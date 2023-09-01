@@ -27,7 +27,7 @@ export const Header = () => {
   };
 
   return (
-    <div className="w-full h-[80px] flex flex-col items-center gap-6 mb-4">
+    <header className="w-full h-[80px] flex flex-col items-center gap-6 mb-4">
       <div className="flex items-center justify-between w-full h-[80px]">
         <Image width={40} height={40} alt="logo" src={logo} onClick={() => router.push('/')} className="self-start" />
 
@@ -47,7 +47,7 @@ export const Header = () => {
           </DropdownMenu>
         </div>
       </div>
-    </div>
+    </header>
   );
 };
 

@@ -1,6 +1,7 @@
+import { getServerSession } from 'next-auth/next';
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { getUserId } from '@/backend/lib/getUserId';
+import { authOptions } from '@/lib/auth';
 import { MongoClient } from '@/backend/mongoConnection';
 import { generateObjectId } from '@/backend/lib/generateObjectId';
 import persistExercise from '@/backend/domain/exercise/repository/persistExercise';
@@ -9,7 +10,7 @@ import { createExerciseUseCase } from '@/backend/domain/exercise/usecase/createE
 import { retrieveExerciseByName } from '@/backend/domain/exercise/repository/retrieveExerciseByName';
 
 export const createExercise = async (request: NextApiRequest, response: NextApiResponse) => {
-  const userId = await getUserId(request, response);
+  const authSession: any = await getServerSession(authOptions);
 
   const { name, link, type } = request.body;
 
@@ -25,7 +26,7 @@ export const createExercise = async (request: NextApiRequest, response: NextApiR
         name,
         link,
         type,
-        userId,
+        userId: authSession.user.id,
       };
 
       return await createExerciseUseCase(dependencies)(data);

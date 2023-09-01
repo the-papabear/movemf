@@ -1,29 +1,21 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+
 import axios from 'axios';
 import { MoreHorizontal } from 'react-feather';
 
 import { Button } from '@/components';
-import { WorkoutDTO } from '@/app/interfaces';
 
-const Workouts = () => {
-  const [workouts, setWorkouts] = useState<WorkoutDTO[]>([]);
+export default function Workouts() {
+  const [workouts, setWorkouts] = useState([]);
 
   useEffect(() => {
-    const getWorkouts = async () => {
-      const workouts = (await axios.get('/api/workouts')).data.data;
-      setWorkouts(workouts);
-    };
-
-    getWorkouts();
+    (async function getWorkouts() {
+      const workouts = await axios.get('/api/workouts');
+      setWorkouts(workouts.data.data);
+    })();
   }, []);
-
-  const onDuplicateClick = async (workout: WorkoutDTO) => {
-    const { completedAt, _id, ...parsedWorkout } = workout;
-
-    await axios.post('/api/workouts', parsedWorkout);
-  };
 
   return (
     <>
@@ -38,9 +30,9 @@ const Workouts = () => {
           </tr>
         </thead>
         <tbody>
-          {workouts.map((workout, index) => (
+          {workouts.map((workout: any, index: number) => (
             <tr key={index}>
-              <td>{workout.completedAt.toISOString()}</td>
+              <td>{workout.completedAt?.toISOString() || 'No date'}</td>
               <td>{workout.name}</td>
               <td>
                 <MoreHorizontal />
@@ -51,6 +43,4 @@ const Workouts = () => {
       </table>
     </>
   );
-};
-
-export default Workouts;
+}

@@ -1,6 +1,7 @@
+import { getServerSession } from 'next-auth/next';
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { getUserId } from '@/backend/lib/getUserId';
+import { authOptions } from '@/lib/auth';
 import { MongoClient } from '@/backend/mongoConnection';
 import { generateObjectId } from '@/backend/lib/generateObjectId';
 import { editSetUseCase } from '@/backend/domain/set/usecase/editSet';
@@ -16,7 +17,8 @@ import { retrieveWorkoutById } from '@/backend/domain/workout/repository/retriev
 import { retrieveExerciseById } from '@/backend/domain/exercise/repository/retrieveExerciseById';
 
 export const editWorkout = async (request: NextApiRequest, response: NextApiResponse) => {
-  const userId = await getUserId(request, response);
+  const authSession: any = await getServerSession(authOptions);
+
   const { reps, time, notes, weight, workoutId, exerciseId, setId, completedAt, setNumber, name } = request.body;
 
   try {
@@ -47,11 +49,11 @@ export const editWorkout = async (request: NextApiRequest, response: NextApiResp
         notes,
         setId,
         weight,
-        userId,
         setNumber,
         workoutId,
         exerciseId,
         completedAt,
+        userId: authSession.user.id,
       };
 
       return await editWorkoutUseCase(dependencies)(data);

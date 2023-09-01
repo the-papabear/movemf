@@ -1,10 +1,11 @@
+import { NextRequest } from 'next/server';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 import { getExercise } from '@/backend/domain/exercise/api/getExercise';
 import { editExercise } from '@/backend/domain/exercise/api/editExercise';
 import { deleteExercise } from '@/backend/domain/exercise/api/deleteExercise';
 
-export async function GET(req: NextApiRequest, res: NextApiResponse) {
+export async function GET(req: NextRequest) {
   return await getExercise(req);
 }
 
