@@ -1,5 +1,5 @@
+import { NextRequest } from 'next/server';
 import { getServerSession } from 'next-auth/next';
-import { NextApiRequest, NextApiResponse } from 'next';
 
 import { authOptions } from '@/lib/auth';
 import { MongoClient } from '@/backend/mongoConnection';
@@ -9,10 +9,9 @@ import { makeErrorResponse, makeSuccessResponse } from '@/backend/lib/makeQueryR
 import { retrieveExerciseById } from '@/backend/domain/exercise/repository/retrieveExerciseById';
 import { retrieveExerciseByName } from '@/backend/domain/exercise/repository/retrieveExerciseByName';
 
-export const editExercise = async (request: NextApiRequest, response: NextApiResponse) => {
+export const editExercise = async (request: NextRequest) => {
   const authSession: any = await getServerSession(authOptions);
-
-  const { id, name, link } = request.body;
+  const exerciseData = await request.json();
 
   try {
     const exerciseDTO = await MongoClient.exec(async (db, session) => {
@@ -23,9 +22,9 @@ export const editExercise = async (request: NextApiRequest, response: NextApiRes
       };
 
       const data = {
-        name,
-        link,
-        exerciseId: id,
+        name: exerciseData.name,
+        link: exerciseData.link,
+        exerciseId: exerciseData.id,
         userId: authSession.user.id,
       };
 

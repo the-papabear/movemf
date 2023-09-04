@@ -14,6 +14,7 @@ export const editExerciseUseCase = (dependencies: EditExerciseDependencies) => a
   validateData();
 
   const existingExerciseDTO = await retrieveExerciseById(exerciseId);
+
   if (!existingExerciseDTO) {
     throw new BackendError(404, 'exercise_not_found');
   }
@@ -53,7 +54,7 @@ export const editExerciseUseCase = (dependencies: EditExerciseDependencies) => a
       throw new BackendError(400, 'invalid_name');
     }
 
-    if (typeof link === 'string' && !link.trim()) {
+    if (typeof link === 'string' && link.trim() === '') {
       throw new BackendError(400, 'invalid_link');
     }
   }

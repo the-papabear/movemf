@@ -2,14 +2,8 @@
 
 import { Header, Footer } from '@/components/';
 import { NextAuthProvider } from '@/app/providers';
-import { Metadata } from 'next';
 
 import '@/app/globals.css';
-
-// export const metadata: Metadata = {
-//   title: 'MoveMF',
-//   description: 'MoveMF - A workout diary app',
-// };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -19,9 +13,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="h-full">
         <NextAuthProvider>
-          <div className="flex flex-col items-center max-w-5xl m-auto p-4 h-full">
+          <div className="m-auto flex h-full max-w-5xl flex-col items-center p-4">
             <Header />
-            <div className="flex-1 w-full">{children}</div>
+            <div className="w-full flex-1">{children}</div>
             <Footer />
           </div>
         </NextAuthProvider>

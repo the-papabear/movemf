@@ -1,31 +1,29 @@
+import { NextRequest } from 'next/server';
 import { getServerSession } from 'next-auth/next';
-import { NextApiRequest, NextApiResponse } from 'next';
 
 import { authOptions } from '@/lib/auth';
 import { MongoClient } from '@/backend/mongoConnection';
 import { generateObjectId } from '@/backend/lib/generateObjectId';
 import persistExercise from '@/backend/domain/exercise/repository/persistExercise';
 import { makeErrorResponse, makeSuccessResponse } from '@/backend/lib/makeQueryResponse';
-import { createExerciseUseCase } from '@/backend/domain/exercise/usecase/createExercise';
 import { retrieveExerciseByName } from '@/backend/domain/exercise/repository/retrieveExerciseByName';
+import { CreateExerciseDependencies, createExerciseUseCase } from '@/backend/domain/exercise/usecase/createExercise';
 
-export const createExercise = async (request: NextApiRequest, response: NextApiResponse) => {
+export const createExercise = async (request: NextRequest) => {
   const authSession: any = await getServerSession(authOptions);
 
-  const { name, link, type } = request.body;
+  const exerciseData = await request.json();
 
   try {
     const exerciseDTO = await MongoClient.exec(async (db, session) => {
-      const dependencies = {
+      const dependencies: CreateExerciseDependencies = {
         generateObjectId,
         persistExercise: persistExercise(db, session),
         retrieveExerciseByName: retrieveExerciseByName(db, session),
       };
 
       const data = {
-        name,
-        link,
-        type,
+        ...exerciseData,
         userId: authSession.user.id,
       };
 

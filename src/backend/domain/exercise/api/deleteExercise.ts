@@ -1,4 +1,4 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextRequest } from 'next/server';
 
 import { MongoClient } from '@/backend/mongoConnection';
 import { removeSet } from '@/backend/domain/set/repository/removeSet';
@@ -11,8 +11,8 @@ import { retrieveWorkoutById } from '@/backend/domain/workout/repository/retriev
 import { retrieveExerciseById } from '@/backend/domain/exercise/repository/retrieveExerciseById';
 import { retrieveSetByExerciseId } from '@/backend/domain/set/repository/retrieveSetByExerciseId';
 
-export const deleteExercise = async (request: NextApiRequest, response: NextApiResponse) => {
-  const { id } = request.query;
+export const deleteExercise = async (request: NextRequest) => {
+  const exerciseId = request.nextUrl.pathname.split('/')[3];
 
   try {
     await MongoClient.exec(async (db, session) => {
@@ -27,10 +27,10 @@ export const deleteExercise = async (request: NextApiRequest, response: NextApiR
         }),
       };
 
-      return await deleteExerciseUseCase(dependencies)({ exerciseId: id as string });
+      return await deleteExerciseUseCase(dependencies)({ exerciseId });
     });
 
-    return makeSuccessResponse('EXERCISE_DELETED_SUCCESSFULLY', response);
+    return makeSuccessResponse('EXERCISE_DELETED_SUCCESSFULLY');
   } catch (e) {
     return makeErrorResponse(400);
   }

@@ -21,7 +21,7 @@ export const Button = ({
       disabled={disabled}
       type={type}
       className={[
-        'cursor-pointer inline-block px-3 h-8 bg-gray-400 border border-gray-400 rounded text-white hover:shadow-lg hover:transition-all',
+        'inline-block w-fit cursor-pointer rounded border-transparent bg-lime-700 px-2 py-1 text-xs text-white hover:bg-lime-600 hover:shadow-lg hover:transition-all sm:text-base',
         className,
       ].join(' ')}
       onClick={onClick}
