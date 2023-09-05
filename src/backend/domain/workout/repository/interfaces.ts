@@ -1,14 +1,17 @@
+import { ExerciseDB } from '@/backend/domain/exercise/repository/interfaces';
 import { ObjectId } from 'mongodb';
-
-import { SetAggregationDB } from '@/backend/domain/set/repository/interfaces';
 
 export interface WorkoutDB {
   _id: ObjectId;
   name: string;
+  sets: SetDB[];
   userId: ObjectId;
   completedAt: Date;
 }
 
-export interface WorkoutAggregationDB extends WorkoutDB {
-  set: SetAggregationDB[];
+export interface SetDB {
+  reps: number;
+  weight: number;
+  setNumber: number;
+  exercise: ExerciseDB;
 }

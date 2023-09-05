@@ -1,32 +1,39 @@
 export const workoutAggregation = [
   {
-    $lookup: {
-      from: 'set',
-      localField: 'set',
-      foreignField: '_id',
-      as: 'set',
-      pipeline: [
-        {
-          $lookup: {
-            from: 'exercises',
-            localField: 'exercise',
-            foreignField: '_id',
-            as: 'exercise',
-          },
-        },
-        {
-          $addFields: {
-            exercise: {
-              $first: '$exercise',
-            },
-          },
-        },
-      ],
+    $unwind: {
+      path: '$sets',
     },
   },
   {
-    $addFields: {
-      set: '$set',
+    $lookup: {
+      from: 'exercises',
+      localField: 'sets.exercise',
+      foreignField: '_id',
+      as: 'sets.exercise',
+    },
+  },
+  {
+    $unwind: {
+      path: '$sets.exercise',
+    },
+  },
+  {
+    $group: {
+      _id: '$_id',
+      name: {
+        $first: '$name',
+      },
+      userId: {
+        $first: '$userId',
+      },
+      sets: {
+        $push: {
+          reps: '$sets.reps',
+          weight: '$sets.weight',
+          exercise: '$sets.exercise',
+          setNumber: '$sets.setNumber',
+        },
+      },
     },
   },
 ];

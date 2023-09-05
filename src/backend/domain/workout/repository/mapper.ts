@@ -1,12 +1,12 @@
 import { WorkoutDTO } from '@/backend/domain/workout/interfaces';
-import { WorkoutAggregationDB } from '@/backend/domain/workout/repository/interfaces';
-import { mapToSetDTO } from '@/backend/domain/set/repository/mapper';
+import { WorkoutDB } from '@/backend/domain/workout/repository/interfaces';
+import { mapToExerciseDTO } from '@/backend/domain/exercise/repository/mapper';
 
-export const mapToWorkoutDTO = (workout: WorkoutAggregationDB): WorkoutDTO => {
+export const mapToWorkoutDTO = (workout: WorkoutDB): WorkoutDTO => {
   return {
     ...workout,
     _id: workout._id.toString(),
     userId: workout.userId.toString(),
-    set: workout.set.map((set) => mapToSetDTO(set)),
+    sets: workout.sets.map((set) => ({ ...set, exercise: mapToExerciseDTO(set.exercise) })),
   };
 };

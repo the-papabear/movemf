@@ -1,33 +1,53 @@
 import { BackendError } from '@/backend/errors';
 import { IGenerateObjectId } from '@/backend/interfaces';
-import { IPersistWorkout } from '@/backend/domain/workout/interfaces';
-import { IRetrieveSetById, SetDTO } from '@/backend/domain/set/interfaces';
+import { WORKOUT_ERRORS } from '@/backend/domain/workout/usecase/errors';
+import { IRetrieveExerciseById } from '@/backend/domain/exercise/interfaces';
+import { IPersistWorkout, SetDTO } from '@/backend/domain/workout/interfaces';
 
 export const createWorkoutUseCase = (dependencies: CreateWorkoutDependencies) => async (data: CreateWorkoutData) => {
-  const { persistWorkout, generateObjectId, retrieveSetById } = dependencies;
+  const { persistWorkout, generateObjectId, retrieveExerciseById } = dependencies;
 
-  const { completedAt, userId, name, set } = data;
+  const { completedAt, userId, name, sets } = data;
 
-  const workoutDTO = createWorkoutDTO();
-
-  if (set && set.length) {
-    const existingExDetails = await Promise.all(set.map(async (set) => await retrieveSetById(set._id)));
-
-    if (existingExDetails.length !== set.length) {
-      throw new BackendError(404, 'EXERCISE_DETAILS_NOT_FOUND');
-    }
+  if (!sets.length) {
+    throw new BackendError(400, WORKOUT_ERRORS.MISSING_SETS);
   }
+
+  const setDTOs = await Promise.all(
+    sets.map(async (set) => {
+      if (set.reps < 0) {
+        throw new BackendError(400, WORKOUT_ERRORS.INVALID_REPS);
+      }
+
+      if (set.weight < 0) {
+        throw new BackendError(400, WORKOUT_ERRORS.INVALID_WEIGHT);
+      }
+
+      const existingExerciseDTO = await retrieveExerciseById(set.exerciseId);
+
+      if (!existingExerciseDTO) {
+        throw new BackendError(404, WORKOUT_ERRORS.EXERCISE_NOT_FOUND);
+      }
+
+      return {
+        ...set,
+        exercise: existingExerciseDTO,
+      };
+    }),
+  );
+
+  const workoutDTO = createWorkoutDTO(setDTOs);
 
   await persistWorkout(workoutDTO);
 
   return workoutDTO;
 
-  function createWorkoutDTO() {
+  function createWorkoutDTO(sets: SetDTO[]) {
     return {
       name,
       userId,
+      sets: setDTOs,
       _id: generateObjectId(),
-      set: set || [],
       completedAt: completedAt ?? new Date(),
     };
   }
@@ -35,13 +55,13 @@ export const createWorkoutUseCase = (dependencies: CreateWorkoutDependencies) =>
 
 interface CreateWorkoutDependencies {
   persistWorkout: IPersistWorkout;
-  retrieveSetById: IRetrieveSetById;
   generateObjectId: IGenerateObjectId;
+  retrieveExerciseById: IRetrieveExerciseById;
 }
 
 interface CreateWorkoutData {
   name: string;
-  set: SetDTO[];
   userId: string;
   completedAt?: Date;
+  sets: { setNumber: number; reps: number; weight: number; exerciseId: string }[];
 }
