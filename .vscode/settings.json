@@ -1,5 +1,0 @@
-{
-  "cSpell.words": ["movemf", "nextauth"],
-  "typescript.tsdk": "node_modules/typescript/lib",
-  "typescript.enablePromptUseWorkspaceTsdk": true
-}
