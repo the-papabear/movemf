@@ -1,11 +1,8 @@
-export type ExerciseType = 'EXERCISE' | 'REST';
-
 export interface ExerciseDTO {
   _id: string;
   name: string;
+  link?: string;
   userId: string;
-  type: ExerciseType;
-  link?: string | null;
 }
 
 export interface IRetrieveExercises {
