@@ -1,16 +1,11 @@
-import {
-  ExerciseDTO,
-  ExerciseType,
-  IPersistExercise,
-  IRetrieveExerciseByName,
-} from '@/backend/domain/exercise/interfaces';
+import { ExerciseDTO, IPersistExercise, IRetrieveExerciseByName } from '@/backend/domain/exercise/interfaces';
 import { BackendError } from '@/backend/errors';
 import { IGenerateObjectId } from '@/backend/interfaces';
 
 export const createExerciseUseCase = (dependencies: CreateExerciseDependencies) => async (data: CreateExerciseData) => {
   const { persistExercise, generateObjectId, retrieveExerciseByName } = dependencies;
 
-  const { name, link, type, userId } = data;
+  const { name, link, userId } = data;
 
   validateData();
 
@@ -30,7 +25,6 @@ export const createExerciseUseCase = (dependencies: CreateExerciseDependencies) 
     return {
       name,
       link,
-      type,
       userId,
       _id: generateObjectId(),
     };
@@ -51,7 +45,6 @@ export interface CreateExerciseData {
   name: string;
   link?: string;
   userId: string;
-  type: ExerciseType;
 }
 
 export interface CreateExerciseDependencies {

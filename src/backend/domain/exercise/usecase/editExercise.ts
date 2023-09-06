@@ -53,18 +53,14 @@ export const editExerciseUseCase = (dependencies: EditExerciseDependencies) => a
     if (typeof name === 'string' && !name.trim()) {
       throw new BackendError(400, 'invalid_name');
     }
-
-    if (typeof link === 'string' && link.trim() === '') {
-      throw new BackendError(400, 'invalid_link');
-    }
   }
 };
 
 interface EditExerciseData {
   name?: string;
+  link?: string;
   userId: string;
   exerciseId: string;
-  link?: string | null;
 }
 
 interface EditExerciseDependencies {

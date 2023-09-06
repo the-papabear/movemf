@@ -1,4 +1,3 @@
-import { ExerciseType } from '@/backend/domain/exercise/interfaces';
 import { createExerciseUseCase } from '@/backend/domain/exercise/usecase/createExercise';
 
 describe('createExerciseUseCase', () => {
@@ -12,7 +11,6 @@ describe('createExerciseUseCase', () => {
     userId: 'user',
     name: 'Pull-up',
     link: 'pullups.com',
-    type: 'exercise' as ExerciseType,
   };
 
   describe('given no name', () => {
@@ -64,7 +62,6 @@ describe('createExerciseUseCase', () => {
       function assertValidExerciseDTO() {
         expect(exerciseDTO._id).toBeDefined();
         expect(exerciseDTO.name).toMatch(validData.name);
-        expect(exerciseDTO.type).toMatch(validData.type);
         expect(exerciseDTO.link).toMatch(validData.link);
       }
     });

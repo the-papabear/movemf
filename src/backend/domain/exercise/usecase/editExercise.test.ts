@@ -62,20 +62,6 @@ describe('editExerciseUseCase', () => {
     });
   });
 
-  describe('given an empty link', () => {
-    it('should throw an error', async () => {
-      const invalidData = {
-        ...validData,
-        link: '',
-      };
-
-      await expect(editExerciseUseCase(mockDependencies)(invalidData)).rejects.toMatchObject({
-        code: 400,
-        message: 'invalid_link',
-      });
-    });
-  });
-
   describe('given an exercise name that already exists', () => {
     it('should throw an error', async () => {
       const invalidData = {
@@ -103,20 +89,7 @@ describe('editExerciseUseCase', () => {
       expect(mockDependencies.updateExercise).toHaveBeenCalledTimes(1);
     });
 
-    it('should return a valid exerciseDTO when optional fields are not set', async () => {
-      const data = {
-        ...validData,
-        link: null,
-      };
-
-      const exerciseDTO = await editExerciseUseCase(mockDependencies)(data);
-
-      expect(exerciseDTO.link).toBeNull();
-      expect(exerciseDTO._id).toBeDefined();
-      expect(exerciseDTO.name).toEqual(validData.name);
-    });
-
-    it('should return a valid exerciseDTO when all fields are set', async () => {
+    it('should return a valid exerciseDTO', async () => {
       const exerciseDTO = await editExerciseUseCase(mockDependencies)(validData);
 
       expect(exerciseDTO._id).toBeDefined();
