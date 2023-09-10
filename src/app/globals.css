@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-}
-
 html {
   box-sizing: border-box;
 }
