@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { ChevronLeft } from 'react-feather';
 
 import { Button } from '@/components';
+import dynamic from 'next/dynamic';
 
 interface SetsData {
   reps: number;
@@ -16,7 +17,7 @@ interface SetsData {
   restPeriod: number;
 }
 
-export default function Workout() {
+function WorkoutPage() {
   const router = useRouter();
   const completedAt = new Date().toISOString().split('T')[0].replace('.', '-');
 
@@ -174,3 +175,7 @@ export default function Workout() {
     </>
   );
 }
+
+const NewWorkout = dynamic(() => Promise.resolve(WorkoutPage), { ssr: false });
+
+export default NewWorkout;

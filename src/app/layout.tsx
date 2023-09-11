@@ -1,9 +1,9 @@
 'use client';
 
 import { Mulish } from 'next/font/google';
+import { SessionProvider } from 'next-auth/react';
 
 import { Header, Footer } from '@/components/';
-import { NextAuthProvider } from '@/app/providers';
 
 import '@/app/globals.css';
 
@@ -15,14 +15,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <title>MoveMF - A workout diary app</title>
       </head>
-      <body className="font-main h-full">
-        <NextAuthProvider>
+      <body className="h-full font-main">
+        <SessionProvider>
           <div className="m-auto flex h-full max-w-5xl flex-col items-center p-4">
             <Header />
             <div className="w-full flex-1">{children}</div>
             <Footer />
           </div>
-        </NextAuthProvider>
+        </SessionProvider>
       </body>
     </html>
   );

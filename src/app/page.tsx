@@ -3,12 +3,13 @@
 import { useEffect, useState } from 'react';
 
 import axios from 'axios';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
 import { MoreHorizontal } from 'react-feather';
 
 import { Button } from '@/components';
 
-export default function Workouts() {
+const WorkoutsPage = () => {
   const router = useRouter();
 
   const [workouts, setWorkouts] = useState([]);
@@ -53,4 +54,8 @@ export default function Workouts() {
       </table>
     </>
   );
-}
+};
+
+const Workouts = dynamic(() => Promise.resolve(WorkoutsPage), { ssr: false });
+
+export default Workouts;

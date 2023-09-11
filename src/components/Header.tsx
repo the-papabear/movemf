@@ -1,12 +1,11 @@
 'use client';
 
 import Image from 'next/image';
-import * as AvatarCircle from '@radix-ui/react-avatar';
+import { signOut } from 'next-auth/react';
 import { useRouter, usePathname } from 'next/navigation';
-import { signIn, signOut, useSession } from 'next-auth/react';
 
 import logo from 'public/logo.svg';
-import { Button, DropdownMenu, DropdownMenuItem } from '@/components';
+import { Button } from '@/components';
 
 export const Header = () => {
   const router = useRouter();

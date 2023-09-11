@@ -4,12 +4,13 @@ import { useEffect, useState } from 'react';
 
 import axios from 'axios';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import { MoreHorizontal } from 'react-feather';
 
 import { Button, Dialog, DropdownMenu } from '@/components';
 import { CreateOrEditExerciseProps, ExerciseData, ExerciseDTO } from '@/app/exercises/interfaces';
 
-export default function Exercises() {
+function ExercisesPage() {
   const [refetchData, setRefetchData] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -163,3 +164,7 @@ function CreateOrEditExercise({ exerciseData, submitExercise, handleChange }: Cr
     </>
   );
 }
+
+const Exercises = dynamic(() => Promise.resolve(ExercisesPage), { ssr: false });
+
+export default Exercises;
