@@ -23,7 +23,7 @@ export const createWorkoutUseCase = (dependencies: CreateWorkoutDependencies) =>
         throw new BackendError(400, WORKOUT_ERRORS.INVALID_WEIGHT);
       }
 
-      const existingExerciseDTO = await retrieveExerciseById(set.exerciseId);
+      const existingExerciseDTO = await retrieveExerciseById(set.exercise);
 
       if (!existingExerciseDTO) {
         throw new BackendError(404, WORKOUT_ERRORS.EXERCISE_NOT_FOUND);
@@ -63,5 +63,5 @@ interface CreateWorkoutData {
   name: string;
   userId: string;
   completedAt?: Date;
-  sets: { setNumber: number; reps: number; weight: number; exerciseId: string }[];
+  sets: { setNumber: number; reps: number; weight: number; exercise: string }[];
 }

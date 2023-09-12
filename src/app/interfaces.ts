@@ -1,20 +1,15 @@
 import { ExerciseDTO } from '@/app/exercises/interfaces';
 
 export interface WorkoutDTO {
-  _id: string;
   name: string;
+  sets: SetDTO[];
   completedAt: Date;
-  set: SetDTO;
 }
 
 export interface SetDTO {
-  _id: string;
   reps?: number;
-  time?: number;
-  notes?: string;
   weight?: number;
-  insertedAt: Date;
-  workoutId: string;
   setNumber: number;
+  restPeriod?: number;
   exercise: ExerciseDTO;
 }

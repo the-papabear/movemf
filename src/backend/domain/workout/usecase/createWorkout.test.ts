@@ -15,8 +15,8 @@ describe('createWorkoutUseCase', () => {
     userId: 'userId',
     completedAt: new Date(),
     sets: [
-      { setNumber: 1, exerciseId: 'exerciseId', reps: 10, weight: 10 },
-      { setNumber: 2, exerciseId: 'exerciseId', reps: 10, weight: 10 },
+      { setNumber: 1, exercise: 'exerciseId', reps: 10, weight: 10 },
+      { setNumber: 2, exercise: 'exerciseId', reps: 10, weight: 10 },
     ],
   };
 
@@ -37,8 +37,8 @@ describe('createWorkoutUseCase', () => {
     const invalidData = {
       ...validData,
       sets: [
-        { setNumber: 2, exerciseId: 'exerciseId', reps: 10, weight: 10 },
-        { setNumber: 1, exerciseId: 'non-existent', reps: 10, weight: 10 },
+        { setNumber: 2, exercise: 'exerciseId', reps: 10, weight: 10 },
+        { setNumber: 1, exercise: 'non-existent', reps: 10, weight: 10 },
       ],
     };
 
@@ -57,8 +57,8 @@ describe('createWorkoutUseCase', () => {
       const invalidData = {
         ...validData,
         sets: [
-          { setNumber: 2, exerciseId: 'exerciseId', reps: -1, weight: 10 },
-          { setNumber: 1, exerciseId: 'non-existent', reps: 0, weight: 10 },
+          { setNumber: 2, exercise: 'exerciseId', reps: -1, weight: 10 },
+          { setNumber: 1, exercise: 'exerciseId2', reps: 0, weight: 10 },
         ],
       };
 
@@ -74,8 +74,8 @@ describe('createWorkoutUseCase', () => {
       const invalidData = {
         ...validData,
         sets: [
-          { setNumber: 2, exerciseId: 'exerciseId', reps: 1, weight: 30 },
-          { setNumber: 1, exerciseId: 'non-existent', reps: 1, weight: -2 },
+          { setNumber: 2, exercise: 'exerciseId', reps: 1, weight: 30 },
+          { setNumber: 1, exercise: 'exerciseId2', reps: 1, weight: -2 },
         ],
       };
 

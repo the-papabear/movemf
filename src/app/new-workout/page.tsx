@@ -3,36 +3,29 @@
 import { useEffect, useState } from 'react';
 
 import axios from 'axios';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
 import { ChevronLeft } from 'react-feather';
 
 import { Button } from '@/components';
-import dynamic from 'next/dynamic';
-
-interface SetsData {
-  reps: number;
-  weight: number;
-  setNumber: number;
-  exerciseId: string;
-  restPeriod: number;
-}
+import { WorkoutDTO } from '@/app/interfaces';
 
 function WorkoutPage() {
   const router = useRouter();
   const completedAt = new Date().toISOString().split('T')[0].replace('.', '-');
 
-  const [exercise, setExercise] = useState<SetsData>({
+  const [exercise, setExercise] = useState<any>({
     reps: 0,
     weight: 0,
     setNumber: 1,
     restPeriod: 0,
-    exerciseId: '',
+    exercise: '',
   });
 
-  const [workout, setWorkout] = useState<any>({
+  const [workout, setWorkout] = useState<WorkoutDTO>({
     name: '',
     sets: [],
-    completedAt,
+    completedAt: new Date(completedAt),
   });
 
   const [exercises, setExercises] = useState<any>([]);
@@ -46,9 +39,9 @@ function WorkoutPage() {
   }, []);
 
   const onSubmit = async () => {
-    axios.post('/api/workouts', workout);
+    await axios.post('/api/workouts', workout);
 
-    setWorkout({ name: '', sets: [], completedAt });
+    setWorkout({ name: '', sets: [], completedAt: new Date(completedAt) });
     router.push('/');
   };
 
@@ -59,7 +52,7 @@ function WorkoutPage() {
 
   const handleExerciseChange = (event: any) => {
     const { name, value } = event.target;
-    setExercise((prevFormData: any) => ({ ...prevFormData, [name]: name === 'exerciseId' ? value : +value }));
+    setExercise((prevFormData: any) => ({ ...prevFormData, [name]: name === 'exercise' ? value : +value }));
   };
 
   const onSaveExerciseClick = () => {
@@ -73,7 +66,7 @@ function WorkoutPage() {
       weight: 0,
       setNumber: 1,
       restPeriod: 0,
-      exerciseId: '',
+      exercise: '',
     });
   };
 
@@ -108,8 +101,8 @@ function WorkoutPage() {
         <input
           type="date"
           name="completedAt"
-          value={workout.date}
           onChange={handleWorkoutChange}
+          value={workout.completedAt.toString()}
           className="h-[40px] w-full max-w-[300px] rounded border border-lime-700 px-4"
         />
       </section>
@@ -127,9 +120,9 @@ function WorkoutPage() {
         <h2 className="my-4px-2 text-xl font-bold">Exercises information</h2>
         <select
           required
-          value={exercise.exerciseId}
-          id="exerciseId"
-          name="exerciseId"
+          value={exercise.exercise}
+          id="exercise"
+          name="exercise"
           onChange={handleExerciseChange}
           defaultValue="select-placeholder"
           className="h-[40px] w-full max-w-[300px] rounded border border-lime-700 px-4"
