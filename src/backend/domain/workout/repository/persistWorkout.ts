@@ -8,7 +8,7 @@ export const persistWorkout = (db: Db, session: ClientSession) => async (workout
       ...workout,
       _id: new ObjectId(workout._id),
       userId: new ObjectId(workout.userId),
-      set: workout.sets.map((set) => ({ ...set, exercise: new ObjectId(set.exercise._id) })),
+      sets: workout.sets.map((set) => ({ ...set, exercise: new ObjectId(set.exercise._id) })),
     },
     { session },
   );
