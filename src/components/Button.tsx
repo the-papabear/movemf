@@ -1,33 +1,22 @@
-import { PropsWithChildren } from 'react';
+'use client';
 
 interface ButtonProps {
   title?: string;
-  className?: string;
+  leadingIcon?: any;
   disabled?: boolean;
   onClick?: () => void;
   type?: 'button' | 'submit' | 'reset';
 }
 
-export const Button = ({
-  onClick,
-  title,
-  children,
-  className,
-  type = 'button',
-  disabled = false,
-}: PropsWithChildren<ButtonProps>) => {
+export default function Button({ leadingIcon, onClick, title, type = 'button', disabled = false }: ButtonProps) {
   return (
     <button
-      disabled={disabled}
       type={type}
-      className={[
-        'inline-block w-fit cursor-pointer rounded border-transparent bg-lime-700 px-2 py-1 text-xs text-white hover:bg-lime-600 hover:shadow-lg hover:transition-all sm:text-base',
-        className,
-      ].join(' ')}
       onClick={onClick}
-      placeholder={title}
+      disabled={disabled}
+      className="inline-block w-fit cursor-pointer rounded border-transparent bg-lime-600 px-2 py-1 text-base text-white hover:bg-lime-500 hover:shadow-lg hover:transition-all"
     >
-      {children}
+      {leadingIcon} {title}
     </button>
   );
-};
+}

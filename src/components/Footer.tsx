@@ -1,16 +1,16 @@
 import { GitHub, Linkedin } from 'react-feather';
 
-export const Footer = () => {
+export default function Footer() {
   return (
-    <footer className="flex flex-col w-full">
-      <span className="h-[1px] border-b-[1px] border-lime-500 rounded" />
-      <div className="flex flex-col gap-2 items-center p-2">
-        <span className="text-xs text-gray-400">MoveMF - A workout diary app</span>
+    <footer className="flex w-full flex-col">
+      <span className="h-[1px] rounded border-b-[1px] border-lime-500" />
+      <div className="flex flex-col items-center gap-2 p-2">
+        <span className="text-xs text-gray-400">MoveMF - Minimalist workout diary app</span>
         <div className="flex gap-8">
           <a
             href="https://github.com/the-papabear/movemf"
             target="_blank"
-            className="flex gap-1 items-center text-xs text-gray-400"
+            className="flex items-center gap-1 text-xs text-gray-400"
           >
             <GitHub height={12} width={12} />
             Check the repo
@@ -18,7 +18,7 @@ export const Footer = () => {
           <a
             href="https://www.linkedin.com/in/gabriel-ursu/"
             target="_blank"
-            className="flex gap-1 items-center text-xs text-gray-400"
+            className="flex items-center gap-1 text-xs text-gray-400"
           >
             <Linkedin height={12} width={12} />
             Check the dev
@@ -27,4 +27,4 @@ export const Footer = () => {
       </div>
     </footer>
   );
-};
+}
