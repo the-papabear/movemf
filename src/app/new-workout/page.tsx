@@ -3,14 +3,13 @@
 import { useEffect, useState } from 'react';
 
 import axios from 'axios';
-import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
 import { ChevronLeft } from 'react-feather';
 
-import { Button } from '@/components';
+import Button from '@/components/Button';
 import { WorkoutDTO } from '@/app/interfaces';
 
-function WorkoutPage() {
+export default function NewWorkout() {
   const router = useRouter();
   const completedAt = new Date().toISOString().split('T')[0].replace('.', '-');
 
@@ -25,7 +24,7 @@ function WorkoutPage() {
   const [workout, setWorkout] = useState<WorkoutDTO>({
     name: '',
     sets: [],
-    completedAt: new Date(completedAt),
+    completedAt,
   });
 
   const [exercises, setExercises] = useState<any>([]);
@@ -41,7 +40,7 @@ function WorkoutPage() {
   const onSubmit = async () => {
     await axios.post('/api/workouts', workout);
 
-    setWorkout({ name: '', sets: [], completedAt: new Date(completedAt) });
+    setWorkout({ name: '', sets: [], completedAt });
     router.push('/');
   };
 
@@ -71,15 +70,13 @@ function WorkoutPage() {
   };
 
   return (
-    <>
-      <div className="mt-4 flex items-center justify-between">
+    <div className="flex flex-col items-center">
+      <div className="mt-4 flex w-full items-center justify-between self-start">
         <button className="flex hover:text-lime-700" onClick={() => router.push('/')}>
           <ChevronLeft />
           <span>Workouts</span>
         </button>
-        <Button onClick={onSubmit} className="h-[30px] w-[80px] bg-yellow-500">
-          +
-        </Button>
+        <Button onClick={onSubmit} title="Create Workout" />
       </div>
 
       <section className="mt-6 flex flex-col gap-2 px-2">
@@ -108,15 +105,6 @@ function WorkoutPage() {
       </section>
 
       <section className="mt-6 flex flex-col gap-2 px-2">
-        <h2 className="my-4px-2 text-xl font-bold">Workout overview</h2>
-        {workout.sets.map((set: any, index: number) => (
-          <div key={index} className="flex flex-col">
-            <span>{set.weight}</span>
-          </div>
-        ))}
-      </section>
-
-      <section className="mt-6 flex flex-col gap-2 px-2">
         <h2 className="my-4px-2 text-xl font-bold">Exercises information</h2>
         <select
           required
@@ -124,7 +112,6 @@ function WorkoutPage() {
           id="exercise"
           name="exercise"
           onChange={handleExerciseChange}
-          defaultValue="select-placeholder"
           className="h-[40px] w-full max-w-[300px] rounded border border-lime-700 px-4"
         >
           <option value="select-placeholder" hidden>
@@ -161,14 +148,17 @@ function WorkoutPage() {
           className="h-[40px] w-full max-w-[300px] rounded border border-lime-700 px-4"
         />
 
-        <Button onClick={onSaveExerciseClick} className="my-4 self-center">
-          Save Exercise
-        </Button>
+        <Button title="Save exercise" onClick={onSaveExerciseClick} />
       </section>
-    </>
+
+      <section className="my-4 flex flex-col gap-2">
+        <h2 className="my-4px-2 text-xl font-bold">Workout overview</h2>
+        {workout.sets.map((set: any, index: number) => (
+          <div key={index} className="flex flex-col">
+            <span>{set.weight}</span>
+          </div>
+        ))}
+      </section>
+    </div>
   );
 }
-
-const NewWorkout = dynamic(() => Promise.resolve(WorkoutPage), { ssr: false });
-
-export default NewWorkout;

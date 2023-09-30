@@ -17,7 +17,7 @@ export default function Workouts() {
   }, []);
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col items-center gap-4">
       <Link href="/new-workout">
         <Button title="Add Workout" />
       </Link>
