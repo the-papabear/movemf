@@ -1,164 +1,138 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import { ChevronLeft } from 'react-feather';
+import { ChevronLeft, X } from 'react-feather';
 
 import Button from '@/components/Button';
-import { WorkoutDTO } from '@/app/interfaces';
+import { SetDTO, WorkoutDTO } from '@/app/interfaces';
+import SetInfoForm from '@/app/new-workout/SetInfoForm';
+import { ExerciseDTO } from '@/app/exercises/interfaces';
 
-export default function NewWorkout() {
+const NewWorkout = () => {
   const router = useRouter();
-  const completedAt = new Date().toISOString().split('T')[0].replace('.', '-');
 
-  const [exercise, setExercise] = useState<any>({
+  const [exercises, setExercises] = useState<ExerciseDTO[]>([]);
+  useEffect(() => {
+    getExercises();
+
+    async function getExercises() {
+      await axios
+        .get('/api/exercises')
+        .then((res) => {
+          setExercises(res.data.data);
+        })
+        .catch((err) => {});
+    }
+  }, []);
+
+  const [exerciseInfo, setExerciseInfo] = useState<SetDTO>({
+    id: 0,
     reps: 0,
     weight: 0,
     setNumber: 1,
-    restPeriod: 0,
     exercise: '',
+    restPeriod: 0,
   });
 
   const [workout, setWorkout] = useState<WorkoutDTO>({
     name: '',
     sets: [],
-    completedAt,
+    completedAt: new Date(),
   });
-
-  const [exercises, setExercises] = useState<any>([]);
-  useEffect(() => {
-    getExercises();
-
-    async function getExercises() {
-      const exercises = (await axios.get('/api/exercises')).data.data;
-      setExercises(exercises);
-    }
-  }, []);
-
-  const onSubmit = async () => {
-    await axios.post('/api/workouts', workout);
-
-    setWorkout({ name: '', sets: [], completedAt });
-    router.push('/');
-  };
 
   const handleWorkoutChange = (event: any) => {
     const { name, value } = event.target;
     setWorkout((prevFormData: any) => ({ ...prevFormData, [name]: value }));
   };
 
-  const handleExerciseChange = (event: any) => {
-    const { name, value } = event.target;
-    setExercise((prevFormData: any) => ({ ...prevFormData, [name]: name === 'exercise' ? value : +value }));
-  };
-
-  const onSaveExerciseClick = () => {
-    setWorkout({
-      ...workout,
-      sets: [...workout.sets, exercise],
-    });
-
-    setExercise({
-      reps: 0,
-      weight: 0,
-      setNumber: 1,
-      restPeriod: 0,
-      exercise: '',
-    });
+  const onSubmit = async () => {
+    await axios.post('/api/workouts', workout);
+    setWorkout({ name: '', sets: [], completedAt: new Date() });
+    router.push('/workouts');
   };
 
   return (
-    <div className="flex flex-col items-center">
-      <div className="mt-4 flex w-full items-center justify-between self-start">
+    <div className="flex w-full flex-col">
+      {/* Page Header */}
+      <section className="mt-4 flex w-full items-center justify-between self-start">
         <button className="flex hover:text-lime-700" onClick={() => router.push('/')}>
           <ChevronLeft />
           <span>Workouts</span>
         </button>
-        <Button onClick={onSubmit} title="Create Workout" />
-      </div>
 
-      <section className="mt-6 flex flex-col gap-2 px-2">
-        <h2 className="my-4 text-xl font-bold">General information</h2>
+        <Button onClick={onSubmit} title="Save Workout" disabled={!workout.name} />
+      </section>
+
+      {/* General info section */}
+      <section className="flex w-full flex-col items-center gap-4">
+        <h2 className="mt-6 text-xl font-bold">General information</h2>
         <label htmlFor="name">
-          <h4>Name</h4>
+          <p className="text-sm text-green-900">Name*</p>
+          <input
+            id="name"
+            name="name"
+            type="text"
+            value={workout.name}
+            autoComplete="autoComplete"
+            onChange={handleWorkoutChange}
+            placeholder="e.g. Bicep crushers"
+            className="h-[40px] w-[300px] rounded border border-lime-700 px-4 placeholder:text-sm"
+          />
         </label>
-        <input
-          type="text"
-          name="name"
-          value={workout.name}
-          onChange={handleWorkoutChange}
-          placeholder="Bicep crusher"
-          className="h-[40px] w-full max-w-[300px] rounded border border-lime-700 px-4"
-        />
+
         <label htmlFor="completedAt">
-          <h4>Workout completion date</h4>
+          <p className="text-sm text-green-900">Completed at</p>
+          <input
+            type="date"
+            id="completedAt"
+            name="completedAt"
+            onChange={handleWorkoutChange}
+            value={parseDate(workout.completedAt) || parseDate(new Date())}
+            className="h-[40px] w-[300px] rounded border border-lime-700 px-4 placeholder:text-sm"
+          />
         </label>
-        <input
-          type="date"
-          name="completedAt"
-          onChange={handleWorkoutChange}
-          value={workout.completedAt.toString()}
-          className="h-[40px] w-full max-w-[300px] rounded border border-lime-700 px-4"
-        />
       </section>
 
-      <section className="mt-6 flex flex-col gap-2 px-2">
-        <h2 className="my-4px-2 text-xl font-bold">Exercises information</h2>
-        <select
-          required
-          value={exercise.exercise}
-          id="exercise"
-          name="exercise"
-          onChange={handleExerciseChange}
-          className="h-[40px] w-full max-w-[300px] rounded border border-lime-700 px-4"
-        >
-          <option value="select-placeholder" hidden>
-            Select an exercise
-          </option>
-          {exercises.map((exercise: any) => (
-            <option value={exercise._id} key={exercise._id}>
-              {exercise.name}
-            </option>
-          ))}
-        </select>
-        <input
-          value={exercise.reps}
-          name="reps"
-          type="number"
-          onChange={handleExerciseChange}
-          placeholder="Number of reps"
-          className="h-[40px] w-full max-w-[300px] rounded border border-lime-700 px-4"
-        />
-        <input
-          value={exercise.weight}
-          type="number"
-          name="weight"
-          placeholder="Weights"
-          onChange={handleExerciseChange}
-          className="h-[40px] w-full max-w-[300px] rounded border border-lime-700 px-4"
-        />
-        <input
-          value={exercise.restPeriod}
-          name="restPeriod"
-          type="number"
-          onChange={handleExerciseChange}
-          placeholder="Rest period"
-          className="h-[40px] w-full max-w-[300px] rounded border border-lime-700 px-4"
-        />
+      <SetInfoForm
+        workout={workout}
+        exercises={exercises}
+        setWorkout={setWorkout}
+        exerciseInfo={exerciseInfo}
+        setExerciseInfo={setExerciseInfo}
+      />
 
-        <Button title="Save exercise" onClick={onSaveExerciseClick} />
-      </section>
-
-      <section className="my-4 flex flex-col gap-2">
+      {/* Workout overview section */}
+      <section className="my-4 flex w-full flex-col items-center gap-4">
         <h2 className="my-4px-2 text-xl font-bold">Workout overview</h2>
-        {workout.sets.map((set: any, index: number) => (
-          <div key={index} className="flex flex-col">
-            <span>{set.weight}</span>
+        {workout.sets.map((set, index) => (
+          <div key={index} className="flex w-full flex-col gap-1">
+            <p className=" flex items-center justify-between rounded-md  border border-lime-500 p-2">
+              {exercises.find((exercise) => exercise._id === set.exercise)?.name}
+              <span>
+                <X
+                  width={16}
+                  height={16}
+                  className="cursor-pointer stroke-red-600"
+                  onClick={() => {
+                    const filteredSets = workout.sets.filter((filteredSet) => filteredSet.id !== set.id);
+                    setWorkout({ ...workout, sets: [...filteredSets] });
+                  }}
+                />
+              </span>
+            </p>
+            <p className=" rounded-md border border-lime-500  p-2">Rest: {set.restPeriod}</p>
           </div>
         ))}
       </section>
     </div>
   );
+};
+
+export default NewWorkout;
+
+function parseDate(date: Date) {
+  const theDate = new Date(date);
+  return theDate.toISOString().split('T')[0].replace('.', '-');
 }
