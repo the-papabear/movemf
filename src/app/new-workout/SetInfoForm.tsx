@@ -42,6 +42,18 @@ const SetInfoForm = ({ exerciseInfo, setExerciseInfo, setWorkout, workout, exerc
           </option>
         ))}
       </select>
+      <label htmlFor="setNumber">
+        <p className="text-sm text-green-900">Set number</p>
+        <input
+          min={1}
+          type="number"
+          id="setNumber"
+          name="setNumber"
+          onChange={handleExerciseChange}
+          value={exerciseInfo.setNumber.toString()}
+          className="h-[40px] w-[300px] rounded border border-lime-700 px-4 placeholder:text-sm"
+        />
+      </label>
       <label htmlFor="reps">
         <p className="text-sm text-green-900">Number of reps</p>
         <input

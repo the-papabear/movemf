@@ -108,9 +108,9 @@ const NewWorkout = () => {
         <h2 className="my-4px-2 text-xl font-bold">Workout overview</h2>
         {workout.sets.map((set, index) => (
           <div key={index} className="flex w-full flex-col gap-1">
-            <p className=" flex items-center justify-between rounded-md  border border-lime-500 p-2">
-              {exercises.find((exercise) => exercise._id === set.exercise)?.name}
-              <span>
+            <div className=" flex flex-col justify-between rounded-md  border border-lime-500 p-2">
+              <div className="flex w-full items-center justify-between">
+                <h3 className="text-lg">Set {set.setNumber}</h3>
                 <X
                   width={16}
                   height={16}
@@ -120,9 +120,16 @@ const NewWorkout = () => {
                     setWorkout({ ...workout, sets: [...filteredSets] });
                   }}
                 />
-              </span>
-            </p>
-            <p className=" rounded-md border border-lime-500  p-2">Rest: {set.restPeriod}</p>
+              </div>
+              <div className="flex gap-2">
+                <p className="font-bold capitalize">
+                  {exercises.find((exercise) => exercise._id === set.exercise)?.name}
+                </p>
+                <p>{set.reps} reps</p>
+                <p>{set.weight} kg</p>
+              </div>
+              <p>{set.restPeriod} seconds rest</p>
+            </div>
           </div>
         ))}
       </section>
