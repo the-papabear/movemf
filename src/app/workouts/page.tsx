@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 import Button from '@/components/Button';
 
-export default function Workouts() {
+const Workouts = () => {
   const [workouts, setWorkouts] = useState([]);
 
   useEffect(() => {
@@ -39,4 +39,6 @@ export default function Workouts() {
       </table>
     </div>
   );
-}
+};
+
+export default Workouts;

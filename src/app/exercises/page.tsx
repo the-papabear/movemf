@@ -3,12 +3,17 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 import { Edit2, Link2, Trash2 } from 'react-feather';
 
 import Button from '@/components/Button';
 import { CreateOrEditExerciseProps, ExerciseData, ExerciseDTO } from '@/app/exercises/interfaces';
 
-export default function Exercises() {
+const Exercises = () => {
+  const { data: session } = useSession({
+    required: true,
+  });
+
   const [isCreateFormOpen, setIsCreateFormOpen] = useState(false);
   const [isEditFormOpen, setIsEditFormOpen] = useState(false);
 
@@ -125,7 +130,7 @@ export default function Exercises() {
       </table>
     </div>
   );
-}
+};
 
 function CreateOrEditExercise({ exerciseData, submitExercise, handleChange }: CreateOrEditExerciseProps) {
   return (
@@ -163,3 +168,5 @@ function CreateOrEditExercise({ exerciseData, submitExercise, handleChange }: Cr
     </div>
   );
 }
+
+export default Exercises;

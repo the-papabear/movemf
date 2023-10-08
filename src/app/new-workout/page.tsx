@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 import { ChevronLeft, X } from 'react-feather';
 
 import Button from '@/components/Button';
@@ -11,6 +12,10 @@ import SetInfoForm from '@/app/new-workout/SetInfoForm';
 import { ExerciseDTO } from '@/app/exercises/interfaces';
 
 const NewWorkout = () => {
+  const { data: session } = useSession({
+    required: true,
+  });
+
   const router = useRouter();
 
   const [exercises, setExercises] = useState<ExerciseDTO[]>([]);
@@ -137,9 +142,9 @@ const NewWorkout = () => {
   );
 };
 
-export default NewWorkout;
-
 function parseDate(date: Date) {
   const theDate = new Date(date);
   return theDate.toISOString().split('T')[0].replace('.', '-');
 }
+
+export default NewWorkout;
