@@ -9,10 +9,10 @@
 As part of my skill development plan I had the task of creating a working app using React and MongoDB (with some other bits in between to make life a bit easier).
 In order for this demo app to become a reality and its implementations not complete chaos, I forged this document to have a relatively clear path of what I’m about to build. Over time I got proved that the path was not entirely clear. However, documenting and breaking the whole cake in to bite-sized chunks prevented chaos from ensuing (BREAK BIG WORK ITEMS INTO SMALLER CHUNKS PEOPLE!).
 
-The requirements my mentor gave me were the following: `Create an app what has a CRUD and uses MongoDB's views, query search, and auth.`
+The requirements my manager gave me were the following: `Create an app what has a CRUD and uses MongoDB's views, query search, and auth.`
 
-In other words I had complete creative freedom to make something that will push me into uncomfortable software development corners. All this pushing around would make me a better developer.
-After giving it some though I drafted a document that outlined what my app was supposed to do, what problem it solved, and the tools it will use:
+In other words I had complete creative freedom to make something that will push me into uncomfortable software development corners.
+All this pushing around would make me a better developer. Bellow you will find the breakdown of the app found in this repo.
 
 ---
 
@@ -34,18 +34,7 @@ Current workout apps are either too simple and lack a decent UX / basic features
 - Database: MongoDB
 - API: Next.js
 - Authentication: Next Auth + MongoDB
-- UI: Next.js + React + Radix UI + TailwindCSS
-
----
-
-### Views
-
-- ✅ Workouts overview
-- ✅ Create workout
-- 🟥 Edit Workout
-- ✅ Exercises overview
-- ✅ Create Exercise Modal
-- ✅ Edit Exercise Modal
+- UI: Next.js + Radix UI + TailwindCSS
 
 ---
 
@@ -54,71 +43,36 @@ Current workout apps are either too simple and lack a decent UX / basic features
 - ✅ The user is able to login / logout from the app
 - ✅ The user can log a new workout
 - ✅ The user can view a history of his workouts
-- ✅ The user can view a list of added exercises
-- ✅ The user can add previously added exercises to the workout
+- ✅ The user can view a list of his exercises
 - ✅ The user can duplicate a past completed workout
 
 ---
 
-### Data model
+### Data schema
 
-#### USER
+```javascript
+USER: {
+  id: string;
+  name: string;
+  email: string;
+},
 
-```mermaid
-  erDiagram
-    USER ||--o{ WORKOUT : logs
-    USER {
-      string _id
-      string name
-      string email "REQUIRED"
-    }
-    USER ||--o{ EXERCISE : creates
-    USER ||--o{ EXERCISE_DETAILS: creates
+WORKOUT: {
+  id: string;
+  userId: string;
+  completedAt: string;
+  sets: {
+    reps?: number;
+    weight?: number;
+    setNumber: number;
+    exerciseId: string;
+  }[]
+},
+
+EXERCISE: {
+  id: string;
+  name: string;
+  link?: string;
+  userId: string;
+},
 ```
-
-#### EXERCISSE
-
-```mermaid
-  erDiagram
-    EXERCISE }o--|| USER : isCreatedBy
-    EXERCISE {
-      string _id  "REQUIRED"
-      string name "REQUIRED"
-      string link
-      string userId "REQUIRED"
-    }
-    EXERCISE ||--o{ WORKOUT_DETAILS : isUsedBy
-```
-
-#### WORKOUT
-
-```mermaid
-  erDiagram
-    WORKOUT }o--|| USER : isLoggedBy
-    WORKOUT {
-      string _id "REQUIRED"
-      date completedAt "REQUIRED"
-      string userId "REQUIRED"
-    }
-    WORKOUT ||--|{ EXERCISE_DETAILS : has
-```
-
-#### EXERCISE_DETAILS
-
-```mermaid
-  erDiagram
-    EXERCISE_DETAILS }o--|| USER : creates
-    EXERCISE_DETAILS {
-      string _id "REQUIRED"
-      int reps
-      int time
-      string notes
-      date insertedAt "REQUIRED"
-      number setNumber "REQUIRED"
-      string workoutId
-      string userId "REQUIRED"
-    }
-    EXERCISE_DETAILS ||--|{ EXERCISE : uses
-```
-
----
