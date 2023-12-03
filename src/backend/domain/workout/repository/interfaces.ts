@@ -1,5 +1,6 @@
-import { ExerciseDB } from '@/backend/domain/exercise/repository/interfaces';
 import { ObjectId } from 'mongodb';
+
+import { ExerciseDB } from '@/backend/domain/exercise/repository/interfaces';
 
 export interface WorkoutDB {
   _id: ObjectId;

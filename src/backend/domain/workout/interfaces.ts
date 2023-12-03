@@ -1,5 +1,4 @@
 import { ExerciseDTO } from '@/backend/domain/exercise/interfaces';
-import { DeleteWorkoutData } from '@/backend/domain/workout/usecase/deleteWorkout';
 
 export interface WorkoutDTO {
   _id: string;
@@ -10,8 +9,8 @@ export interface WorkoutDTO {
 }
 
 export interface SetDTO {
-  reps?: number;
-  weight?: number;
+  reps: number;
+  weight: number;
   setNumber: number;
   exercise: ExerciseDTO;
 }
@@ -28,14 +27,10 @@ export interface IPersistWorkout {
   (workout: WorkoutDTO): Promise<void>;
 }
 
-export interface IEditWorkout {
+export interface IUpdateWorkout {
   (workoutDTO: WorkoutDTO): Promise<void>;
 }
 
 export interface IRemoveWorkout {
   (workoutId: string): Promise<void>;
-}
-
-export interface IRemoveWorkoutUseCase {
-  (deleteWorkoutData: DeleteWorkoutData): Promise<void>;
 }

@@ -4,7 +4,7 @@ import { MongoClient } from '@/backend/mongoConnection';
 import { makeErrorResponse, makeSuccessResponse } from '@/backend/lib/makeQueryResponse';
 import { retrieveWorkoutById } from '@/backend/domain/workout/repository/retrieveWorkoutById';
 
-export const getWorkout = async (request: NextApiRequest) => {
+export async function GET(request: NextApiRequest) {
   const { id } = request.query;
 
   try {
@@ -16,4 +16,4 @@ export const getWorkout = async (request: NextApiRequest) => {
   } catch (e: any) {
     return makeErrorResponse(e.code, e.message);
   }
-};
+}
