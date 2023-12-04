@@ -2,7 +2,7 @@ import shell from 'shelljs';
 
 import { runCommand } from './runCommand.mjs';
 
-async function run() {
+(async function run() {
   await stopLocalMongoDB();
 
   async function stopLocalMongoDB() {
@@ -14,6 +14,4 @@ async function run() {
       await runCommand(cmd, 'Stopping local MongoDb instance...');
     }
   }
-}
-
-run();
+})();

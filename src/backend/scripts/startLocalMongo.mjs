@@ -1,6 +1,6 @@
 import { runCommand } from './runCommand.mjs';
 
-async function run() {
+(async function run() {
   startMongoDBInstance();
 
   async function startMongoDBInstance() {
@@ -14,6 +14,4 @@ async function run() {
 
     await runCommand(cmd, 'Starting local MongoDB instance...');
   }
-}
-
-run();
+})();
