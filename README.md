@@ -4,15 +4,13 @@
 
 ### The `live` environment is available over at [movemf.vercel.app](https://movemf.vercel.app 'MoveMF - Get a move on!').
 
-### Y u build dis?
-
-As part of my skill development plan I had the task of creating a working app using React and MongoDB (with some other bits in between to make life a bit easier).
-In order for this demo app to become a reality and its implementations not complete chaos, I forged this document to have a relatively clear path of what I’m about to build. Over time I got proved that the path was not entirely clear. However, documenting and breaking the whole cake in to bite-sized chunks prevented chaos from ensuing (BREAK BIG WORK ITEMS INTO SMALLER CHUNKS PEOPLE!).
+### Why build it in the first place?
 
 The requirements my manager gave me were the following: `Create an app what has a CRUD and uses MongoDB's views, query search, and auth.`
 
-In other words I had complete creative freedom to make something that will push me into uncomfortable software development corners.
-All this pushing around would make me a better developer. Bellow you will find the breakdown of the app found in this repo.
+MongoDB was the focus in the statement because I had to learn it for a project I was being assigned to. I wanted to make it a little more challenging and I touched on other patterns and tools I have never user before as well (`TailwindCSS` and `REST APIs` are two examples as I only worked with `CSS modules` and `GraphQL APIs` at the time of getting the assignment above).
+
+With only a sentence for requirements I pushed myself to create something that looks nice, feels nice to use and something that I will actually be using in my day to day workout endeavors. The Mongo lesson became a multi-part lecture about consistency, discipline and the road to better software development.
 
 ---
 
@@ -52,27 +50,34 @@ Current workout apps are either too simple and lack a decent UX / basic features
 
 ```javascript
 USER: {
-  id: string;
+  _id: string;
   name: string;
   email: string;
 },
 
 WORKOUT: {
-  id: string;
+  _id: string;
   userId: string;
   completedAt: string;
   sets: {
     reps?: number;
     weight?: number;
     setNumber: number;
-    exerciseId: string;
+    exercise: EXERCISE._id;
   }[]
 },
 
 EXERCISE: {
-  id: string;
+  _id: string;
   name: string;
   link?: string;
   userId: string;
 },
 ```
+
+### TO DO LIST:
+
+- [ ] Nicer UI using shad/cn to build it fast
+- [ ] Test all use cases available in the system
+- [ ] Demo account functionality for faster demo/playing around
+- [ ] Refined auth login/logout/account creation functionalities
