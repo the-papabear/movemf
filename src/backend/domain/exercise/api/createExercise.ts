@@ -9,7 +9,7 @@ import { makeErrorResponse, makeSuccessResponse } from '@/backend/lib/makeQueryR
 import { retrieveExerciseByName } from '@/backend/domain/exercise/repository/retrieveExerciseByName';
 import { CreateExerciseDependencies, createExerciseUseCase } from '@/backend/domain/exercise/usecase/createExercise';
 
-export const createExercise = async (request: NextRequest) => {
+export async function POST(request: NextRequest) {
   const authSession: any = await getServerSession(authOptions);
 
   const exerciseData = await request.json();
@@ -34,4 +34,4 @@ export const createExercise = async (request: NextRequest) => {
   } catch (e: any) {
     return makeErrorResponse(e.code, e.message);
   }
-};
+}

@@ -9,10 +9,6 @@ export const createWorkoutUseCase = (dependencies: CreateWorkoutDependencies) =>
 
   const { completedAt, userId, name, sets } = data;
 
-  if (!sets.length) {
-    throw new BackendError(400, WORKOUT_ERRORS.MISSING_SETS);
-  }
-
   const setDTOs = await Promise.all(
     sets.map(async (set) => {
       if (set.reps < 0) {
@@ -23,16 +19,13 @@ export const createWorkoutUseCase = (dependencies: CreateWorkoutDependencies) =>
         throw new BackendError(400, WORKOUT_ERRORS.INVALID_WEIGHT);
       }
 
-      const existingExerciseDTO = await retrieveExerciseById(set.exercise);
+      const existingExerciseDTO = await retrieveExerciseById(set.exercise._id);
 
       if (!existingExerciseDTO) {
         throw new BackendError(404, WORKOUT_ERRORS.EXERCISE_NOT_FOUND);
       }
 
-      return {
-        ...set,
-        exercise: existingExerciseDTO,
-      };
+      return set;
     }),
   );
 
@@ -45,8 +38,8 @@ export const createWorkoutUseCase = (dependencies: CreateWorkoutDependencies) =>
   function createWorkoutDTO(sets: SetDTO[]) {
     return {
       name,
+      sets,
       userId,
-      sets: setDTOs,
       _id: generateObjectId(),
       completedAt: completedAt ?? new Date(),
     };
@@ -62,6 +55,6 @@ interface CreateWorkoutDependencies {
 interface CreateWorkoutData {
   name: string;
   userId: string;
+  sets: SetDTO[];
   completedAt?: Date;
-  sets: { setNumber: number; reps: number; weight: number; exercise: string }[];
 }

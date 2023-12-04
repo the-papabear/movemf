@@ -5,7 +5,7 @@ import { MongoClient } from '@/backend/mongoConnection';
 import { makeErrorResponse, makeSuccessResponse } from '@/backend/lib/makeQueryResponse';
 import { retrieveExercises } from '@/backend/domain/exercise/repository/retrieveExercises';
 
-export async function getExercises() {
+export async function GET() {
   const authSession: any = await getServerSession(authOptions);
 
   try {

@@ -9,7 +9,7 @@ import { deleteExerciseUseCase } from '@/backend/domain/exercise/usecase/deleteE
 import { retrieveWorkoutById } from '@/backend/domain/workout/repository/retrieveWorkoutById';
 import { retrieveExerciseById } from '@/backend/domain/exercise/repository/retrieveExerciseById';
 
-export const deleteExercise = async (request: NextRequest) => {
+export async function DELETE(request: NextRequest) {
   const exerciseId = request.nextUrl.pathname.split('/')[3];
 
   try {
@@ -30,4 +30,4 @@ export const deleteExercise = async (request: NextRequest) => {
   } catch (e) {
     return makeErrorResponse(400);
   }
-};
+}

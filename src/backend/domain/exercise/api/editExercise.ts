@@ -1,17 +1,15 @@
 import { NextRequest } from 'next/server';
-import { getServerSession } from 'next-auth/next';
 
-import { authOptions } from '@/lib/auth';
 import { MongoClient } from '@/backend/mongoConnection';
+import { ExerciseDTO } from '@/backend/domain/exercise/interfaces';
 import { editExerciseUseCase } from '@/backend/domain/exercise/usecase/editExercise';
 import { updateExercise } from '@/backend/domain/exercise/repository/updateExercise';
 import { makeErrorResponse, makeSuccessResponse } from '@/backend/lib/makeQueryResponse';
 import { retrieveExerciseById } from '@/backend/domain/exercise/repository/retrieveExerciseById';
 import { retrieveExerciseByName } from '@/backend/domain/exercise/repository/retrieveExerciseByName';
 
-export const editExercise = async (request: NextRequest) => {
-  const authSession: any = await getServerSession(authOptions);
-  const exerciseData = await request.json();
+export async function PATCH(request: NextRequest) {
+  const exerciseData: ExerciseDTO = await request.json();
 
   try {
     const exerciseDTO = await MongoClient.exec(async (db, session) => {
@@ -24,8 +22,8 @@ export const editExercise = async (request: NextRequest) => {
       const data = {
         name: exerciseData.name,
         link: exerciseData.link,
-        exerciseId: exerciseData.id,
-        userId: authSession.user.id,
+        userId: exerciseData.userId,
+        exerciseId: exerciseData._id,
       };
 
       return await editExerciseUseCase(dependencies)(data);
@@ -35,4 +33,4 @@ export const editExercise = async (request: NextRequest) => {
   } catch (e: any) {
     makeErrorResponse(e.code, e.message);
   }
-};
+}

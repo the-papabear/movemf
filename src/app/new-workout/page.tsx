@@ -7,7 +7,6 @@ import { useSession } from 'next-auth/react';
 import { ChevronLeft, X } from 'react-feather';
 
 import Button from '@/components/Button';
-import { SetDTO, WorkoutDTO } from '@/app/interfaces';
 import SetInfoForm from '@/app/new-workout/SetInfoForm';
 import { ExerciseDTO } from '@/app/exercises/interfaces';
 
@@ -32,7 +31,7 @@ const NewWorkout = () => {
     }
   }, []);
 
-  const [exerciseInfo, setExerciseInfo] = useState<SetDTO>({
+  const [exerciseInfo, setExerciseInfo] = useState({
     id: 0,
     reps: 0,
     weight: 0,
@@ -41,7 +40,7 @@ const NewWorkout = () => {
     restPeriod: 0,
   });
 
-  const [workout, setWorkout] = useState<WorkoutDTO>({
+  const [workout, setWorkout] = useState({
     name: '',
     sets: [],
     completedAt: new Date(),
@@ -111,7 +110,7 @@ const NewWorkout = () => {
       {/* Workout overview section */}
       <section className="my-4 flex w-full flex-col items-center gap-4">
         <h2 className="my-4px-2 text-xl font-bold">Workout overview</h2>
-        {workout.sets.map((set, index) => (
+        {workout.sets.map((set: any, index: number) => (
           <div key={index} className="flex w-full flex-col gap-1">
             <div className=" flex flex-col justify-between rounded-md  border border-lime-500 p-2">
               <div className="flex w-full items-center justify-between">
@@ -121,7 +120,7 @@ const NewWorkout = () => {
                   height={16}
                   className="cursor-pointer stroke-red-600"
                   onClick={() => {
-                    const filteredSets = workout.sets.filter((filteredSet) => filteredSet.id !== set.id);
+                    const filteredSets = workout.sets.filter((filteredSet: any) => filteredSet.id !== set.id);
                     setWorkout({ ...workout, sets: [...filteredSets] });
                   }}
                 />

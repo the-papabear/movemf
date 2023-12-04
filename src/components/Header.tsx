@@ -1,11 +1,10 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { signOut } from 'next-auth/react';
+// @ts-ignore
 import { usePathname } from 'next/navigation';
 
-import logo from 'public/logo.svg';
 import Button from '@/components/Button';
 
 export default function Header() {
@@ -14,7 +13,7 @@ export default function Header() {
   return (
     <header className="mb-12 flex w-full items-center justify-between gap-6">
       <Link href="/workouts" className="hidden justify-between sm:block">
-        <Image width={32} height={32} alt="logo" src={logo} className="cursor-pointer self-start" />
+        Logo
       </Link>
 
       <div className="flex gap-4">

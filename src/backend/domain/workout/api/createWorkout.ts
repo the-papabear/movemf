@@ -9,7 +9,7 @@ import { createWorkoutUseCase } from '@/backend/domain/workout/usecase/createWor
 import { makeErrorResponse, makeSuccessResponse } from '@/backend/lib/makeQueryResponse';
 import { retrieveExerciseById } from '@/backend/domain/exercise/repository/retrieveExerciseById';
 
-export const createWorkout = async (request: NextRequest) => {
+export async function POST(request: NextRequest) {
   const authSession: any = await getServerSession(authOptions);
 
   const workoutData = await request.json();
@@ -36,4 +36,4 @@ export const createWorkout = async (request: NextRequest) => {
   } catch (e: any) {
     return makeErrorResponse(e.code, e.message);
   }
-};
+}

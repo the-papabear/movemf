@@ -4,7 +4,7 @@ import { MongoClient } from '@/backend/mongoConnection';
 import { makeErrorResponse, makeSuccessResponse } from '@/backend/lib/makeQueryResponse';
 import { retrieveExerciseById } from '@/backend/domain/exercise/repository/retrieveExerciseById';
 
-export const getExercise = async (request: NextRequest) => {
+export async function GET(request: NextRequest) {
   const url = request.url.split('/');
   const id = url[url.length - 1];
 
@@ -17,4 +17,4 @@ export const getExercise = async (request: NextRequest) => {
   } catch (e: any) {
     return makeErrorResponse(e.code, e.message);
   }
-};
+}

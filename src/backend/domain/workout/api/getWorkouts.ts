@@ -5,7 +5,7 @@ import { MongoClient } from '@/backend/mongoConnection';
 import retrieveWorkouts from '@/backend/domain/workout/repository/retrieveWorkouts';
 import { makeErrorResponse, makeSuccessResponse } from '@/backend/lib/makeQueryResponse';
 
-export const getWorkouts = async () => {
+export async function GET() {
   const authSession: any = await getServerSession(authOptions);
 
   try {
@@ -17,4 +17,4 @@ export const getWorkouts = async () => {
   } catch (e: any) {
     return makeErrorResponse(e.code, e.message);
   }
-};
+}
