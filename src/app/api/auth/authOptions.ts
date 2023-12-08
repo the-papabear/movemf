@@ -17,6 +17,9 @@ export const authOptions: NextAuthOptions = {
       checks: ['none'],
     }),
   ],
+  pages: {
+    signIn: '/auth/login',
+  },
   callbacks: {
     session: ({ session, token }) => ({
       ...session,
