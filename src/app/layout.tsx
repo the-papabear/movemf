@@ -16,9 +16,9 @@ export const metadata = {
 const RootLayout = ({ children }: PropsWithChildren) => {
   return (
     <html lang="en" className={`${mulish.variable}`}>
-      <body className="font-main h-screen bg-gray-100">
+      <body className="font-main flex h-screen flex-col bg-gray-100">
         <NextAuthProvider>
-          {children}
+          <div className="flex-1">{children}</div>
           <Footer />
         </NextAuthProvider>
       </body>

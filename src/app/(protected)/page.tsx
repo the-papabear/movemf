@@ -2,16 +2,16 @@
 import { Fragment } from 'react';
 import { ChevronDown, CopyPlus, Pen, PlusIcon, Trash2 } from 'lucide-react';
 
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardTitle } from '@/components/ui/card';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { Badge } from '@/components/ui/badge';
 
-const workouts = [
+const mockWorkouts = [
   {
     _id: '1',
     name: 'Super long name workout',
-    completedAt: new Date('01-01-2023').toLocaleDateString(),
+    completedAt: new Date('01-01-2023').toDateString(),
     sets: [
       { reps: 1, weight: 1, setNumber: 1, exercise: { _id: 'ex1', name: 'Pullups', link: 'lorem.com' } },
       { reps: 1, weight: 1, setNumber: 2, exercise: { _id: 'ex1', name: 'Pullups', link: 'lorem.com' } },
@@ -21,7 +21,7 @@ const workouts = [
   {
     _id: '2',
     name: 'Super workout',
-    completedAt: new Date('01-01-2023').toLocaleDateString(),
+    completedAt: new Date('01-01-2023').toDateString(),
     sets: [
       { reps: 1, weight: 1, setNumber: 1, exercise: { _id: 'ex1', name: 'Pullups', link: 'lorem.com' } },
       { reps: 1, weight: 1, setNumber: 2, exercise: { _id: 'ex1', name: 'Pullups', link: 'lorem.com' } },
@@ -31,7 +31,7 @@ const workouts = [
   {
     _id: '3',
     name: 'Super workout',
-    completedAt: new Date('01-01-2023').toLocaleDateString(),
+    completedAt: new Date('01-01-2023').toDateString(),
     sets: [
       { reps: 1, weight: 1, setNumber: 1, exercise: { _id: 'ex1', name: 'Pullups', link: 'lorem.com' } },
       { reps: 1, weight: 1, setNumber: 2, exercise: { _id: 'ex1', name: 'Pullups', link: 'lorem.com' } },
@@ -41,7 +41,7 @@ const workouts = [
   {
     _id: '6',
     name: 'Super workout',
-    completedAt: new Date('01-01-2023').toLocaleDateString(),
+    completedAt: new Date('01-01-2023').toDateString(),
     sets: [
       { reps: 1, weight: 1, setNumber: 1, exercise: { _id: 'ex1', name: 'Pullups', link: 'lorem.com' } },
       { reps: 1, weight: 1, setNumber: 2, exercise: { _id: 'ex1', name: 'Pullups', link: 'lorem.com' } },
@@ -96,7 +96,7 @@ const WorkoutsOverview = () => {
       </Button>
 
       <div className="flex w-full flex-col gap-4">
-        {workouts.map((workout) => (
+        {mockWorkouts.map((workout) => (
           <Fragment key={workout._id}>
             <Collapsible>
               <Card className="flex flex-col gap-6 p-4">
@@ -111,15 +111,17 @@ const WorkoutsOverview = () => {
                 </CollapsibleTrigger>
                 <CardContent className="flex items-center justify-between gap-2 p-0">
                   <p>Number of sets: {workout.sets.length}</p>
-                  <Button size={'sm'}>
-                    <Pen />
-                  </Button>
-                  <Button size={'sm'}>
-                    <CopyPlus />
-                  </Button>
-                  <Button variant="destructive" size={'sm'}>
-                    <Trash2 />
-                  </Button>
+                  <div className="flex gap-4">
+                    <Button size={'sm'}>
+                      <Pen />
+                    </Button>
+                    <Button size={'sm'}>
+                      <CopyPlus />
+                    </Button>
+                    <Button variant="destructive" size={'sm'}>
+                      <Trash2 />
+                    </Button>
+                  </div>
                 </CardContent>
               </Card>
               <CollapsibleContent className="mx-2 mt-1 gap-2 rounded border border-slate-400">

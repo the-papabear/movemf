@@ -2,7 +2,7 @@ import { GitHub, Linkedin } from 'react-feather';
 
 export default function Footer() {
   return (
-    <footer className="relative inset-x-0 bottom-0 flex w-full flex-col">
+    <footer className="flex w-full flex-col">
       <span className="h-[1px] rounded border-b-[1px] border-slate-200" />
       <div className="flex flex-col items-center gap-2 p-2">
         <span className="text-xs text-gray-400">MoveMF - Minimalist workout diary app</span>
