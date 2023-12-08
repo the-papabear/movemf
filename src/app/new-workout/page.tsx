@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { ChevronLeft, X } from 'react-feather';
 
-import Button from '@/components/Button';
 import SetInfoForm from '@/app/new-workout/SetInfoForm';
 import { ExerciseDTO } from '@/app/exercises/interfaces';
 
@@ -65,8 +64,6 @@ const NewWorkout = () => {
           <ChevronLeft />
           <span>Workouts</span>
         </button>
-
-        <Button onClick={onSubmit} title="Save Workout" disabled={!workout.name} />
       </section>
 
       {/* General info section */}

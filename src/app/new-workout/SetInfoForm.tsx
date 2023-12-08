@@ -1,5 +1,4 @@
 import { ExerciseDTO } from '@/app/exercises/interfaces';
-import Button from '@/components/Button';
 
 const SetInfoForm = ({ exerciseInfo, setExerciseInfo, setWorkout, workout, exercises }: any) => {
   const handleExerciseChange = (event: any) => {
@@ -91,8 +90,6 @@ const SetInfoForm = ({ exerciseInfo, setExerciseInfo, setWorkout, workout, exerc
           className="h-[40px] w-[300px] rounded border border-lime-700 px-4 placeholder:text-sm"
         />
       </label>
-
-      <Button title="Save Exercise" onClick={onSaveExerciseClick} disabled={!exerciseInfo.exercise} />
     </section>
   );
 };

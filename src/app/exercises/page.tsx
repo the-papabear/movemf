@@ -3,17 +3,11 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
-import { useSession } from 'next-auth/react';
 import { Edit2, Link2, Trash2 } from 'react-feather';
 
-import Button from '@/components/Button';
 import { CreateOrEditExerciseProps, ExerciseData, ExerciseDTO } from '@/app/exercises/interfaces';
 
 const Exercises = () => {
-  const { data: session } = useSession({
-    required: true,
-  });
-
   const [isCreateFormOpen, setIsCreateFormOpen] = useState(false);
   const [isEditFormOpen, setIsEditFormOpen] = useState(false);
 
@@ -71,8 +65,6 @@ const Exercises = () => {
 
   return (
     <div className="flex flex-col items-center gap-2">
-      <Button title={isCreateFormOpen || isEditFormOpen ? 'Cancel' : 'Add Exercise'} onClick={handleAddBtnClick} />
-
       {isCreateFormOpen ? (
         <CreateOrEditExercise exerciseData={exerciseData} handleChange={handleChange} submitExercise={handleSubmit} />
       ) : null}
@@ -161,9 +153,7 @@ function CreateOrEditExercise({ exerciseData, submitExercise, handleChange }: Cr
           onChange={handleChange}
           className="h-[30px] rounded border border-lime-700"
         />
-        <div className="self-center">
-          <Button title="Save exercise" type="submit" onClick={() => submitExercise} />
-        </div>
+        <div className="self-center"></div>
       </form>
     </div>
   );

@@ -4,8 +4,6 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
 
-import Button from '@/components/Button';
-
 const Workouts = () => {
   const [workouts, setWorkouts] = useState([]);
 
@@ -18,9 +16,7 @@ const Workouts = () => {
 
   return (
     <div className="flex flex-col items-center gap-4">
-      <Link href="/new-workout">
-        <Button title="Add Workout" />
-      </Link>
+      <Link href="/new-workout"></Link>
 
       <table className="w-full">
         <thead>
