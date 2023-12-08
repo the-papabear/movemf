@@ -3,17 +3,13 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import { useSession } from 'next-auth/react';
+
 import { ChevronLeft, X } from 'react-feather';
 
 import SetInfoForm from '@/app/new-workout/SetInfoForm';
 import { ExerciseDTO } from '@/app/exercises/interfaces';
 
 const NewWorkout = () => {
-  const { data: session } = useSession({
-    required: true,
-  });
-
   const router = useRouter();
 
   const [exercises, setExercises] = useState<ExerciseDTO[]>([]);
