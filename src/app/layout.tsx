@@ -4,6 +4,7 @@ import { Mulish } from 'next/font/google';
 import Footer from '@/components/Footer';
 
 import '@/app/globals.css';
+import { NextAuthProvider } from '@/app/auth/NextAuthProvider';
 
 const mulish = Mulish({ subsets: ['latin'], display: 'swap', variable: '--font-main' });
 
@@ -16,8 +17,10 @@ const RootLayout = ({ children }: PropsWithChildren) => {
   return (
     <html lang="en" className={`${mulish.variable}`}>
       <body className="font-main h-screen bg-gray-100">
-        {children}
-        <Footer />
+        <NextAuthProvider>
+          {children}
+          <Footer />
+        </NextAuthProvider>
       </body>
     </html>
   );
