@@ -1,7 +1,7 @@
 import { NextRequest } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 
-import { authOptions } from '@/lib/auth';
+import { authOptions } from '@/app/api/auth/authOptions';
 import { MongoClient } from '@/backend/mongoConnection';
 import { generateObjectId } from '@/backend/lib/generateObjectId';
 import { persistWorkout } from '@/backend/domain/workout/repository/persistWorkout';

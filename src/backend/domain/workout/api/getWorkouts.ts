@@ -1,6 +1,6 @@
 import { getServerSession } from 'next-auth/next';
 
-import { authOptions } from '@/lib/auth';
+import { authOptions } from '@/app/api/auth/authOptions';
 import { MongoClient } from '@/backend/mongoConnection';
 import retrieveWorkouts from '@/backend/domain/workout/repository/retrieveWorkouts';
 import { makeErrorResponse, makeSuccessResponse } from '@/backend/lib/makeQueryResponse';
