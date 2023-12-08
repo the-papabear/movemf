@@ -1,4 +1,4 @@
-import { ExerciseDTO } from '@/app/exercises/interfaces';
+import { ExerciseDTO } from '@/app/(protected)/exercises/interfaces';
 
 const SetInfoForm = ({ exerciseInfo, setExerciseInfo, setWorkout, workout, exercises }: any) => {
   const handleExerciseChange = (event: any) => {

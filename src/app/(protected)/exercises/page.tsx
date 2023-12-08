@@ -5,7 +5,7 @@ import axios from 'axios';
 import Link from 'next/link';
 import { Edit2, Link2, Trash2 } from 'react-feather';
 
-import { CreateOrEditExerciseProps, ExerciseData, ExerciseDTO } from '@/app/exercises/interfaces';
+import { CreateOrEditExerciseProps, ExerciseData, ExerciseDTO } from '@/app/(protected)/exercises/interfaces';
 
 const Exercises = () => {
   const [isCreateFormOpen, setIsCreateFormOpen] = useState(false);

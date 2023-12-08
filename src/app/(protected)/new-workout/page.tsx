@@ -6,8 +6,8 @@ import { useRouter } from 'next/navigation';
 
 import { ChevronLeft, X } from 'react-feather';
 
-import SetInfoForm from '@/app/new-workout/SetInfoForm';
-import { ExerciseDTO } from '@/app/exercises/interfaces';
+import SetInfoForm from '@/app/(protected)/new-workout/SetInfoForm';
+import { ExerciseDTO } from '@/app/(protected)/exercises/interfaces';
 
 const NewWorkout = () => {
   const router = useRouter();
