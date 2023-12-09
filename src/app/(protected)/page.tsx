@@ -1,9 +1,11 @@
 'use client';
 import { Fragment } from 'react';
+import Link from 'next/link';
 import { ChevronDown, CopyPlus, Pen, PlusIcon, Trash2 } from 'lucide-react';
 
+import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardTitle } from '@/components/ui/card';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
@@ -71,29 +73,11 @@ const mockWorkouts = [
 ];
 
 const WorkoutsOverview = () => {
-  // TODO: Maybe give react query a shot for requests?
-  // const [workouts, setWorkouts] = useState([]);
-
-  // useEffect(() => {
-  //   const getWorkouts = async () => {
-  //     try {
-  //       const response = await fetch('/api/workouts');
-
-  //       const data = await response.json();
-  //       setWorkouts(data);
-  //     } catch (e: any) {
-  //       console.log(e);
-  //     }
-  //   };
-
-  //   getWorkouts();
-  // }, []);
-
   return (
     <section className="flex w-full flex-col items-center gap-4 py-4">
-      <Button className="w-full">
+      <Link href="/new-workout" className={cn('flex items-center gap-2', buttonVariants({ variant: 'default' }))}>
         <PlusIcon /> Add new workout
-      </Button>
+      </Link>
 
       <div className="flex w-full flex-col gap-4">
         {mockWorkouts.map((workout) => (

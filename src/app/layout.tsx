@@ -2,9 +2,10 @@ import { PropsWithChildren } from 'react';
 import { Mulish } from 'next/font/google';
 
 import Footer from '@/components/Footer';
+import ReactQueryProvider from '@/lib/reactQueryProvider';
+import { NextAuthProvider } from '@/app/auth/NextAuthProvider';
 
 import '@/app/globals.css';
-import { NextAuthProvider } from '@/app/auth/NextAuthProvider';
 
 const mulish = Mulish({ subsets: ['latin'], display: 'swap', variable: '--font-main' });
 
@@ -18,8 +19,10 @@ const RootLayout = ({ children }: PropsWithChildren) => {
     <html lang="en" className={`${mulish.variable}`}>
       <body className="font-main flex h-screen flex-col bg-gray-100">
         <NextAuthProvider>
-          <div className="flex-1">{children}</div>
-          <Footer />
+          <ReactQueryProvider>
+            <div className="flex-1">{children}</div>
+            <Footer />
+          </ReactQueryProvider>
         </NextAuthProvider>
       </body>
     </html>
