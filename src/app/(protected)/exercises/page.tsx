@@ -1,36 +1,30 @@
 'use client';
 
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 import Link from 'next/link';
 import { ExternalLink, Pen, PlusIcon, Trash2 } from 'lucide-react';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { cn } from '@/lib/utils';
-import { getExercises } from '@/lib/exerciseQueries';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Separator } from '@/components/ui/separator';
 import { buttonVariants } from '@/components/ui/button';
-import { deleteExercise } from '@/lib/exerciseMutations';
+import { useExerciseQueries } from '@/lib/useExerciseQueries';
+import { useExerciseMutations } from '@/lib/useExerciseMutations';
 import { Card, CardContent, CardTitle } from '@/components/ui/card';
 import { ExerciseDTO } from '@/app/(protected)/exercises/interfaces';
 import CreateExerciseForm from '@/app/(protected)/exercises/CreateExerciseForm';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
 const ExercisesPage = () => {
-  const queryClient = useQueryClient();
-
-  const { isPending, data } = useQuery({ queryKey: ['exercises'], queryFn: getExercises });
-  const removeExercise = useMutation({
-    mutationFn: deleteExercise,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['exercises'] });
-    },
-  });
+  const { isPending, data } = useExerciseQueries();
+  const { deleteExercise } = useExerciseMutations();
+  const [isOpen, setIsOpen] = useState(false);
+  const handleDeleteBtnClick = (exerciseId: string) => deleteExercise.mutate(exerciseId);
 
   return (
     <section className="flex w-full flex-col items-center gap-4 py-4">
-      <Collapsible className="w-full">
+      <Collapsible className="w-full" open={isOpen} onOpenChange={setIsOpen}>
         <CollapsibleTrigger className={cn('w-full', buttonVariants({ variant: 'default' }))}>
           <PlusIcon /> Add new exercise
         </CollapsibleTrigger>
@@ -38,7 +32,7 @@ const ExercisesPage = () => {
           <Card className="mt-2 flex flex-col gap-4 p-2">
             <CardTitle>New Exercise</CardTitle>
             <CardContent>
-              <CreateExerciseForm />
+              <CreateExerciseForm setIsCollapsibleOpen={setIsOpen} />
             </CardContent>
           </Card>
         </CollapsibleContent>
@@ -72,7 +66,7 @@ const ExercisesPage = () => {
                       <Button size={'sm'}>
                         <Pen />
                       </Button>
-                      <Button variant="destructive" size={'sm'} onClick={() => removeExercise}>
+                      <Button variant="destructive" size={'sm'} onClick={() => handleDeleteBtnClick(exercise._id)}>
                         <Trash2 />
                       </Button>
                     </div>
