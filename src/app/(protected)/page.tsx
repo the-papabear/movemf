@@ -75,7 +75,10 @@ const mockWorkouts = [
 const WorkoutsOverview = () => {
   return (
     <section className="flex w-full flex-col items-center gap-4 py-4">
-      <Link href="/new-workout" className={cn('flex items-center gap-2', buttonVariants({ variant: 'default' }))}>
+      <Link
+        href="/new-workout"
+        className={cn('flex w-full items-center gap-2', buttonVariants({ variant: 'default' }))}
+      >
         <PlusIcon /> Add new workout
       </Link>
 
