@@ -1,4 +1,4 @@
-import { ExerciseDTO } from '@/app/(protected)/exercises/interfaces';
+import { ExerciseData } from '@/app/(protected)/exercises/interfaces';
 
 const SetInfoForm = ({ exerciseInfo, setExerciseInfo, setWorkout, workout, exercises }: any) => {
   const handleExerciseChange = (event: any) => {
@@ -35,7 +35,7 @@ const SetInfoForm = ({ exerciseInfo, setExerciseInfo, setWorkout, workout, exerc
         <option value="select-placeholder" hidden>
           Select an exercise
         </option>
-        {exercises.map((exercise: ExerciseDTO) => (
+        {exercises.map((exercise: ExerciseData) => (
           <option key={exercise._id} value={exercise._id}>
             {exercise.name}
           </option>

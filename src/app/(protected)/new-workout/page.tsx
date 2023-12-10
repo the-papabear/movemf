@@ -7,12 +7,12 @@ import { useRouter } from 'next/navigation';
 import { ChevronLeft, X } from 'react-feather';
 
 import SetInfoForm from '@/app/(protected)/new-workout/SetInfoForm';
-import { ExerciseDTO } from '@/app/(protected)/exercises/interfaces';
+import { ExerciseData } from '@/app/(protected)/exercises/interfaces';
 
 const NewWorkout = () => {
   const router = useRouter();
 
-  const [exercises, setExercises] = useState<ExerciseDTO[]>([]);
+  const [exercises, setExercises] = useState<ExerciseData[]>([]);
   useEffect(() => {
     getExercises();
 

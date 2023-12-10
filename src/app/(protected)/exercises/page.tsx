@@ -12,27 +12,43 @@ import { buttonVariants } from '@/components/ui/button';
 import { useExerciseQueries } from '@/lib/useExerciseQueries';
 import { useExerciseMutations } from '@/lib/useExerciseMutations';
 import { Card, CardContent, CardTitle } from '@/components/ui/card';
-import { ExerciseDTO } from '@/app/(protected)/exercises/interfaces';
+import { ExerciseData, ExerciseDTO } from '@/app/(protected)/exercises/interfaces';
 import CreateExerciseForm from '@/app/(protected)/exercises/CreateExerciseForm';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
 const ExercisesPage = () => {
   const { isPending, data } = useExerciseQueries();
   const { deleteExercise } = useExerciseMutations();
-  const [isOpen, setIsOpen] = useState(false);
-  const handleDeleteBtnClick = (exerciseId: string) => deleteExercise.mutate(exerciseId);
 
+  const [isOpen, setIsOpen] = useState(false);
+  const [exerciseData, setExerciseData] = useState<ExerciseData>({ _id: '', name: '', link: '' });
+
+  const handleDeleteBtnClick = (exerciseId: string) => deleteExercise.mutate(exerciseId);
   return (
     <section className="flex w-full flex-col items-center gap-4 py-4">
       <Collapsible className="w-full" open={isOpen} onOpenChange={setIsOpen}>
-        <CollapsibleTrigger className={cn('w-full', buttonVariants({ variant: 'default' }))}>
-          <PlusIcon /> Add new exercise
+        <CollapsibleTrigger
+          onClick={() => setExerciseData({ _id: '', name: '', link: '', userId: '' })}
+          className={cn('w-full', buttonVariants({ variant: isOpen ? 'destructive' : 'default' }))}
+        >
+          {isOpen ? (
+            <>Cancel</>
+          ) : (
+            <>
+              <PlusIcon /> Add new exercise
+            </>
+          )}
         </CollapsibleTrigger>
         <CollapsibleContent>
           <Card className="mt-2 flex flex-col gap-4 p-2">
-            <CardTitle>New Exercise</CardTitle>
+            <CardTitle>{exerciseData.name || 'New Exercise'}</CardTitle>
             <CardContent>
-              <CreateExerciseForm setIsCollapsibleOpen={setIsOpen} />
+              <CreateExerciseForm
+                name={exerciseData.name}
+                link={exerciseData.link}
+                exerciseId={exerciseData._id}
+                setIsCollapsibleOpen={setIsOpen}
+              />
             </CardContent>
           </Card>
         </CollapsibleContent>
@@ -53,20 +69,38 @@ const ExercisesPage = () => {
               <Fragment key={exercise._id}>
                 <Card className="flex flex-col gap-6 p-4">
                   <CardTitle className="truncate">{exercise.name}</CardTitle>
-                  <CardContent className="flex items-center justify-between p-0">
+                  <CardContent className="flex  items-center justify-between p-0">
                     {exercise.link && (
-                      <Link
-                        href={exercise.link}
+                      <a
+                        target="_blank"
+                        href={`https://${exercise.link}`}
                         className={cn('flex items-center gap-2', buttonVariants({ variant: 'default' }))}
                       >
                         <ExternalLink /> Exercise Info
-                      </Link>
+                      </a>
                     )}
-                    <div className="flex gap-4">
-                      <Button size={'sm'}>
+                    <div className="flex flex-1 justify-end gap-4">
+                      <Button
+                        size={'sm'}
+                        disabled={isOpen}
+                        onClick={() => {
+                          setExerciseData({
+                            _id: exercise._id,
+                            name: exercise.name,
+                            link: exercise.link,
+                            userId: exercise.userId,
+                          });
+                          setIsOpen(true);
+                        }}
+                      >
                         <Pen />
                       </Button>
-                      <Button variant="destructive" size={'sm'} onClick={() => handleDeleteBtnClick(exercise._id)}>
+                      <Button
+                        size={'sm'}
+                        disabled={isOpen}
+                        variant="destructive"
+                        onClick={() => handleDeleteBtnClick(exercise._id)}
+                      >
                         <Trash2 />
                       </Button>
                     </div>

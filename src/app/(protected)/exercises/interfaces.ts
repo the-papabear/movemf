@@ -6,13 +6,8 @@ export interface ExerciseDTO {
 }
 
 export interface ExerciseData {
-  id?: string;
+  _id?: string;
   name: string;
   link?: string;
-}
-
-export interface CreateOrEditExerciseProps {
-  exerciseData?: ExerciseData;
-  handleChange: (e: any) => void;
-  submitExercise: (e: any) => void;
+  userId?: string;
 }

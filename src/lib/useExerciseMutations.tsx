@@ -1,11 +1,11 @@
-import { ExerciseDTO } from '@/app/(protected)/exercises/interfaces';
+import { ExerciseData } from '@/app/(protected)/exercises/interfaces';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export const useExerciseMutations = () => {
   const queryClient = useQueryClient();
 
   const createExercise = useMutation({
-    mutationFn: async (exercise: { name: string; link?: string }) => {
+    mutationFn: async (exercise: ExerciseData) => {
       try {
         await fetch(`/api/exercises`, {
           method: 'POST',
@@ -24,7 +24,7 @@ export const useExerciseMutations = () => {
   });
 
   const updateExercise = useMutation({
-    mutationFn: async (exercise: ExerciseDTO) => {
+    mutationFn: async (exercise: ExerciseData) => {
       try {
         await fetch(`/api/exercises/${exercise._id}`, {
           method: 'PATCH',
@@ -36,6 +36,9 @@ export const useExerciseMutations = () => {
       } catch (e: any) {
         return e;
       }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['exercises'] });
     },
   });
 
@@ -52,5 +55,5 @@ export const useExerciseMutations = () => {
     },
   });
 
-  return { createExercise, deleteExercise };
+  return { createExercise, updateExercise, deleteExercise };
 };

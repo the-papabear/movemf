@@ -10,27 +10,35 @@ import { useExerciseMutations } from '@/lib/useExerciseMutations';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel } from '@/components/ui/form';
 
 interface CreateExerciseFormProps {
+  name?: string;
+  link?: string;
+  userId?: string;
+  exerciseId?: string;
   setIsCollapsibleOpen: (isOpen: boolean) => void;
 }
 
 const formSchema = z.object({
   name: z.string().min(1),
+  _id: z.string().optional(),
   link: z.string().optional(),
+  userId: z.string().optional(),
 });
 
-const CreateExerciseForm = ({ setIsCollapsibleOpen }: CreateExerciseFormProps) => {
-  const { createExercise } = useExerciseMutations();
+const CreateExerciseForm = ({ setIsCollapsibleOpen, name, link, exerciseId, userId }: CreateExerciseFormProps) => {
+  const { createExercise, updateExercise } = useExerciseMutations();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: '',
-      link: '',
+      name: name || '',
+      link: link || '',
+      _id: exerciseId,
+      userId: userId || '',
     },
   });
 
   const handleSubmit = (values: z.infer<typeof formSchema>) => {
-    createExercise.mutate(values);
+    exerciseId ? updateExercise.mutate(values) : createExercise.mutate(values);
     setIsCollapsibleOpen(false);
   };
 
@@ -63,7 +71,7 @@ const CreateExerciseForm = ({ setIsCollapsibleOpen }: CreateExerciseFormProps) =
             </FormItem>
           )}
         />
-        <Button type="submit">Add Exercise</Button>
+        <Button type="submit">{exerciseId ? 'Update Exercise' : 'Add Exercise'}</Button>
       </form>
     </Form>
   );

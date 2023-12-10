@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { ExerciseDTO } from '@/app/(protected)/exercises/interfaces';
+import { ExerciseData as ExerciseDTO } from '@/app/(protected)/exercises/interfaces';
 
 export const useExerciseQueries = () => {
   const { isPending, data } = useQuery({
